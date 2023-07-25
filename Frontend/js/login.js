@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------------------------------------
-function registrarUsuario() {
+async function registrarUsuario() {
     try{
         //Se obtienen los valores de los campos en el formulario de registrar
         const nombre = document.querySelector('input[name="nombre"]').value;
@@ -9,42 +9,41 @@ function registrarUsuario() {
         const usuarioAdministrador = document.querySelector('input[name="usuarioAdministrador"]').value;
         const contraseñaAdministrador = document.querySelector('input[name="paswordAdministrador"]').value;
 
-    // Se crea el objeto que se envia al servicio de crear usuario
-    const datosUsuario = {
-        usuarioValidador: usuarioAdministrador,
-        claveValidador: contraseñaAdministrador,
-        usuario: usuario,
-        clave: contraseña,
-        nombre: nombre,
-        rol_id: rol
-    };
+        // Se crea el objeto que se envia al servicio de crear usuario
+        const datosUsuario = {
+            usuarioValidador: usuarioAdministrador,
+            claveValidador: contraseñaAdministrador,
+            usuario: usuario,
+            clave: contraseña,
+            nombre: nombre,
+            rol_id: rol
+        };
+    
+        // Opciones para la petición fetch
+        const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosUsuario)
+        };
   
-    // Opciones para la petición fetch
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datosUsuario)
-    };
-  
-    // URL del servicio que crea el usuario
-    const url = "http://127.0.0.1:5000/usuarios/register";
-    debugger
-    // Realizar la petición fetch
-    fetch(url, options)
-        .then(response => response.json())
+        // URL del servicio que crea el usuario
+        const url = "http://127.0.0.1:5000/usuarios/register";
+
+        fetch(url, options)
+        .then(Response => Response.json())
         .then(data => {
-            // Acceder a la propiedad 'mensaje' del objeto JSON y mostrarla en el alert
+            console.log(data)
             alert("Usuario creado exitosamente: " + data);
+            location.reload();
         })
-        .catch(error => {
-            // En caso de error, puedes mostrar una alerta con el mensaje de error
-            alert("Error al crear el usuario: " + error.message);
-        });
+        .catch(err => {
+            console.log(err)
+            alert("Error al crear el usuario: " + err.message);
+        })
     } catch (e) {
         console.log(e);
-        debugger;
     }
   }
 //------------------------------------------------------------------------------------------------------------
