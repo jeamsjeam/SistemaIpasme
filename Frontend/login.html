@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <!-- <link rel="stylesheet" type="text/css" href="css/estilo.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/estilos_login.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    </head>
+    <body>
+            <nav class="navbar navbar-dark color">
+                <div class="container-fluid justify-content-center">
+                    <a href="login.php">
+                        <span class="navbar-brand mb-0 h1" >Reposos</span>
+                    </a>
+                </div>
+	        </nav>
+
+            <main>
+
+                <div class="container_all">
+                    <div class="box">
+                        <div class="box-login">
+                            <h3>Sistema de Reposo</h3>
+                            <p>Acceder al sistema</p>
+                            <button id="btn__iniciar-sesion">Iniciar Sesión</button>
+                        </div>
+                        <div class="box-register">
+                            <img src="css\imagenes\ipaslogo.png" alt="IPASME UMO" width="80" height="80">
+                            
+                            <p>Registrar nuevo usuario</p>
+                            <button id="btn__registrarse">Registrarse</button>
+                        </div>
+                    </div>
+
+                    <!--Formulario de Login y registro-->
+                    <div class="container_login-register">
+                        <!--Login-->
+                        <form action="funciones/login_user.php" class="form_login" method="post">
+                            <h2>Iniciar Sesión</h2>
+                            <input type="text" placeholder="Usuario" name="user">
+                            <input type="password" placeholder="Contraseña" name="pasword">
+                            <button>Entrar</button>
+                        </form>
+
+                        <!--Register-->
+                        <form action="#" class="form_register" method="post">
+                            <h2>Regístrarse</h2>
+                            <input type="text" placeholder="Nombre" name="nombre" required>
+                            <input type="text" placeholder="Usuario" name="user_registro" required>
+                            <input type="password" placeholder="Contraseña" name="password_registro" required>
+                            <select name="rol" class="form-select mt-3" aria-label="Default select example">
+                                <option value="1" selected>Administrador</option>
+                                <option value="2">Estandar</option>
+                            </select>
+
+                            <input type="tex" placeholder="Confirmar Usuario Administrador" name="usuarioAdministrador" required>
+                            <input type="password" placeholder=" Confirmar Contraseña Administrador" name="paswordAdministrador" required>
+                            
+
+                            <button onclick="registrarUsuario()">Regístrarse</button>
+                        </form>
+                    </div>
+                </div>
+
+            </main>
+
+            <script src="js/login.js"></script>
+            <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    </body>
+</html>
