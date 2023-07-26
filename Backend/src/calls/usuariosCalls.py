@@ -35,7 +35,7 @@ class UsuariosCalls():
             return "02|Usuario incorrecto"
         else : 
             if usuarioBD.clave == clave:
-                return "00|OK"
+                return "00|" + usuarioBD.nombre
             else :
                 return "01|Clave incorrecta"
             

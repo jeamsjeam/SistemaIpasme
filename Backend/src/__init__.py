@@ -14,4 +14,4 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from .models import asistencia,cargo,dependencia,empleado,especialidad,estado,genero,grupo_reporte,municipio,paciente,permiso, reporte,rol,turno,usuario
-from .routes import  usuariosController, rolesController
+from .routes import  usuariosController, rolesController, generosController, turnosController

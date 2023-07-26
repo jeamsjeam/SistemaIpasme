@@ -16,7 +16,7 @@ class UsuariosServices:
                 if done is None:
                     respuesta = '01|Problemas al crear usuario'
                 else :
-                    respuesta = '00|OK'
+                    respuesta = '00|' + done.nombre
             else:
                 respuesta = '03|Usuario ya existe'
         else :
