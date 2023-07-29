@@ -13,5 +13,5 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from .models import asistencia,cargo,dependencia,empleado,especialidad,estado,genero,grupo_reporte,municipio,paciente,permiso, reporte,rol,turno,usuario
+from .models import asistencia,cargo,dependencia,empleado,especialidad,estado,genero,grupo_reposos,municipio,paciente,permiso,reposos,rol,turno,usuario
 from .routes import  usuariosController, rolesController, generosController, turnosController

@@ -16,7 +16,7 @@ class Paciente(db.Model):
     dependencia_id = db.Column(db.BigInteger(), db.ForeignKey('dependencia.id'))
     municipio_id = db.Column(db.BigInteger(), db.ForeignKey('municipio.id'))
 
-    grupos_reportes = relationship('GrupoReporte', backref='paciente')
+    grupos_reposos = relationship('GrupoReposos', backref='paciente')
 
     def __init__(self, cedula, nombre, apellido, institucion_laboral, fecha_nacimiento, direccion, telefono, permiso_dias_extra, cargo_id, dependencia_id, municipio_id):
         self.cedula = cedula

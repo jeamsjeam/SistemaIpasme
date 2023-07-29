@@ -1,8 +1,8 @@
 from src import db
 from datetime import datetime
 
-class Reporte(db.Model):
-    __tablename__ = 'reporte'
+class Reposos(db.Model):
+    __tablename__ = 'reposos'
 
     id = db.Column(db.BigInteger(), primary_key=True)
     codigo_asistencial = db.Column(db.Text, nullable=False)
@@ -10,11 +10,11 @@ class Reporte(db.Model):
     fecha_inicio = db.Column(db.DateTime(), default=datetime.now)
     fecha_fin = db.Column(db.DateTime())
     empleado_validador_cedula = db.Column(db.BigInteger(), db.ForeignKey('empleado.cedula'))
-    grupo_reporte_id = db.Column(db.BigInteger(), db.ForeignKey('grupo_reporte.id'))
+    grupo_reposos_id = db.Column(db.BigInteger(), db.ForeignKey('grupo_reposos.id'))
 
-    def __init__(self,codigo_asistencial,codigo_registro,fecha_inicio, fecha_fin,grupo_reporte_id):
+    def __init__(self,codigo_asistencial,codigo_registro,fecha_inicio, fecha_fin,grupo_reposos_id):
         self.codigo_asistencial = codigo_asistencial
         self.codigo_registro = codigo_registro
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.grupo_reporte_id = grupo_reporte_id
+        self.grupo_reposos_id = grupo_reposos_id

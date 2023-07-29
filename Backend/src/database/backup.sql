@@ -296,10 +296,10 @@ ALTER SEQUENCE public.genero_id_seq OWNED BY public.genero.id;
 
 --
 -- TOC entry 241 (class 1259 OID 16793)
--- Name: grupo_reporte; Type: TABLE; Schema: public; Owner: postgres
+-- Name: grupo_reposos; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.grupo_reporte (
+CREATE TABLE public.grupo_reposos (
     id bigint NOT NULL,
     paciente_cedula bigint,
     especialidad_id bigint,
@@ -307,14 +307,14 @@ CREATE TABLE public.grupo_reporte (
 );
 
 
-ALTER TABLE public.grupo_reporte OWNER TO postgres;
+ALTER TABLE public.grupo_reposos OWNER TO postgres;
 
 --
 -- TOC entry 240 (class 1259 OID 16792)
--- Name: grupo_reporte_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: grupo_reposos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.grupo_reporte_id_seq
+CREATE SEQUENCE public.grupo_reposos_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -322,15 +322,15 @@ CREATE SEQUENCE public.grupo_reporte_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.grupo_reporte_id_seq OWNER TO postgres;
+ALTER TABLE public.grupo_reposos_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3458 (class 0 OID 0)
 -- Dependencies: 240
--- Name: grupo_reporte_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: grupo_reposos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.grupo_reporte_id_seq OWNED BY public.grupo_reporte.id;
+ALTER SEQUENCE public.grupo_reposos_id_seq OWNED BY public.grupo_reposos.id;
 
 
 --
@@ -459,28 +459,28 @@ ALTER SEQUENCE public.permiso_id_seq OWNED BY public.permiso.id;
 
 --
 -- TOC entry 243 (class 1259 OID 16810)
--- Name: reporte; Type: TABLE; Schema: public; Owner: postgres
+-- Name: reposos; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.reporte (
+CREATE TABLE public.reposos (
     id bigint NOT NULL,
     codigo_asistencial text,
     codigo_registro text,
     fecha_inicio timestamp without time zone,
     fecha_fin timestamp without time zone,
     empleado_validador_cedula bigint,
-    grupo_reporte_id bigint
+    grupo_reposos_id bigint
 );
 
 
-ALTER TABLE public.reporte OWNER TO postgres;
+ALTER TABLE public.reposos OWNER TO postgres;
 
 --
 -- TOC entry 242 (class 1259 OID 16809)
--- Name: reporte_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: reposos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.reporte_id_seq
+CREATE SEQUENCE public.reposos_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -488,15 +488,15 @@ CREATE SEQUENCE public.reporte_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.reporte_id_seq OWNER TO postgres;
+ALTER TABLE public.reposos_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3462 (class 0 OID 0)
 -- Dependencies: 242
--- Name: reporte_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: reposos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.reporte_id_seq OWNED BY public.reporte.id;
+ALTER SEQUENCE public.reposos_id_seq OWNED BY public.reposos.id;
 
 
 --
@@ -673,10 +673,10 @@ ALTER TABLE ONLY public.genero ALTER COLUMN id SET DEFAULT nextval('public.gener
 
 --
 -- TOC entry 3256 (class 2604 OID 16796)
--- Name: grupo_reporte id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: grupo_reposos id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.grupo_reporte ALTER COLUMN id SET DEFAULT nextval('public.grupo_reporte_id_seq'::regclass);
+ALTER TABLE ONLY public.grupo_reposos ALTER COLUMN id SET DEFAULT nextval('public.grupo_reposos_id_seq'::regclass);
 
 
 --
@@ -705,10 +705,10 @@ ALTER TABLE ONLY public.permiso ALTER COLUMN id SET DEFAULT nextval('public.perm
 
 --
 -- TOC entry 3257 (class 2604 OID 16813)
--- Name: reporte id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: reposos id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.reporte ALTER COLUMN id SET DEFAULT nextval('public.reporte_id_seq'::regclass);
+ALTER TABLE ONLY public.reposos ALTER COLUMN id SET DEFAULT nextval('public.reposos_id_seq'::regclass);
 
 
 --
@@ -800,11 +800,11 @@ ALTER TABLE ONLY public.genero
 
 --
 -- TOC entry 3285 (class 2606 OID 16798)
--- Name: grupo_reporte grupo_reporte_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: grupo_reposos grupo_reposos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.grupo_reporte
-    ADD CONSTRAINT grupo_reporte_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.grupo_reposos
+    ADD CONSTRAINT grupo_reposos_pkey PRIMARY KEY (id);
 
 
 --
@@ -836,11 +836,11 @@ ALTER TABLE ONLY public.permiso
 
 --
 -- TOC entry 3287 (class 2606 OID 16817)
--- Name: reporte reporte_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: reposos reposos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.reporte
-    ADD CONSTRAINT reporte_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.reposos
+    ADD CONSTRAINT reposos_pkey PRIMARY KEY (id);
 
 
 --
@@ -926,19 +926,19 @@ ALTER TABLE ONLY public.empleado
 
 --
 -- TOC entry 3300 (class 2606 OID 16804)
--- Name: grupo_reporte fk_gr_esp; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: grupo_reposos fk_gr_esp; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.grupo_reporte
+ALTER TABLE ONLY public.grupo_reposos
     ADD CONSTRAINT fk_gr_esp FOREIGN KEY (especialidad_id) REFERENCES public.especialidad(id);
 
 
 --
 -- TOC entry 3301 (class 2606 OID 16799)
--- Name: grupo_reporte fk_gr_pac; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: grupo_reposos fk_gr_pac; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.grupo_reporte
+ALTER TABLE ONLY public.grupo_reposos
     ADD CONSTRAINT fk_gr_pac FOREIGN KEY (paciente_cedula) REFERENCES public.paciente(cedula);
 
 
@@ -989,20 +989,20 @@ ALTER TABLE ONLY public.permiso
 
 --
 -- TOC entry 3302 (class 2606 OID 16823)
--- Name: reporte fk_rep_emp; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: reposos fk_rep_emp; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.reporte
+ALTER TABLE ONLY public.reposos
     ADD CONSTRAINT fk_rep_emp FOREIGN KEY (empleado_validador_cedula) REFERENCES public.empleado(cedula);
 
 
 --
 -- TOC entry 3303 (class 2606 OID 16818)
--- Name: reporte fk_rep_gr; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: reposos fk_rep_gr; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.reporte
-    ADD CONSTRAINT fk_rep_gr FOREIGN KEY (grupo_reporte_id) REFERENCES public.grupo_reporte(id);
+ALTER TABLE ONLY public.reposos
+    ADD CONSTRAINT fk_rep_gr FOREIGN KEY (grupo_reposos_id) REFERENCES public.grupo_reposos(id);
 
 
 --
