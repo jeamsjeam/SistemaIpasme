@@ -16,7 +16,8 @@ class UsuariosServices:
                 if done is None:
                     respuesta = '01|Problemas al crear usuario'
                 else :
-                    respuesta = '00|' + done.nombre
+                    #respuesta = '00|' + done.nombre
+                    respuesta = '00|Usuario Creado Con Exito'
             else:
                 respuesta = '03|Usuario ya existe'
         else :
@@ -24,7 +25,9 @@ class UsuariosServices:
         return respuesta
 
 def es_admin(usuario, clave):
+    print(usuario,clave)
     validadorLogin = UsuariosCalls.autenticar_usuario(usuario, clave)
+    print(validadorLogin)
     if validadorLogin == '00|OK':
         validador = UsuariosCalls.usuario_por_nombre(usuario)
         if RolesCalls.permite_crear(validador.rol_id):

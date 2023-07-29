@@ -12,3 +12,8 @@ class RolesCalls():
             return True
         else :
             return False
+    
+    def mostrar_rol_id(id):
+        rol = Rol.query.get(id)
+        print(rol)
+        return rol

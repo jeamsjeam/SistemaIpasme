@@ -35,9 +35,10 @@ class UsuariosCalls():
             return "02|Usuario incorrecto"
         else : 
             if usuarioBD.clave == clave:
-                return "00|" + usuarioBD.nombre
+                #return "00|" + usuarioBD.nombre
+                return "00|OK"
             else :
-                return "01|Clave incorrecta"
+                return "01|Usuario o Clave Incorrecta"
             
     def usuario_por_nombre(usuario):
         return Usuario.query.filter_by(usuario = usuario).first()
