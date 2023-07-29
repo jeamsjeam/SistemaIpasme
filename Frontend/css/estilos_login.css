@@ -30,7 +30,7 @@ main{
 .box{
     width: 100%;
     padding: 10px 20px;
-    height: 600px;
+    height: 400px;
     display: flex;
     justify-content: center;
     backdrop-filter: blur(10px);
@@ -91,7 +91,7 @@ main{
     width: 100%;
     max-width: 380px;
     position: relative;
-    top: -300px;
+    top: -200px;
     left: 10px;
 
     /*La transicion va despues del codigo JS*/

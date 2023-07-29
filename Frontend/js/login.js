@@ -7,7 +7,7 @@ async function registrarUsuario() {
         const contraseña = document.querySelector('input[name="password_registro"]').value;
         const rol = document.querySelector('select[name="rol"]').value;
         const usuarioAdministrador = document.querySelector('input[name="usuarioAdministrador"]').value;
-        const contraseñaAdministrador = document.querySelector('input[name="paswordAdministrador"]').value;
+        const contraseñaAdministrador = document.querySelector('input[name="passwordAdministrador"]').value;
 
         // Se crea el objeto que se envia al servicio de crear usuario
         const datosUsuario = {
@@ -36,7 +36,7 @@ async function registrarUsuario() {
         document.querySelector('input[name="password_registro"]').value = "";
         document.querySelector('select[name="rol"]').value = 1;
         document.querySelector('input[name="usuarioAdministrador"]').value = "";
-        document.querySelector('input[name="paswordAdministrador"]').value = "";
+        document.querySelector('input[name="passwordAdministrador"]').value = "";
 
         fetch(url, options)
         .then(Response => Response.json())
