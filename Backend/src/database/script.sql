@@ -127,29 +127,29 @@ ALTER TABLE PACIENTE ADD CONSTRAINT FK_PAC_MUN
 ALTER TABLE PACIENTE ADD CONSTRAINT FK_PAC_CAR
     FOREIGN KEY (cargo_id) REFERENCES CARGO(id);
 
-CREATE TABLE grupo_reposos (
+CREATE TABLE grupo_reposo (
     id BIGSERIAL PRIMARY KEY,
     paciente_cedula BIGINT,
     especialidad_id BIGINT,
     fecha_inicio TIMESTAMP
 );
 
-ALTER TABLE grupo_reposos ADD CONSTRAINT FK_GR_PAC
+ALTER TABLE grupo_reposo ADD CONSTRAINT FK_GR_PAC
     FOREIGN KEY (paciente_cedula) REFERENCES PACIENTE(cedula);
-ALTER TABLE grupo_reposos ADD CONSTRAINT FK_GR_ESP
+ALTER TABLE grupo_reposo ADD CONSTRAINT FK_GR_ESP
     FOREIGN KEY (especialidad_id) REFERENCES ESPECIALIDAD(id);
 
-CREATE TABLE reposos (
+CREATE TABLE reposo (
     id BIGSERIAL PRIMARY KEY,
     codigo_asistencial TEXT,
     codigo_registro TEXT,
     fecha_inicio TIMESTAMP,
     fecha_fin TIMESTAMP,
     empleado_validador_cedula BIGINT,
-    grupo_reposos_id BIGINT
+    grupo_reposo_id BIGINT
 );
 
-ALTER TABLE reposos ADD CONSTRAINT FK_REP_GR
-    FOREIGN KEY (grupo_reposos_id) REFERENCES grupo_reposos(id);
-ALTER TABLE reposos ADD CONSTRAINT FK_REP_EMP
+ALTER TABLE reposo ADD CONSTRAINT FK_REP_GR
+    FOREIGN KEY (grupo_reposo_id) REFERENCES grupo_reposo(id);
+ALTER TABLE reposo ADD CONSTRAINT FK_REP_EMP
     FOREIGN KEY (empleado_validador_cedula) REFERENCES EMPLEADO(cedula);

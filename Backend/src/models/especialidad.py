@@ -9,7 +9,7 @@ class Especialidad(db.Model):
     maximo_dias = db.Column(db.Integer)
 
     empleados = relationship('Empleado', backref='especialidad')
-    grupos_reposos = relationship('GrupoReposos', backref='especialidad')
+    grupos_reposo = relationship('GrupoReposo', backref='especialidad')
 
     def __init__(self, nombre, maximo_dias):
         self.nombre = nombre
