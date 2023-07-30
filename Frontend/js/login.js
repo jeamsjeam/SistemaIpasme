@@ -43,7 +43,7 @@ async function registrarUsuario() {
         fetch(url, options)
         .then(Response => Response.json())
         .then(data => {
-            console.log(data)
+
             resultado = data.toString().split('|')
 
             if(typeof resultado[1] !== 'undefined' && resultado[1] !== null){
@@ -63,12 +63,10 @@ async function registrarUsuario() {
             }
         })
         .catch(err => {
-            console.log(err)
             mostrarNotificacion(err.message,"#FF0000") 
         })
     } catch (e) {
         mostrarNotificacion(e,"#FF0000") 
-        console.log(e);
     }
   }
 
@@ -125,13 +123,11 @@ async function registrarUsuario() {
             //location.reload();
         })
         .catch(err => {
-            console.log(err)
             mostrarNotificacion(err.message,"#FF0000") 
             //alert("Error al crear el usuario: " + err.message);
         })
     } catch (e) {
         mostrarNotificacion(e,"#FF0000") 
-        console.log(e);
     }
   }
 

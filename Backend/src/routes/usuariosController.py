@@ -22,8 +22,6 @@ def register():
 def usuari_rol_por_nombre(usuario):
     respuesta = UsuariosServices.usuari_rol_por_nombre(usuario)
     rol = usuario_schema.dump(respuesta)
-    print("---------------------------------------------------")
-    print(rol)
     if rol is not None and len(rol) > 0:
         return make_response(jsonify(rol['nombre']))
     else:

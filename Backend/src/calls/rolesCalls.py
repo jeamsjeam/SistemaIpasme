@@ -15,6 +15,5 @@ class RolesCalls():
     
     def mostrar_rol_id(id):
         rol = Rol.query.get(id)
-        print(rol)
         return rol
 
