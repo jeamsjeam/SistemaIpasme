@@ -6,8 +6,11 @@ class UsuariosServices:
 
     def usuari_rol_por_nombre(usuario):
         usuario = UsuariosCalls.usuario_por_nombre(usuario)
-        rol = RolesCalls.mostrar_rol_id(usuario.rol_id)
-        return rol
+        if usuario is not None:
+            rol = RolesCalls.mostrar_rol_id(usuario.rol_id)
+            return rol
+        else:
+            return None
 
     def login(usuario, clave):
         return UsuariosCalls.autenticar_usuario(usuario, clave)

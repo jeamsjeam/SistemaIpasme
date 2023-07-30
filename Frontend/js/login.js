@@ -5,7 +5,9 @@ async function registrarUsuario() {
         const nombre = document.querySelector('input[name="nombre"]').value;
         const usuario = document.querySelector('input[name="user_registro"]').value;
         const contraseña = document.querySelector('input[name="password_registro"]').value;
-        const rol = document.querySelector('select[name="rol"]').value;
+        const SelectRol = document.querySelector('select[name="rol"]').selectedOptions[0];
+        const rol = SelectRol.value;
+        const rolNombre = SelectRol.textContent;
         const usuarioAdministrador = document.querySelector('input[name="usuarioAdministrador"]').value;
         const contraseñaAdministrador = document.querySelector('input[name="passwordAdministrador"]').value;
 
@@ -49,7 +51,7 @@ async function registrarUsuario() {
                     //mostrarNotificacion(resultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
                     let datosUsuarioLogin = {
                         usuario: datosUsuario.usuario,
-                        rol: datosUsuario.rol_id,
+                        rol: rolNombre,
                     };
                     sessionStorage.setItem('usuario', JSON.stringify(datosUsuarioLogin))
                     window.location.href = "index.html";
