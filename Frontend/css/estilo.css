@@ -3,114 +3,25 @@
   background-color: #1b7ec7;
 }
 
-
 .requerido{
 	color:red;
 	padding-left: 3px;
-}
-
-.cajas{
-	background-color: #d7dde1;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 20px;
-	padding-right: 20px;
-	border-radius: 5px;
-}
-
-.margenDerecho{
-  margin-right: 10px;
 }
 
 a{
 	text-decoration: none;
 }
 
-.bordeBoton{
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
-  border-radius: 10px;
-}
-
-.carta{
-	font-weight: bold;
-}
-
-.pruebas{
-
-background:red;
-height:100px;
-width:100px;
-word-wrap: break-word;
-
-}
-
-.sinpadding{
-	padding-left: 0px;
-	padding-right: 0px;
-	border-radius: 0px;
-}
-
-.bordesSection {
-  border-top: 2px solid green;
-  border-bottom: 2px solid green;
-  border-right: 2px solid green;
-  border-left: 2px solid green;
-  border-radius: 10px;
-}
-.colornabtext{
-  color: green;
-}
-
-.tamañoFuenteConstancia{
-  font-size: 14px;
+.bordeSeccion{
+  border-style: groove;
+  border-radius: 5px;
+  background-color: #d8e5ee;
+  margin: 5px;
 }
 
 @media (min-width: 1200px){
-  .bordesSectionDerecha {
-    border-top: 2px solid green;
-    border-bottom: 2px solid green;
-    border-right: 2px solid green;
-    border-left: 1px solid green;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-  .bordesSectionCentro {
-    border-top: 2px solid green;
-    border-bottom: 2px solid green;
-    border-right: 1px solid green;
-    border-left: 1px solid green;
-  }
-  .bordesSectionIzquierda {
-    border-top: 2px solid green;
-    border-bottom: 2px solid green;
-    border-right: 1px solid green;
-    border-left: 2px solid green;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
+
 }
 @media (min-width: 0px) and (max-width: 1199px){
-  .bordesSectionArriba{
-    border-top: 2px solid green;
-    border-right: 2px solid green;
-    border-left: 2px solid green;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  .bordesSectionCentro2{
-    border-top: 2px solid green;
-    border-bottom: 2px solid green;
-    border-right: 2px solid green;
-    border-left: 2px solid green;
-  }
-  .bordesSectionAbajo{
-    border-right: 2px solid green;
-    border-left: 2px solid green;
-    border-bottom: 2px solid green;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
+
 }

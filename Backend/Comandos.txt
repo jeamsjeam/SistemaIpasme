@@ -16,3 +16,6 @@ pip install -r requirements.txt
 
 Generar archivo de requerimientos
 pip freeze > requirements.txt
+
+Arrancar la api REST
+python run.py

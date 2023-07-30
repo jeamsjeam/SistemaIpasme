@@ -1,4 +1,4 @@
-INSERT INTO ROL (nombre) VALUES ('Administrador'),('Estandar');
+INSERT INTO ROL (nombre) VALUES ('Administrador'),('Administrador (Lectura)'),('Asistencial'),('Recursos Humanos');
 INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1);
 INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
 
