@@ -2,11 +2,11 @@ from ..models.paciente import Paciente
 from src import db
 
 class PacienteCalls():
-    def mostrar_paciente():
+    def get_paciente():
         paciente = Paciente.query.all()
         return paciente
     
-    def mostrar_paciente_cedula(cedula):
+    def get_paciente_cedula(cedula):
         paciente = Paciente.query.get(cedula)
         return paciente
 

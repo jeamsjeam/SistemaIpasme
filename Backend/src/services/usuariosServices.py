@@ -3,6 +3,15 @@ from ..calls.rolesCalls import RolesCalls
 from ..models.usuario import Usuario
 
 class UsuariosServices:
+
+    def usuario_rol_por_nombre(usuario):
+        usuario = UsuariosCalls.usuario_por_nombre(usuario)
+        if usuario is not None:
+            rol = RolesCalls.get_rol_id(usuario.rol_id)
+            return rol
+        else:
+            return None
+
     def login(usuario, clave):
         return UsuariosCalls.autenticar_usuario(usuario, clave)
     
@@ -31,4 +40,6 @@ def es_admin(usuario, clave):
         if RolesCalls.permite_crear(validador.rol_id):
             return True
     return False
+
+
         

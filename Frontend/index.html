@@ -3,11 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <title>Menu</title>
 </head>
 <body>
+    <nav class="navbar navbar-dark color">
+        <div class="container-fluid d-flex justify-content-evenly">
+            <a href="index.html">
+                <button type="submit" name="" class="btn bordeBoton"><span class="navbar-brand mb-0 h1" >Inicio</span></button></a>
+            <div>
+                <span class="navbar-brand mb-0 h1" id="mensajeNavbar" >Menu</span>
+            </div class="">
+            <a href="login.html" class="">
+                <button type="submit" name="" class="btn bordeBoton"><span class="navbar-brand mb-0 h1" >Cerrar Sesion</span></button></a>
+        </div>
+    </nav>
+    <div class="contaier-fluid mt-2">
+        <div class="row d-flex justify-content-center">
+            <section class="col-5 d-flex justify-content-center pt-5 pb-5 bordeSeccion">
+                <div class="card" style="width: 18rem;">
+                    <div class="d-flex justify-content-center">
+                        <img src="css\imagenes\ipaslogo.png" alt="logo" width="80" height="80">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Registra Reposos Médicos</h5>
+                        <p class="card-text">Aquí podrás registrar todos los reposos médicos. Mantén un registro organizado y actualizado para un mejor control.</p>
+                        <a href="asistencial.html" class="btn btn-primary">Ir a la sección</a>
+                    </div>
+                </div>                  
+            </section>
+            <section class="col-5  d-flex justify-content-center pt-5 pb-5 bordeSeccion">
+                <div class="card" style="width: 18rem;">
+                    <div class="d-flex justify-content-center">
+                        <img src="css\imagenes\ipaslogo.png" alt="logo" width="80" height="80">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Registro de Entradas y Salidas</h5>
+                        <p class="card-text">Lleva un control preciso de las horas de entrada y salida. Facilita el seguimiento de la asistencia y puntualidad del personal.</p>
+                        <a href="recursoshumanos.html" class="btn btn-primary">Ir a la sección</a>
+                    </div>
+                </div>            
+            </section>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <section class="col-5 d-flex justify-content-center pt-5 pb-5 bordeSeccion">
+                <div class="card" style="width: 18rem;">
+                    <div class="d-flex justify-content-center">
+                        <img src="css\imagenes\ipaslogo.png" alt="logo" width="80" height="80">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Registro de Citas Médicas</h5>
+                        <p class="card-text">Agenda y administra todas las citas médicas de los pacientes de manera eficiente. Mantén un seguimiento ordenado de los horarios y detalles de las consultas.</p>
+                        <button class="btn btn-primary" disabled>Proximamente...</button>
+                        
+                      </div>
+                </div>        
+            </section>
+            <section class="col-5  d-flex justify-content-center pt-5 pb-5 bordeSeccion">
+                <div class="card" style="width: 18rem;">
+                    <div class="d-flex justify-content-center">
+                        <img src="css\imagenes\ipaslogo.png" alt="logo" width="80" height="80">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Proximamente...</h5>
+                        <p class="card-text">Proximamente...</p>
+                        <button class="btn btn-primary" disabled>Proximamente...</button>
+                    </div>
+                </div>        
+            </section>
+        </div>
+    </div>
     
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/index.js"></script>
     <script src="bootstrap-5/js/bootstrap.min.js"></script>
 </body>
 </html>
