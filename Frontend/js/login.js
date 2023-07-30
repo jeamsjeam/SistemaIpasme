@@ -46,20 +46,23 @@ async function registrarUsuario() {
 
             if(typeof resultado[1] !== 'undefined' && resultado[1] !== null){
                 if(resultado[0] === '00'){
-                    mostrarNotificacion(resultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+                    //mostrarNotificacion(resultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+                    let datosUsuarioLogin = {
+                        usuario: datosUsuario.usuario,
+                        rol: datosUsuario.rol_id,
+                    };
+                    sessionStorage.setItem('usuario', JSON.stringify(datosUsuarioLogin))
+                    window.location.href = "index.html";
                 }else{
                     mostrarNotificacion(resultado[1],"#FF0000") 
                 }
             }else{
                 mostrarNotificacion(resultado[0],"#FF0000") 
             }
-            //alert("Usuario creado exitosamente: " + typeof resultado[1] !== 'undefined' && resultado[1] !== null ? resultado[1] : resultado[0]);
-            //location.reload();
         })
         .catch(err => {
             console.log(err)
             mostrarNotificacion(err.message,"#FF0000") 
-            //alert("Error al crear el usuario: " + err.message);
         })
     } catch (e) {
         mostrarNotificacion(e,"#FF0000") 
@@ -97,12 +100,19 @@ async function registrarUsuario() {
         fetch(url, options)
         .then(Response => Response.json())
         .then(data => {
-            console.log(data)
             resultado = data.toString().split('|')
-
             if(typeof resultado[1] !== 'undefined' && resultado[1] !== null){
                 if(resultado[0] === '00'){
-                    window.location.href = "index.html";
+                    fetch('http://127.0.0.1:5000/usuarios/'+datosUsuario.usuario)
+                    .then(responseUsuario => responseUsuario.json())
+                    .then(rolUsuario => {
+                        let usuario = {
+                            usuario: datosUsuario.usuario,
+                            rol: rolUsuario
+                        }
+                        sessionStorage.setItem('usuario', JSON.stringify(usuario))
+                        window.location.href = "index.html";
+                    }).catch(usuarioError => mostrarNotificacion(usuarioError.message,"#FF0000"))
                 }else{
                     mostrarNotificacion(resultado[1],"#FF0000") 
                 }
@@ -137,6 +147,13 @@ function mostrarNotificacion(texto,color) {
   }
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Para borrar todos los datos almacenados en sessionStorage
+    sessionStorage.clear();
+
+    // Para borrar todos los datos almacenados en sessionStorage
+    sessionStorage.clear();
+
     // URL del servicio REST que retorna la lista de roles
     const url = "http://127.0.0.1:5000/roles";
     // Elemento select donde agregaremos las opciones de los roles

@@ -17,3 +17,4 @@ class RolesCalls():
         rol = Rol.query.get(id)
         print(rol)
         return rol
+

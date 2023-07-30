@@ -3,6 +3,12 @@ from ..calls.rolesCalls import RolesCalls
 from ..models.usuario import Usuario
 
 class UsuariosServices:
+
+    def usuari_rol_por_nombre(usuario):
+        usuario = UsuariosCalls.usuario_por_nombre(usuario)
+        rol = RolesCalls.mostrar_rol_id(usuario.rol_id)
+        return rol
+
     def login(usuario, clave):
         return UsuariosCalls.autenticar_usuario(usuario, clave)
     
@@ -25,12 +31,12 @@ class UsuariosServices:
         return respuesta
 
 def es_admin(usuario, clave):
-    print(usuario,clave)
     validadorLogin = UsuariosCalls.autenticar_usuario(usuario, clave)
-    print(validadorLogin)
     if validadorLogin == '00|OK':
         validador = UsuariosCalls.usuario_por_nombre(usuario)
         if RolesCalls.permite_crear(validador.rol_id):
             return True
     return False
+
+
         
