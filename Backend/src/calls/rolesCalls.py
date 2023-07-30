@@ -2,7 +2,7 @@ from ..models.rol import Rol
 from src import db
 
 class RolesCalls():
-    def mostrar_roles():
+    def get_roles():
         roles = Rol.query.all()
         return roles
 
@@ -13,7 +13,6 @@ class RolesCalls():
         else :
             return False
     
-    def mostrar_rol_id(id):
+    def get_rol_id(id):
         rol = Rol.query.get(id)
-        print(rol)
         return rol

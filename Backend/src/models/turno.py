@@ -12,8 +12,8 @@ class Turno(db.Model):
 
     empleados = relationship('Empleado', backref='turno')
 
-    def __init__(self, comentario, hora_llegada, hora_salida):
-        self.comentario = comentario
+    def __init__(self, nombre, hora_llegada, hora_salida):
+        self.nombre = nombre
         self.hora_llegada = hora_llegada
         self.hora_salida = hora_salida
     

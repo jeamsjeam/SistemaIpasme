@@ -2,12 +2,15 @@ from ..models.usuario import Usuario
 from src import db
 
 class UsuariosCalls():
-    def mostrar_usuarios():
+    def get_usuarios():
         usuarios = Usuario.query.all()
         return usuarios
 
     def crear_usuario(usuario):
-        usuarioNuevo = Usuario(usuario = usuario.usuario, clave = usuario.clave, nombre = usuario.nombre, rol_id=usuario.rol_id)
+        usuarioNuevo = Usuario(usuario = usuario.usuario, 
+                               clave = usuario.clave, 
+                               nombre = usuario.nombre, 
+                               rol_id=usuario.rol_id)
         db.session.add(usuarioNuevo)
         db.session.commit()
         db.session.refresh(usuarioNuevo)

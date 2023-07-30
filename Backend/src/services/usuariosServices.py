@@ -25,9 +25,7 @@ class UsuariosServices:
         return respuesta
 
 def es_admin(usuario, clave):
-    print(usuario,clave)
     validadorLogin = UsuariosCalls.autenticar_usuario(usuario, clave)
-    print(validadorLogin)
     if validadorLogin == '00|OK':
         validador = UsuariosCalls.usuario_por_nombre(usuario)
         if RolesCalls.permite_crear(validador.rol_id):
