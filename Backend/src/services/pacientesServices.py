@@ -21,9 +21,6 @@ class PacientesServices:
         pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
         if pacienteConsulta is not None:
             paciente = paciente_schema.dump(pacienteConsulta)   
-            # paciente["cargo"] = cargo_schema.dump(CargosCalls.get_cargo_id(paciente["cargo_id"]))["nombre"]
-            # paciente["dependencia"] = dependecia_schema.dump(DependenciasCalls.get_dependencia_id(paciente["dependencia_id"]))["nombre"]
-            # paciente["municipio"] = municipio_schema.dump(MunicipiosCalls.get_municipio_id(paciente["municipio_id"]))["nombre"]
             #pdb.set_trace()  
             grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
             if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:

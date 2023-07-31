@@ -110,7 +110,10 @@ function buscarPaciente(){
         console.log(data)
         if(typeof data !== 'undefined' && data !== null){
             var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
+            var tablaReposos = document.getElementById("tablaReposos");
             pacienteEncontrado.classList.remove("d-none");
+            tablaReposos.classList.remove("d-none");
+            
             datosPacienteTabla(data)
             toggleDesplegable()
         }else{
@@ -236,7 +239,7 @@ function datosPacienteTabla(datos){
     document.getElementById("datosPaciente_nombres").textContent = datos.nombre;
     document.getElementById("datosPaciente_apellidos").textContent = datos.apellido;
     document.getElementById("datosPaciente_institucion_laboral").textContent = datos.institucion_laboral;
-    document.getElementById("datosPaciente_fecha_nacimiento").textContent = datos.fecha_nacimiento.toString('dd-MM-yyyy');
+    document.getElementById("datosPaciente_fecha_nacimiento").textContent = formatearFecha(datos.fecha_nacimiento);
     let datosPaciente_dias_reposo = 3
     let datosPaciente_permiso = 2
     if (datosPaciente_dias_reposo > 62) {
@@ -244,7 +247,6 @@ function datosPacienteTabla(datos){
     } else {
         document.getElementById("datosPaciente_dias_reposo").textContent = datosPaciente_dias_reposo;
     }
-
     document.getElementById("datosPaciente_telefono").textContent = datos.telefono;
     document.getElementById("datosPaciente_direccion").textContent = datos.direccion;
     document.getElementById("datosPaciente_cargo").textContent = datos.cargo.nombre;
@@ -262,6 +264,62 @@ function datosPacienteTabla(datos){
         modificarButton.disabled = false;
         eliminarButton.disabled = false;
     }
+
+    llenarTablaReposos(datos.reposos);
+}
+
+
+// Función para llenar la tabla con los datos de la lista de objetos
+function llenarTablaReposos(datos) {
+
+    var tablaBody = document.getElementById("tabla-body");
+
+    // Recorrer los datos de reposos y crear las filas y celdas correspondientes
+    datos.forEach(function(reposo) {
+        var filaReposo = document.createElement("tr");
+
+        var celdaCodigoAsistencial = document.createElement("td");
+        celdaCodigoAsistencial.textContent = reposo.codigo_asistencial;
+        filaReposo.appendChild(celdaCodigoAsistencial);
+
+        var celdaCodigoRegistro = document.createElement("td");
+        celdaCodigoRegistro.textContent = reposo.codigo_registro;
+        filaReposo.appendChild(celdaCodigoRegistro);
+
+        var celdaReposoCuido = document.createElement("td");
+        //celdaReposoCuido.textContent = reposo.reposo_cuido === 1 ? "Reposo" : "Cuido";
+        celdaReposoCuido.textContent = "Reposo";
+        filaReposo.appendChild(celdaReposoCuido);
+
+        var celdaFechaDesde = document.createElement("td");
+        celdaFechaDesde.textContent = formatearFecha(reposo.fecha_inicio);
+        filaReposo.appendChild(celdaFechaDesde);
+
+        var celdaFechaHasta = document.createElement("td");
+        celdaFechaHasta.textContent = formatearFecha(reposo.fecha_fin);
+        filaReposo.appendChild(celdaFechaHasta);
+
+        var celdaQuienValida = document.createElement("td");
+        celdaQuienValida.textContent = reposo.quien_valida;
+        filaReposo.appendChild(celdaQuienValida);
+
+        var celdaEspecialidadValida = document.createElement("td");
+        celdaEspecialidadValida.textContent = reposo.especialidad_valida;
+        filaReposo.appendChild(celdaEspecialidadValida);
+
+        var celdaAccion = document.createElement("td");
+        // Agregar el contenido deseado en la celda de Acción aquí, por ejemplo:
+        // celdaAccion.innerHTML = '<button class="btn btn-secondary">Acción</button>';
+        filaReposo.appendChild(celdaAccion);
+
+        // Agregar la fila al tbody de la tabla
+        tablaBody.appendChild(filaReposo);
+    });
+}
+
+function formatearFecha(fecha) {
+    var opciones = { day: 'numeric', month: 'numeric', year: 'numeric' };
+    return new Date(fecha).toLocaleDateString(undefined, opciones);
 }
 
 function resetearEtquitasOcultas(){
@@ -269,6 +327,10 @@ function resetearEtquitasOcultas(){
     //Formulario con datos del paciente y registro de reposos
     var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
     pacienteEncontrado.classList.add("d-none");
+
+    //Tabla de los reposos
+    var tablaReposos = document.getElementById("tablaReposos");
+    tablaReposos.classList.add("d-none");
 
     //Formulario para paciente nuevo
     var registrarPaciente = document.getElementById("formularioRegistrarPaciente");

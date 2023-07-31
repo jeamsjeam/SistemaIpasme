@@ -20,7 +20,3 @@
     justify-content: center;
     flex: 1;
   }
-  
-  .btn {
-    margin-bottom: 20px; /* Ajusta este valor para cambiar la distancia del botón desde la parte inferior */
-  }
