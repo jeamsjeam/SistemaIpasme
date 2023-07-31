@@ -19,6 +19,10 @@ a{
   margin: 5px;
 }
 
+.logoImagenCard{
+  border-radius: 50%;
+}
+
 .accordion-content {
   max-height: 0px;
   overflow: hidden;

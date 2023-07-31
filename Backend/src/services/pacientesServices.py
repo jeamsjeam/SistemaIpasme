@@ -5,13 +5,35 @@ from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
 from ..schemas.pacienteSchema import paciente_schema,Pacientes_schema
+from ..schemas.grupoReposoSchema import grupoReposo_schema,grupoReposos_schema
+from ..schemas.reposoSchema import reposo_schema,reposos_schema
+import pdb
 
 class PacientesServices:
         
     def buscar(cedula):
-        paciente = PacienteCalls.get_paciente_cedula(cedula)
-        if paciente is not None:
-            return paciente_schema.dump(paciente)
+        pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
+        if pacienteConsulta is not None:
+            paciente = paciente_schema.dump(pacienteConsulta)   
+            #pdb.set_trace()  
+            grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
+            if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
+                grupoReposo = grupoReposos_schema.dump(grupoReposoConsulta)
+                listaReposos = []
+                for grupo in grupoReposo:
+                    reposoConsulta = ReposoCalls.get_reposo_paciente(grupo['id'])
+                    if reposoConsulta is not None and len(reposoConsulta) > 0:
+                        repososAux = reposos_schema.dump(reposoConsulta)
+                        for rep in repososAux:
+                            listaReposos.append(rep)
+                if listaReposos is not None and len(listaReposos) > 0:
+                    paciente['reposos'] = listaReposos
+                else:
+                    paciente['reposos'] = []
+                return paciente
+            else:
+                paciente['reposos'] = []
+                return paciente
         else:
             return None
     

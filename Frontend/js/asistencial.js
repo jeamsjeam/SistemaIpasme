@@ -111,6 +111,7 @@ function buscarPaciente(){
         if(typeof data !== 'undefined' && data !== null){
             var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
             pacienteEncontrado.classList.remove("d-none");
+            datosPacienteTabla(data)
             toggleDesplegable()
         }else{
             var registrarPaciente = document.getElementById("formularioRegistrarPaciente");
@@ -227,6 +228,42 @@ function registrarPacienteNuevo(){
     })
 }
 
+function datosPacienteTabla(datos){
+
+
+    // Asignar valores a las celdas de la tabla
+    document.getElementById("datosPaciente_cedula").textContent = datos.cedula;
+    document.getElementById("datosPaciente_nombres").textContent = datos.nombres;
+    document.getElementById("datosPaciente_apellidos").textContent = datos.apellidos;
+    document.getElementById("datosPaciente_institucion_laboral").textContent = datos.institucion_laboral;
+    document.getElementById("datosPaciente_fecha_nacimiento").textContent = datos.fecha_nacimiento;
+    let datosPaciente_dias_reposo = 63
+    let datosPaciente_permiso = 2
+    if (datosPaciente_dias_reposo > 62) {
+        document.getElementById("datosPaciente_dias_reposo").innerHTML = '<span class="requerido">' + datosPaciente_dias_reposo + '</span>';
+    } else {
+        document.getElementById("datosPaciente_dias_reposo").textContent = datosPaciente_dias_reposo;
+    }
+
+    document.getElementById("datosPaciente_telefono").textContent = datos.telefono;
+    document.getElementById("datosPaciente_direccion").textContent = datos.direccion;
+    document.getElementById("datosPaciente_cargo").textContent = datos.cargo;
+    document.getElementById("datosPaciente_dependencia").textContent = datos.dependencia;
+    document.getElementById("datosPaciente_municipio").textContent = datos.municipio;
+
+    // Habilitar o deshabilitar botones según el permiso
+    var modificarButton = document.getElementById("modificarButton");
+    var eliminarButton = document.getElementById("eliminarButton");
+
+    if (datosPaciente_permiso === 2) {
+        modificarButton.disabled = true;
+        eliminarButton.disabled = true;
+    } else {
+        modificarButton.disabled = false;
+        eliminarButton.disabled = false;
+    }
+}
+
 function resetearEtquitasOcultas(){
 
     //Formulario con datos del paciente y registro de reposos
@@ -239,5 +276,5 @@ function resetearEtquitasOcultas(){
 
     //Desplegable
     var contenido = document.getElementById("contenidoDesplegable");
-    contenido.style.maxHeight = "0px";
+    contenido.style.maxHeight = "";
 }

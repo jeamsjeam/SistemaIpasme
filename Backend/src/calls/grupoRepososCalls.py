@@ -10,3 +10,7 @@ class GrupoReposoCalls:
         db.session.commit()
         db.session.refresh(grupo_reposo_nuevo)
         return grupo_reposo_nuevo
+    
+    def get_grupoReposo_paciente(cedula):
+        grupoReposos = sorted(GrupoReposo.query.filter_by(paciente_cedula = cedula), key=lambda grupo: grupo.fecha_inicio)
+        return grupoReposos

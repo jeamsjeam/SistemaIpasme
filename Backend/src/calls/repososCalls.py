@@ -1,5 +1,6 @@
 from ..models.reposo import Reposo
 from src import db
+import pdb
 
 class ReposoCalls:
     def crear_reposo(reposo):
@@ -13,3 +14,7 @@ class ReposoCalls:
         db.session.commit()
         db.session.refresh(reposo_nuevo)
         return reposo_nuevo
+    
+    def get_reposo_paciente(grupo_reposo_id):
+        reposos = sorted(Reposo.query.filter_by(grupo_reposo_id = grupo_reposo_id), key=lambda rep: rep.fecha_inicio)  
+        return reposos
