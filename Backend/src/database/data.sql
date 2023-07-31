@@ -3,11 +3,12 @@
 
 INSERT INTO ROL (nombre) VALUES ('Administrador'),('Administrador (Lectura)'),('Asistencial'),('Recursos Humanos');
 INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1);
+INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('jeam', '1234', 'Jesus',1);
 INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
 
-INSERT INTO cargo (nombre) VALUES ('Cargo1'),('Cargo2');
-INSERT INTO dependencia (nombre) VALUES ('Dependencia1'),('Dependencia2');
-INSERT INTO especialidad (nombre,maximo_dias) VALUES ('Especialidad1',63),('Especialidad2',63);
+INSERT INTO cargo (nombre) VALUES ('Docente'),('Administrativo'),('Obrero'),('Madres elaboradora');
+INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal');
+INSERT INTO especialidad (nombre,maximo_dias) VALUES ('Cardiología Clínica',63),('Cirugía General',63),('Dermatología',63);
 INSERT INTO estado (nombre) VALUES ('Tachira'),('Merida'),('Zulia'),('Trujillo'),('Apure');
 INSERT INTO municipio (nombre) VALUES ('Junin'),('Ayacucho'),('Libertador'),('San Cristóbal'),('Lobatera');
 
