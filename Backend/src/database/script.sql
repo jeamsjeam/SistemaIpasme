@@ -145,11 +145,9 @@ CREATE TABLE reposo (
     codigo_registro TEXT,
     fecha_inicio TIMESTAMP,
     fecha_fin TIMESTAMP,
-    empleado_validador_cedula BIGINT,
+    quien_valida text,
     grupo_reposo_id BIGINT
 );
 
 ALTER TABLE reposo ADD CONSTRAINT FK_REP_GR
     FOREIGN KEY (grupo_reposo_id) REFERENCES grupo_reposo(id);
-ALTER TABLE reposo ADD CONSTRAINT FK_REP_EMP
-    FOREIGN KEY (empleado_validador_cedula) REFERENCES EMPLEADO(cedula);

@@ -20,6 +20,186 @@
                 <button type="submit" name="" class="btn bordeBoton"><span class="navbar-brand mb-0 h1" >Cerrar Sesion</span></button></a>
         </div>
     </nav>
+
+    <div class="container mt-5">
+        <section class="row d-flex justify-content-center mb-5">
+            <div class="col-lg-8 bordeSeccion">
+                <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarPaciente()">
+                    <div class="mb-3 mt-3">
+                        <label for="buscarCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
+                        <input type="text" name="cedula" class="form-control" id="buscarCedula" required pattern="[0-9]{5,8}" placeholder="Ingresar solo numeros">
+                      </div>						
+                    <div class="col-12">
+                          <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn btn-secondary">Consultar</button>
+                      </div>
+                </form>
+            </div>
+            <div class="col-lg-3 cajas mb-2 bordeSeccion">
+
+                <div class="d-flex justify-content-center">
+                        <label class="form-label carta mt-3">Consulta Todos los datos</label>
+                </div>
+
+                <form name="formulariocantidadConsulta" method="post" action="#" onsubmit="event.preventDefault();">
+                    <div class="row mt-4 mb-4 d-flex">
+                        <div class="col">	
+                            <label for="cantidadConsultar" class="form-label">Cantidad por pagina<span class = "requerido">*</span></label>	
+                        </div>
+                        <div class="col">
+                            <input type="text" name="cantidadConsulta" id="cantidadConsultar" value="50" class="form-control" pattern="[0-9]{1,3}" required id="InputConsulta" style="width: 60px;">
+                        </div>
+                        <div class="col">
+                            <button type="submit" name="botonConsultar" value="1" class="btn btn-secondary">Consultar</button>
+                        </div>
+                      </div>
+                </form>
+            </div>
+        </section>
+        <section class="row accordion-content" id="contenidoDesplegable">
+            <div class="col-12">
+                <div class="row bordeSeccion d-none " id="formularioRegistrarPaciente">
+                    <div class="d-flex justify-content-center mt-2">
+                        <h3>Registrar Paciente</h3>
+                    </div>
+                    <form name="formulario" method="post" action="#" onsubmit="event.preventDefault(); registrarPacienteNuevo()">
+                        <div class="row">
+                        
+                              <div class="mb-3">
+                                  <label for="registrarPacienteCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
+                                <input type="text" name="cedulaDisabled" class="form-control" id="registrarPacienteCedula" value="" required disabled>
+                              </div>	
+    
+                              <div class="mb-3">
+                                <label for="registrarPacienteNombre" class="form-label">Nombres<span class = "requerido">*</span></label>
+                                <input type="text" name="nombres" class="form-control" id="registrarPacienteNombre" required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${3,40}" placeholder="Primer y/o Segundo Nombre">
+                              </div>
+    
+                              <div class="mb-3">
+                                <label for="registrarPacienteApellido" class="form-label">Apellidos<span class = "requerido">*</span></label>
+                                <input type="text" name="apellidos" class="form-control" id="registrarPacienteApellido" required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${3,40}" placeholder="Primer y/o Segundo apellido">
+                              </div>
+                         
+                              <div class="mb-3">
+                                <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
+                                <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
+                              </div>
+                         
+                              <div class="mb-3">
+                                <label for="registrarPacienteDireccion" class="form-label">Direccion</label>
+                                <input type="text" name="direccion" class="form-control" id="registrarPacienteDireccion" placeholder="Direccion">
+                              </div>
+                          
+                              <div class="mb-3">
+                                <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
+                                <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
+                              </div>
+
+                              <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="seleccionCargo" class="form-label">Cargo <span class = "requerido">*</span></label>
+                                        <select name="cargo" id ="seleccionCargo" class="form-select" aria-label="Default select example" required>
+                                            
+                                      </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label for="seleccionDependencia" class="form-label">Dependencia <span class = "requerido">*</span></label>
+                                        <select name="dependencia" id ="seleccionDependencia" class="form-select" aria-label="Default select example" required>
+                                            
+                                      </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label for="seleccionMunicipio" class="form-label">Municipio <span class = "requerido">*</span></label>
+                                        <select name="municipio" id ="seleccionMunicipio" class="form-select" aria-label="Default select example" required>
+                                            
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                       
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                      <label for="registrarPacienteFechaNacimiento" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
+                                      <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01" max="2024-01-01">
+                                  </div>
+                              </div>
+                            </div>	
+
+                            <div class="d-flex justify-content-center mt-2">
+                                <h3>Registrar Paciente</h3>
+                            </div>
+                            <div class="mb-3">
+                                <label for="primerReposoCodAsistencial" class="form-label">Codigo Asistencial<span class = "requerido">*</span></label>
+                                <input type="text" name="codasistencial" class="form-control" id="primerReposoCodAsistencial" required placeholder="Codigo Asistencial">
+                            </div>
+                        
+                            <div class="mb-3">
+                                <label for="primerReposoCodRegistro" class="form-label">Codigo Registro<span class = "requerido">*</span></label>
+                                <input type="text" name="codregistro" class="form-control" id="primerReposoCodRegistro" required placeholder="Codigo Registro">
+                            </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="primerReposofechaDesde" class="form-label">Fecha Desde<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechadesde" class="form-control" id="primerReposofechaDesde" required min="1900-01-01">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="primerReposofechaHasta" class="form-label">Fecha Hasta<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechahasta" class="form-control" id="primerReposofechaHasta" required min="1900-01-01">
+                                    </div>
+                                </div>
+                            </div>	
+
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="primerReposoValida" class="form-label">Quien Valida</label>
+                                        <input type="text" name="quienvalida" class="form-control" id="primerReposoValida" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${3,40}" placeholder="Quien Valida">
+                                    </div>
+
+                                    <div class="col-6">
+                                        <label for="primerReposoEspecialidades" class="form-label">Expecialidad <span class = "requerido">*</span></label>
+                                        <select name="expecialidad" id ="primerReposoEspecialidades" class="form-select" aria-label="Default select example" required>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check mt-4">
+                                    <input class="form-check-input" type="checkbox" id="primerReposoDiasExtras">
+                                    <label class="form-check-label" for="primerReposoDiasExtras">
+                                        Dias Extras?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4 mb-3">
+                            <!-- Boton Registrar -->
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <button type="submit" name="botonRegistrarTodo" value="1" class="btn btn-secondary">Registrar</button>
+                                    </div>
+                                    <div class="col-8">
+                                        <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                    </form>
+                </div>
+                <div class="row d-none" id="formularioDatosEncontrados">
+                    <h1>NO ENCONTRADO</h1>
+                </div>
+            </div>
+        </section>
+    </div>
+
     <script src="js/toastify.js"></script>
     <script src="js/util.js"></script>
     <script src="js/asistencial.js"></script>

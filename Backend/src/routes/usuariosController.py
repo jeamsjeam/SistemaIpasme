@@ -21,7 +21,7 @@ def register():
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def usuario_rol_por_nombre(usuario):
     respuesta = UsuariosServices.usuario_rol_por_nombre(usuario)
-    rol = usuario_schema.dump(respuesta)
+    rol = rol_schema.dump(respuesta)
     if rol is not None and len(rol) > 0:
         return make_response(jsonify(rol['nombre']))
     else:

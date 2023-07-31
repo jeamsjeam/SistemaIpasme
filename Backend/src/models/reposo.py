@@ -9,12 +9,13 @@ class Reposo(db.Model):
     codigo_registro = db.Column(db.Text, nullable=False)
     fecha_inicio = db.Column(db.DateTime(), default=datetime.now)
     fecha_fin = db.Column(db.DateTime())
-    empleado_validador_cedula = db.Column(db.BigInteger(), db.ForeignKey('empleado.cedula'))
+    quien_valida = db.Column(db.Text)
     grupo_reposo_id = db.Column(db.BigInteger(), db.ForeignKey('grupo_reposo.id'))
 
-    def __init__(self,codigo_asistencial,codigo_registro,fecha_inicio, fecha_fin,grupo_reposo_id):
+    def __init__(self,codigo_asistencial,codigo_registro,fecha_inicio, fecha_fin,quien_valida,grupo_reposo_id):
         self.codigo_asistencial = codigo_asistencial
         self.codigo_registro = codigo_registro
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
+        self.quien_valida = quien_valida
         self.grupo_reposo_id = grupo_reposo_id

@@ -7,3 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const mensajeNavbar = document.getElementById("mensajeNavbar");
     mensajeNavbar.textContent = usuario.usuario.toUpperCase() + " - " + usuario.rol.toUpperCase();
 });
+
+function mostrarNotificacion(texto,color) {
+    var notificacion = Toastify({
+      text: texto,
+      duration: 3000,
+      gravity: "top-right",
+      close: true,
+      backgroundColor: color
+    });
+  
+    notificacion.showToast();
+}

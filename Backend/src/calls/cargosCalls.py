@@ -3,5 +3,5 @@ from src import db
 
 class CargosCalls():
     def get_cargos():
-        cargos = Cargo.query.all()
+        cargos = sorted(Cargo.query.all(), key=lambda rol: rol.nombre)
         return cargos

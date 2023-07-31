@@ -468,7 +468,7 @@ CREATE TABLE public.reposo (
     codigo_registro text,
     fecha_inicio timestamp without time zone,
     fecha_fin timestamp without time zone,
-    empleado_validador_cedula bigint,
+    quien_valida text,
     grupo_reposo_id bigint
 );
 
@@ -985,16 +985,6 @@ ALTER TABLE ONLY public.paciente
 
 ALTER TABLE ONLY public.permiso
     ADD CONSTRAINT fk_per_emp FOREIGN KEY (empleado_cedula) REFERENCES public.empleado(cedula);
-
-
---
--- TOC entry 3302 (class 2606 OID 16823)
--- Name: reposo fk_rep_emp; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.reposo
-    ADD CONSTRAINT fk_rep_emp FOREIGN KEY (empleado_validador_cedula) REFERENCES public.empleado(cedula);
-
 
 --
 -- TOC entry 3303 (class 2606 OID 16818)
