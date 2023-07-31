@@ -233,11 +233,11 @@ function datosPacienteTabla(datos){
 
     // Asignar valores a las celdas de la tabla
     document.getElementById("datosPaciente_cedula").textContent = datos.cedula;
-    document.getElementById("datosPaciente_nombres").textContent = datos.nombres;
-    document.getElementById("datosPaciente_apellidos").textContent = datos.apellidos;
+    document.getElementById("datosPaciente_nombres").textContent = datos.nombre;
+    document.getElementById("datosPaciente_apellidos").textContent = datos.apellido;
     document.getElementById("datosPaciente_institucion_laboral").textContent = datos.institucion_laboral;
-    document.getElementById("datosPaciente_fecha_nacimiento").textContent = datos.fecha_nacimiento;
-    let datosPaciente_dias_reposo = 63
+    document.getElementById("datosPaciente_fecha_nacimiento").textContent = datos.fecha_nacimiento.toString('dd-MM-yyyy');
+    let datosPaciente_dias_reposo = 3
     let datosPaciente_permiso = 2
     if (datosPaciente_dias_reposo > 62) {
         document.getElementById("datosPaciente_dias_reposo").innerHTML = '<span class="requerido">' + datosPaciente_dias_reposo + '</span>';
@@ -247,9 +247,9 @@ function datosPacienteTabla(datos){
 
     document.getElementById("datosPaciente_telefono").textContent = datos.telefono;
     document.getElementById("datosPaciente_direccion").textContent = datos.direccion;
-    document.getElementById("datosPaciente_cargo").textContent = datos.cargo;
-    document.getElementById("datosPaciente_dependencia").textContent = datos.dependencia;
-    document.getElementById("datosPaciente_municipio").textContent = datos.municipio;
+    document.getElementById("datosPaciente_cargo").textContent = datos.cargo.nombre;
+    document.getElementById("datosPaciente_dependencia").textContent = datos.dependencia.nombre;
+    document.getElementById("datosPaciente_municipio").textContent = datos.municipio.nombre;
 
     // Habilitar o deshabilitar botones según el permiso
     var modificarButton = document.getElementById("modificarButton");

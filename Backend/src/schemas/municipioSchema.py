@@ -4,10 +4,12 @@ from ..models.municipio  import Municipio
 
 ma = Marshmallow(app)
 
-class CargoSchema(ma.SQLAlchemyAutoSchema):
+class MunicipioSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Municipio
         load_instance = True
+    id = ma.auto_field()
+    nombre = ma.auto_field()
 
-municipio_schema = CargoSchema()
-municipios_schema = CargoSchema(many=True)
+municipio_schema = MunicipioSchema()
+municipios_schema = MunicipioSchema(many=True)

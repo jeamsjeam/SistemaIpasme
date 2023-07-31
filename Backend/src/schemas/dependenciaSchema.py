@@ -8,6 +8,8 @@ class DependenciaSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Dependencia
         load_instance = True
+    id = ma.auto_field()
+    nombre = ma.auto_field()
 
 dependecia_schema = DependenciaSchema()
 dependecias_schema = DependenciaSchema(many=True)

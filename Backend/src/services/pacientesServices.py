@@ -1,12 +1,18 @@
 from ..calls.pacienteCall import PacienteCalls
 from ..calls.grupoRepososCalls import GrupoReposoCalls
 from ..calls.repososCalls import ReposoCalls
+from ..calls.cargosCalls import CargosCalls
+from ..calls.dependenciasCalls import DependenciasCalls
+from ..calls.municipiosCalls import MunicipiosCalls
 from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
 from ..schemas.pacienteSchema import paciente_schema,Pacientes_schema
 from ..schemas.grupoReposoSchema import grupoReposo_schema,grupoReposos_schema
 from ..schemas.reposoSchema import reposo_schema,reposos_schema
+from ..schemas.cargoSchema import cargo_schema,cargos_schema
+from ..schemas.dependenciaSchema import dependecia_schema,dependecias_schema
+from ..schemas.municipioSchema import municipio_schema,municipios_schema
 import pdb
 
 class PacientesServices:
@@ -15,6 +21,9 @@ class PacientesServices:
         pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
         if pacienteConsulta is not None:
             paciente = paciente_schema.dump(pacienteConsulta)   
+            # paciente["cargo"] = cargo_schema.dump(CargosCalls.get_cargo_id(paciente["cargo_id"]))["nombre"]
+            # paciente["dependencia"] = dependecia_schema.dump(DependenciasCalls.get_dependencia_id(paciente["dependencia_id"]))["nombre"]
+            # paciente["municipio"] = municipio_schema.dump(MunicipiosCalls.get_municipio_id(paciente["municipio_id"]))["nombre"]
             #pdb.set_trace()  
             grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
             if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
