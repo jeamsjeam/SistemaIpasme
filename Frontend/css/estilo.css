@@ -29,6 +29,12 @@ a{
   transition: max-height 0.2s ease-out;
 
 }
+
+.nav-item{
+  min-width: 120px;
+    text-align: center;
+}
+
 @media (min-width: 1200px){
 
 }
