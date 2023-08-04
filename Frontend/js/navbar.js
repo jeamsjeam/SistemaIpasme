@@ -1,4 +1,3 @@
-
 const navbar = document.createElement('nav');
 navbar.className = 'navbar navbar-expand-lg navbar-dark bg-primary bg-gradient';
 navbar.id = 'headerNav';
@@ -129,12 +128,23 @@ citasItem.appendChild(citasLink);
 // dropdownMenu.appendChild(contactUsItem);
 
 // companyItem.appendChild(dropdownMenu);
-
+let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'))
 ulList.appendChild(homeItem);
-ulList.appendChild(asistencialItem);
-ulList.appendChild(logoItem);
-ulList.appendChild(rrhhItem);
-ulList.appendChild(citasItem);
+if(datosUsuario.rol.toUpperCase() === 'ADMINISTRADOR'){
+    ulList.appendChild(asistencialItem);
+    ulList.appendChild(logoItem);
+    ulList.appendChild(rrhhItem);
+    ulList.appendChild(citasItem);
+}else if (datosUsuario.rol.toUpperCase() === 'ASISTENCIAL') {
+    ulList.appendChild(logoItem);
+    ulList.appendChild(asistencialItem);
+}else if (datosUsuario.rol.toUpperCase() === 'RECURSOS HUMANOS') {
+    ulList.appendChild(logoItem);
+    ulList.appendChild(rrhhItem);
+}else if (datosUsuario.rol.toUpperCase() === 'USUARIO') {
+    ulList.appendChild(logoItem);
+    ulList.appendChild(citasItem);
+}
 
 collapseDiv.appendChild(ulList);
 
