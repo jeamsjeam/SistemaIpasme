@@ -9,3 +9,9 @@ from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 def get_municipios():
     respuesta = MunicipiosCalls.get_municipios()
     return municipios_schema.dump(respuesta)
+
+@app.route('/municipios/<int:id>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def get_municipios_estado(id):
+    respuesta = MunicipiosCalls.get_municipios_estado(id)
+    return municipios_schema.dump(respuesta)

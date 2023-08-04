@@ -3,7 +3,7 @@ from src import db
 
 class RolesCalls():
     def get_roles():
-        roles = sorted(Rol.query.all(), key=lambda rol: rol.nombre)
+        roles = sorted(Rol.query.all(), key=lambda x: x.nombre)
         return roles
 
     def permite_crear(id):
