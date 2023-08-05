@@ -5,6 +5,7 @@ INSERT INTO ROL (nombre) VALUES ('Administrador'),('Administrador (Lectura)'),('
 INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1);
 INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('jeam', '1234', 'Jesus',1);
 INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
+INSERT INTO ESTADO_EMPLEADO (nombre) VALUES ('Activo'),('Inactivo'),('Jubilado');
 
 INSERT INTO cargo (nombre) VALUES ('Docente'),('Administrativo'),('Obrero'),('Madres elaboradora');
 INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal');

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <title>Personal</title>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container my-3">
+        <div class="mb-3 row align-items-center">
+            <div class="col">
+                <h1>Personal</h1>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-success btn-sm px-5">Agregar</button>
+            </div>
+        </div>
+        <div id="listaTrabajadores">
+            <!-- Aquí se agregarán los trabajadores por departamento mediante JavaScript -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Llamamos a la función para mostrar la lista de trabajadores por departamento
+            mostrarListaTrabajadores();
+        });
+    </script>
+    <script src="js/personal.js"></script>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        margin-bottom: 10px;
+    }
+
+    .card-header {
+        background-color: rgba(33, 137, 255, 1);
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+    img,
+    svg {
+        filter: invert(1);
+        vertical-align: sub;
+    }
+</style>
+
+</html>

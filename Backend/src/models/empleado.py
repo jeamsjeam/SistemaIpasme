@@ -15,11 +15,12 @@ class Empleado(db.Model):
     dependencia_id = db.Column(db.BigInteger(), db.ForeignKey('dependencia.id'))
     turno_id = db.Column(db.BigInteger(), db.ForeignKey('turno.id'))
     genero_id = db.Column(db.BigInteger(), db.ForeignKey('genero.id'))
+    estado_empleado_id = db.Column(db.BigInteger(), db.ForeignKey('estado_empleado.id'))
 
     permisos = relationship('Permiso', backref='empleado')
     asistencias = relationship('Asistencia', backref='empleado')
 
-    def __init__(self, cedula, nombre, apellido, fecha_nacimiento, direccion, telefono, especialidad_id, cargo_id, dependencia_id, turno_id, genero_id):
+    def __init__(self, cedula, nombre, apellido, fecha_nacimiento, direccion, telefono, especialidad_id, cargo_id, dependencia_id, turno_id, genero_id, estado_empleado_id):
         self.cedula = cedula
         self.nombre = nombre
         self.apellido = apellido
@@ -31,3 +32,4 @@ class Empleado(db.Model):
         self.dependencia_id = dependencia_id
         self.turno_id = turno_id
         self.genero_id = genero_id
+        self.estado_empleado_id = estado_empleado_id
