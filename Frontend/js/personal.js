@@ -1,59 +1,63 @@
-// Función para crear la lista de trabajadores por departamento
+// Variables globales
+const urlEmpleados = "http://127.0.0.1:5000/empleados";
+
+// Función para crear la lista de trabajadores por especialidad
 function mostrarListaTrabajadores() {
-    // Datos de ejemplo: departamentos y trabajadores
-    let data = [
-        {
-            id: 1, departamento: 'Ventas', trabajadores: [
-                { nombre: 'Juan Pérez', cedula: '11111111', cargo: 'Vendedor' },
-                { nombre: 'María López', cedula: '22222222', cargo: 'Vendedora' },
-                { nombre: 'Carlos Gómez', cedula: '33333333', cargo: 'Vendedor' }
-            ]
-        },
-        {
-            id: 2, departamento: 'Recursos Humanos', trabajadores: [
-                { nombre: 'Laura Martínez', cedula: '44444444', cargo: 'Analista de RRHH' },
-                { nombre: 'Ana Rodríguez', cedula: '55555555', cargo: 'Coordinadora de RRHH' }
-            ]
-        },
-        {
-            id: 3, departamento: 'Finanzas', trabajadores: [
-                { nombre: 'Pedro Sánchez', cedula: '66666666', cargo: 'Contador' },
-                { nombre: 'Luisa Ramírez', cedula: '77777777', cargo: 'Analista Financiero' },
-                { nombre: 'Elena Torres', cedula: '88888888', cargo: 'Gerente Financiero' }
-            ]
-        },
-        // Puedes agregar más departamentos y trabajadores aquí
-    ];
-
-    const listaTrabajadores = document.getElementById('listaTrabajadores');
-
-    data.forEach((depto) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <div class="card-header">${depto.departamento}</div>
-            <div class="card-body">
-                <ul class="list-group">
-                ${depto.trabajadores.map((trabajador) => `
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <span class="text-muted">${trabajador.cedula}</span>
-                        <span class = "ms-2">${trabajador.nombre}</span>
-                        <span class = "ms-2 text-muted">${trabajador.cargo}</span>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary btn-sm" onclick="mostrarId(${depto.id})"><img src="css/imagenes/eye-solid.svg" alt="Icono" width="16" height="16"></button>
-                    </div>
-                    </li>
-                `).join('')}
-                </ul>
-            </div>
-    `;
-        listaTrabajadores.appendChild(card);
-    });
+    let urlPorEspecialidad = urlEmpleados + "/agrupadosEspecialidad";
+    // Llamada al servicio REST utilizando fetch
+    fetch(urlPorEspecialidad)
+        .then(response => response.json())
+        .then(dataResponse => {
+            const listaTrabajadores = document.getElementById('listaTrabajadores');
+            dataResponse.forEach((depto) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                        <div class="card-header">${depto.especialidad}</div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                            ${depto.trabajadores.map((trabajador) => `
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="text-muted">${trabajador.cedula}</span>
+                                    <span class = "ms-2">${trabajador.nombre}</span>
+                                    <span class = "ms-2 text-muted">${trabajador.cargo}</span>
+                                </div>
+                                <div>
+                                    <button class="btn btn-primary btn-sm" onclick="verPerfil(${trabajador.cedula})"><img src="css/imagenes/eye-solid.svg" alt="Icono" width="16" height="16"></button>
+                                </div>
+                                </li>
+                            `).join('')}
+                            </ul>
+                        </div>
+                `;
+                listaTrabajadores.appendChild(card);
+            });
+        })
+        .catch(error => {
+            mostrarNotificacion("Error al obtener los Empleados: " + error.message, "#FF0000")
+        });
 }
 
-// Función que muestra el id del departamento por consola al presionar los botones
-function mostrarId(deptoId) {
-    console.log(`ID del departamento: ${deptoId}`);
+// Función que muestra el id del empleado por consola al presionar los botones
+function verPerfil(ced) {
+    sessionStorage.setItem('cedulaPerfil', JSON.stringify(ced))
+    window.location.href = "perfil.html";
+}
+
+// Función para crear la lista de trabajadores por especialidad
+function buscarPerfilUsuario() {
+    let cedulaPerfil = sessionStorage.getItem('cedulaPerfil')
+    if (typeof cedulaPerfil === 'undefined' && cedulaPerfil === null && cedulaPerfil != 0) {
+        let urlPerfil = urlEmpleados + "/" + cedulaPerfil;
+        // Llamada al servicio REST utilizando fetch
+        fetch(urlPerfil)
+            .then(response => response.json())
+            .then(dataResponse => {
+                console.log(dataResponse)
+            })
+            .catch(error => {
+                mostrarNotificacion("Error al obtener data del empleado: " + error.message, "#FF0000")
+            });
+    }
 }
