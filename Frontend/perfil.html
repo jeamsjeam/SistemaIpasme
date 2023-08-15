@@ -2,92 +2,138 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/toastify.css">
-    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
-    <title>Personal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/toastify.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+  <title>Perfil</title>
 </head>
 
 <body>
-    <div id="navbarContainer"></div>
-    <div class="container py-5">
-        <div class="row">
-          <div class="col-lg-4">
-            <div class="card mb-4">
-              <div class="card-body text-center">
-                <img src="css/imagenes/user.png" alt="avatar"
-                  class="rounded-circle img-fluid" style="width: 150px;">
-                <h5 class="my-3">John Smith</h5>
-                <p class="text-muted mb-1">Full Stack Developer</p>
-                <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                <div class="d-flex justify-content-center mb-2">
-                  <button type="button" class="btn btn-primary">Follow</button>
-                  <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+  <div id="navbarContainer"></div>
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center">
+            <img src="css/imagenes/user.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+            <h5 class="my-3">Nombre Apellido</h5>
+            <p class="text-muted mb-1">Cargo</p>
+            <p class="text-muted mb-4">Departamento</p>
+            <div class="d-flex justify-content-center mb-2">
+
+              <button type="button" class="btn btn-danger">Borrar</button>
+              <button type="button" class="btn btn-outline-primary ms-1" onclick="modoEditar()">Editar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Nombre</p>
+              </div>
+              <div class="col-sm-9 text-muted ">
+                <div class="row">
+                  <div class="mb-0 col-5">
+                    <input class="d-none" type="text" id="nombreInput" placeholder="Nombre">
+                    <p class="mb-0" id="nombre">Nombre</p>
+                  </div>
+                  <div class="mb-0 col-5">
+                    <input class="d-none" type="text" id="apellidoInput" placeholder="Apellido">
+                    <p class="mb-0" id="apellido">Apellido</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-8">
-            <div class="card mb-4">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Full Name</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">Johnatan Smith</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Email</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">example@example.com</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Phone</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">(097) 234-5678</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Mobile</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">(098) 765-4321</p>
-                  </div>
-                </div>
-                <hr>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <p class="mb-0">Address</p>
-                  </div>
-                  <div class="col-sm-9">
-                    <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                  </div>
-                </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Correo</p>
+              </div>
+              <div class="col-sm-9 text-muted ">
+                <input class="d-none" type="text" id="correoInput" placeholder="Correo">
+                <p class="mb-0" id="correo">Correo</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Telefono</p>
+              </div>
+              <div class="col-sm-9 text-muted ">
+                <input class="d-none" type="text" id="telefonoInput" placeholder="Telefono">
+                <p class="mb-0" id="telefono">Telefono</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Fecha de Nacimiento</p>
+              </div>
+              <div class="col-sm-9 text-muted ">
+                <input class="d-none" type="text" id="nacimientoInput" placeholder="Fecha de Nacimiento">
+                <p class="mb-0" id="nacimiento">Nacimiento</p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Direccion</p>
+              </div>
+              <div class="col-sm-9 text-muted ">
+                <input class="d-none" type="text" id="direccionInput" placeholder="Direccion">
+                <p class="mb-0" id="direccion">Direccion</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            buscarPerfilUsuario();
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      buscarPerfilUsuario();
+    });
+
+    let modo = false
+
+    function modoEditar() {
+      const fieldsToEdit = ["nombre", "apellido", "correo", "telefono", "nacimiento", "direccion"];
+
+      if (modo) {
+        fieldsToEdit.forEach(fieldName => {
+          const labelElement = document.getElementById(fieldName);
+          const inputElement = document.getElementById(fieldName + "Input");
+
+          if (labelElement && inputElement) {
+            labelElement.classList.remove("d-none");
+            inputElement.classList.add("d-none");
+            inputElement.value = ""; // Limpiar el contenido del input
+          }
         });
-    </script>
-    <script src="js/personal.js"></script>
-    <script src="js/toastify.js"></script>
-    <script src="js/util.js"></script>
-    <script src="bootstrap-5/js/bootstrap.min.js"></script>
-    <script src="js/navbar.js"></script>
+        modo = false
+      } else {
+        fieldsToEdit.forEach(fieldName => {
+          const labelElement = document.getElementById(fieldName);
+          const inputElement = document.getElementById(fieldName + "Input");
+
+          if (labelElement && inputElement) {
+            labelElement.classList.add("d-none");
+            inputElement.classList.remove("d-none");
+          }
+        });
+        modo = true
+      }
+
+
+    }
+  </script>
+  <script src="js/personal.js"></script>
+  <script src="js/toastify.js"></script>
+  <script src="js/util.js"></script>
+  <script src="bootstrap-5/js/bootstrap.min.js"></script>
+  <script src="js/navbar.js"></script>
 </body>
