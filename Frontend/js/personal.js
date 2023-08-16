@@ -48,6 +48,7 @@ function verPerfil(ced) {
 // Función para crear la lista de trabajadores por especialidad
 function buscarPerfilUsuario() {
     let cedulaPerfil = sessionStorage.getItem('cedulaPerfil')
+    sessionStorage.setItem('modoPerfil', false)
     if (typeof cedulaPerfil === 'undefined' && cedulaPerfil === null && cedulaPerfil != 0) {
         let urlPerfil = urlEmpleados + "/" + cedulaPerfil;
         // Llamada al servicio REST utilizando fetch
@@ -59,5 +60,47 @@ function buscarPerfilUsuario() {
             .catch(error => {
                 mostrarNotificacion("Error al obtener data del empleado: " + error.message, "#FF0000")
             });
+    }
+}
+
+function modoEditar() {
+    let fieldsToEdit = ["nombre", "apellido", "correo", "telefono", "nacimiento", "direccion"];
+    let modo = sessionStorage.getItem('modoPerfil')
+
+    if (typeof modo != 'undefined' && modo != null && modo != 'false') {
+        let divElement = document.getElementById("botonesNormal");
+        divElement.classList.remove("d-none");
+
+        divElement = document.getElementById("botonesEditar");
+        divElement.classList.add("d-none");
+
+        fieldsToEdit.forEach(fieldName => {
+            let labelElement = document.getElementById(fieldName);
+            let inputElement = document.getElementById(fieldName + "Input");
+
+            if (labelElement && inputElement) {
+                labelElement.classList.remove("d-none");
+                inputElement.classList.add("d-none");
+                inputElement.value = ""; // Limpiar el contenido del input
+            }
+        });
+        sessionStorage.setItem('modoPerfil', false)
+    } else {
+        let divElement = document.getElementById("botonesNormal");
+        divElement.classList.add("d-none");
+
+        divElement = document.getElementById("botonesEditar");
+        divElement.classList.remove("d-none");
+
+        fieldsToEdit.forEach(fieldName => {
+            let labelElement = document.getElementById(fieldName);
+            let inputElement = document.getElementById(fieldName + "Input");
+
+            if (labelElement && inputElement) {
+                labelElement.classList.add("d-none");
+                inputElement.classList.remove("d-none");
+            }
+        });
+        sessionStorage.setItem('modoPerfil', true)
     }
 }

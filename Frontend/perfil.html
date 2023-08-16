@@ -21,9 +21,14 @@
             <p class="text-muted mb-1">Cargo</p>
             <p class="text-muted mb-4">Departamento</p>
             <div class="d-flex justify-content-center mb-2">
-
-              <button type="button" class="btn btn-danger">Borrar</button>
-              <button type="button" class="btn btn-outline-primary ms-1" onclick="modoEditar()">Editar</button>
+              <div id="botonesNormal" class="">
+                <button type="button" class="btn btn-danger">Borrar</button>
+                <button type="button" class="btn btn-outline-primary ms-1" onclick="modoEditar()">Editar</button>
+              </div>
+              <div id="botonesEditar" class="d-none">
+                <button type="button" class="btn btn-danger" onclick="modoEditar()">Cancelar</button>
+                <button type="button" class="btn btn-success ms-1">Guardar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -31,21 +36,28 @@
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
-            <div class="row">
+            <div class="row" id="nombre">
               <div class="col-sm-3">
-                <p class="mb-0">Nombre</p>
+                <p class="mb-0">Nombre y Apellido</p>
               </div>
               <div class="col-sm-9 text-muted ">
-                <div class="row">
+                <div class="row" >
                   <div class="mb-0 col-5">
-                    <input class="d-none" type="text" id="nombreInput" placeholder="Nombre">
-                    <p class="mb-0" id="nombre">Nombre</p>
+                    <p class="mb-0">Nombre</p>
                   </div>
                   <div class="mb-0 col-5">
-                    <input class="d-none" type="text" id="apellidoInput" placeholder="Apellido">
-                    <p class="mb-0" id="apellido">Apellido</p>
+                    <p class="mb-0">Apellido</p>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="row d-none" id="nombreInput">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend input-group-sm">
+                  <span class="input-group-text" >Nombre y Apellido</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Nombre" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input type="text" class="form-control" placeholder="Apellido" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
             <hr>
@@ -79,13 +91,20 @@
               </div>
             </div>
             <hr>
-            <div class="row">
+            <div class="row" id="direccion">
               <div class="col-sm-3">
                 <p class="mb-0">Direccion</p>
               </div>
               <div class="col-sm-9 text-muted ">
-                <input class="d-none" type="text" id="direccionInput" placeholder="Direccion">
-                <p class="mb-0" id="direccion">Direccion</p>
+                <p class="mb-0">Direccion</p>
+              </div>
+            </div>
+            <div class="row d-none" id="direccionInput">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Direccion</span>
+                </div>
+                <textarea class="form-control" aria-label="With textarea"></textarea>
               </div>
             </div>
           </div>
@@ -97,39 +116,6 @@
     document.addEventListener("DOMContentLoaded", function () {
       buscarPerfilUsuario();
     });
-
-    let modo = false
-
-    function modoEditar() {
-      const fieldsToEdit = ["nombre", "apellido", "correo", "telefono", "nacimiento", "direccion"];
-
-      if (modo) {
-        fieldsToEdit.forEach(fieldName => {
-          const labelElement = document.getElementById(fieldName);
-          const inputElement = document.getElementById(fieldName + "Input");
-
-          if (labelElement && inputElement) {
-            labelElement.classList.remove("d-none");
-            inputElement.classList.add("d-none");
-            inputElement.value = ""; // Limpiar el contenido del input
-          }
-        });
-        modo = false
-      } else {
-        fieldsToEdit.forEach(fieldName => {
-          const labelElement = document.getElementById(fieldName);
-          const inputElement = document.getElementById(fieldName + "Input");
-
-          if (labelElement && inputElement) {
-            labelElement.classList.add("d-none");
-            inputElement.classList.remove("d-none");
-          }
-        });
-        modo = true
-      }
-
-
-    }
   </script>
   <script src="js/personal.js"></script>
   <script src="js/toastify.js"></script>
