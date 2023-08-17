@@ -16,7 +16,7 @@ class EmpleadosServices:
         respuesta = ''
         return respuesta
 
-    def crear(json):
+    def guardar(json):
         empleado = deserealizarJson(json)
         repetido = EmpleadosCalls.get_empleado_cedula(empleado.cedula)
         if repetido is None:
@@ -26,12 +26,11 @@ class EmpleadosServices:
             else:
                 return '01|Problemas al registrar empleado'
         else:
-            return '02|Empleado repetido'
-        
-    def modificar(json):
-        empleado = deserealizarJson(json)
-        empleado = EmpleadosCalls.modificar_empleado(empleado)
-        return empleado_schema.dump(empleado) 
+            done = EmpleadosCalls.modificar_empleado(empleado)
+            if done is not None:
+                return '00|OK'
+            else:
+                return '01|Problemas al registrar empleado'
 
     def borrar(id):
         return EmpleadosCalls.borrar_empleado(id)
@@ -56,17 +55,18 @@ class EmpleadosServices:
         return []
     
 def deserealizarJson(json):
-    empleado = Empleado(cedula= json['cedula'],
+    empleado = Empleado(cedula= int(json['cedula']),
                             nombre= json['nombre'],
                             apellido= json['apellido'],
                             fecha_nacimiento= json['fecha_nacimiento'],
                             direccion= json['direccion'],
                             telefono= json['telefono'],
-                            especialidad_id= json['especialidad_id'],
-                            cargo_id= json['cargo_id'],
-                            dependencia_id= json['dependencia_id'],
-                            turno_id= json['turno_id'],
-                            genero_id= json['genero_id'])
+                            especialidad_id= int(json['especialidades']),
+                            cargo_id= int(json['cargos']),
+                            dependencia_id= int(json['dependencias']),
+                            turno_id= int(json['turnos']),
+                            genero_id= int(json['generos']),
+                            estado_empleado_id= int(json['estados_empleados']))
     return empleado
 
 def infoBasica(empleado):

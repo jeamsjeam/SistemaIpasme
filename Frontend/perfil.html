@@ -11,23 +11,41 @@
 
 <body>
   <div id="navbarContainer"></div>
+  <div class="modal fade" id="confirmacionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body align-self-center">
+          <p>¿Está seguro que desea borrar este empleado?</p>
+          <p>También se borrara toda su información asociada</p>         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-danger" onclick="borrarCedula()">Borrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container py-5">
     <div class="row">
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
             <img src="css/imagenes/user.png" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">Nombre Apellido</h5>
-            <p class="text-muted mb-1">Cargo</p>
-            <p class="text-muted mb-4">Departamento</p>
+            <h5 class="my-3" id="nombreApellidoCard">Nombre Apellido</h5>
+            <p class="text-muted mb-1" id="cargoCard">Cargo</p>
+            <p class="text-muted mb-4" id="departamentoCard">Departamento</p>
             <div class="d-flex justify-content-center mb-2">
               <div id="botonesNormal" class="">
-                <button type="button" class="btn btn-danger">Borrar</button>
-                <button type="button" class="btn btn-outline-primary ms-1" onclick="modoEditar()">Editar</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmacionModal">Borrar</button>
+                <button type="button" class="btn btn-outline-primary ms-1" onclick="modoEditar(0)">Editar</button>
               </div>
               <div id="botonesEditar" class="d-none">
-                <button type="button" class="btn btn-danger" onclick="modoEditar()">Cancelar</button>
-                <button type="button" class="btn btn-success ms-1">Guardar</button>
+                <button type="button" class="btn btn-danger" onclick="modoEditar(1)">Cancelar</button>
+                <button type="button" class="btn btn-success ms-1" onclick="guardarPerfil()">Guardar</button>
               </div>
             </div>
           </div>
@@ -36,75 +54,115 @@
       <div class="col-lg-8">
         <div class="card mb-4">
           <div class="card-body">
-            <div class="row" id="nombre">
-              <div class="col-sm-3">
-                <p class="mb-0">Nombre y Apellido</p>
+            <div class="row">
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Cedula</span>
+                  </div>
+                  <input readonly id="cedula" type="number" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
               </div>
-              <div class="col-sm-9 text-muted ">
-                <div class="row" >
-                  <div class="mb-0 col-5">
-                    <p class="mb-0">Nombre</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">F. Nacimiento</span>
                   </div>
-                  <div class="mb-0 col-5">
-                    <p class="mb-0">Apellido</p>
-                  </div>
+                  <input readonly id="fecha_nacimiento" type="date" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" min='1900-01-01' max='2024-01-01'>
                 </div>
               </div>
             </div>
-            <div class="row d-none" id="nombreInput">
+            <hr>
+            <div class="row">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend input-group-sm">
                   <span class="input-group-text" >Nombre y Apellido</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Nombre" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                <input type="text" class="form-control" placeholder="Apellido" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input readonly id="nombre" type="text" class="form-control" placeholder="Nombre" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <input readonly id="apellido" type="text" class="form-control" placeholder="Apellido" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
               </div>
             </div>
             <hr>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Correo</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text">Genero</span>
+                  </div>
+                  <select class="form-select" aria-label="Genero" id="generos" disabled>
+                  </select>
+                </div>
               </div>
-              <div class="col-sm-9 text-muted ">
-                <input class="d-none" type="text" id="correoInput" placeholder="Correo">
-                <p class="mb-0" id="correo">Correo</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Teléfono</span>
+                  </div>
+                  <input readonly id="telefono" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
               </div>
             </div>
             <hr>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Telefono</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text">Dependencia</span>
+                  </div>
+                  <select class="form-select" aria-label="Dependencia" id="dependencias" disabled>
+                  </select>
+                </div>
               </div>
-              <div class="col-sm-9 text-muted ">
-                <input class="d-none" type="text" id="telefonoInput" placeholder="Telefono">
-                <p class="mb-0" id="telefono">Telefono</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text">Turno</span>
+                  </div>
+                  <select class="form-select" aria-label="Turno" id="turnos" disabled>
+                  </select>
+                </div>
               </div>
             </div>
             <hr>
             <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Fecha de Nacimiento</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text">Especialidad</span>
+                  </div>
+                  <select class="form-select" aria-label="Especialidad" id="especialidades" disabled>
+                  </select>
+                </div>
               </div>
-              <div class="col-sm-9 text-muted ">
-                <input class="d-none" type="text" id="nacimientoInput" placeholder="Fecha de Nacimiento">
-                <p class="mb-0" id="nacimiento">Nacimiento</p>
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text">Cargo</span>
+                  </div>
+                  <select class="form-select" aria-label="Cargo" id="cargos" disabled>
+                  </select>
+                </div>
               </div>
             </div>
             <hr>
-            <div class="row" id="direccion">
-              <div class="col-sm-3">
-                <p class="mb-0">Direccion</p>
-              </div>
-              <div class="col-sm-9 text-muted ">
-                <p class="mb-0">Direccion</p>
+            <div class="row">
+              <div class="col-lg-6 mb-1">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend input-group-sm">
+                    <span class="input-group-text">Estado</span>
+                  </div>
+                  <select class="form-select" aria-label="Estado" id="estados_empleados" disabled>
+                  </select>
+                </div>
               </div>
             </div>
-            <div class="row d-none" id="direccionInput">
-              <div class="input-group">
-                <div class="input-group-prepend">
+            <hr>
+            <div class="row">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend input-group-sm">
                   <span class="input-group-text">Direccion</span>
                 </div>
-                <textarea class="form-control" aria-label="With textarea"></textarea>
+                <textarea readonly id="direccion" class="form-control" aria-label="With textarea"></textarea>
               </div>
             </div>
           </div>

@@ -7,9 +7,7 @@ ma = Marshmallow(app)
 class CargoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Cargo
-        #load_instance = True
-    id = ma.auto_field()
-    nombre = ma.auto_field()
+        load_instance = True
 
 cargo_schema = CargoSchema()
 cargos_schema = CargoSchema(many=True)

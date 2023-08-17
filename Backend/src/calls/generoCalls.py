@@ -3,5 +3,5 @@ from src import db
 
 class GenerosCalls():
     def get_generos():
-        generos = sorted(Genero.query.all(), key=lambda rol: rol.nombre)
+        generos = sorted(Genero.query.all(), key=lambda x: x.nombre)
         return generos

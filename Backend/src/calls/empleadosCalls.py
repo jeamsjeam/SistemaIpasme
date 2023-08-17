@@ -21,7 +21,8 @@ class EmpleadosCalls():
                                  cargo_id=empleado.cargo_id,
                                  dependencia_id=empleado.dependencia_id,
                                  turno_id=empleado.turno_id,
-                                 genero_id=empleado.genero_id)
+                                 genero_id=empleado.genero_id,
+                                 estado_empleado_id = empleado.estado_empleado_id)
         db.session.add(empleadoNuevo)
         db.session.commit()
         db.session.refresh(empleadoNuevo)
@@ -41,6 +42,7 @@ class EmpleadosCalls():
             empleadoBD.dependencia_id=empleado.dependencia_id
             empleadoBD.turno_id=empleado.turno_id
             empleadoBD.genero_id=empleado.genero_id
+            empleadoBD.estado_empleado_id=empleado.estado_empleado_id
             db.session.commit()
             db.session.refresh(empleadoBD)
             return empleadoBD
@@ -50,6 +52,10 @@ class EmpleadosCalls():
     def borrar_empleado(cedula):
         empleadoBD = Empleado.query.get(cedula)
         if empleadoBD is not None:
+            for permisoBD in empleadoBD.permisos:
+                db.session.delete(permisoBD)
+            for asistenciaBD in empleadoBD.asistencias:
+                db.session.delete(asistenciaBD)
             db.session.delete(empleadoBD)
             db.session.commit()
             return "00|Ok"

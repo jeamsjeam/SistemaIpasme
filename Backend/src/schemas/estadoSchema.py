@@ -8,8 +8,6 @@ class EstadoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Estado
         load_instance = True
-    id = ma.auto_field()
-    nombre = ma.auto_field()
 
 estado_schema = EstadoSchema()
 estados_schema = EstadoSchema(many=True)

@@ -18,16 +18,11 @@ def buscar_empleado(cedula):
     else:
         return jsonify(None)
 
-@app.route('/empleados/crear', methods=['POST'])
+@app.route('/empleados/guardar', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
-def crear_empleado():
-    respuesta = EmpleadosServices.crear(request.json)
+def guardar_empleado():
+    respuesta = EmpleadosServices.guardar(request.json)
     return make_response(jsonify(respuesta))
-
-@app.route('/empleados/modificar', methods=['POST'])
-@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
-def modificar_empleado():
-    return EmpleadosServices.modificar(request.json)
 
 @app.route('/empleados/borrar/<int:id>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
