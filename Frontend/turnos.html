@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/estilos_dashboard.css">
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <title>Turnos</title>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container pt-4">
+        <div class="mb-3 row align-items-center">
+            <div class="col">
+                <h1>Turnos</h1>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-success btn-sm px-5" onclick="">Agregar</button>
+            </div>
+        </div>
+        <div id="nuevos-turnos"></div>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const addButton = document.querySelector(".btn-success");
+        const nuevosTurnosContainer = document.getElementById("nuevos-turnos");
+        let turnoCount = 1;
+
+        addButton.addEventListener("click", function () {
+            const nuevoTurno = document.createElement("div");
+            nuevoTurno.className = "row pt-3";
+            nuevoTurno.innerHTML = `
+                <div class="col-lg-4">
+                    Nombre Turno
+                    <input type="text" class="form-control" name="nombre-turno-${turnoCount}" />
+                </div>
+                <div class="col-lg-4">
+                    Hora Entrada
+                    <div class="cs-form">
+                        <input type="time" class="form-control" name="hora-entrada-${turnoCount}" value="10:05" />
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    Hora Salida
+                    <div class="cs-form">
+                        <input type="time" class="form-control" name="hora-salida-${turnoCount}" value="10:05" />
+                    </div>
+                </div>
+            `;
+
+            nuevosTurnosContainer.appendChild(nuevoTurno);
+            turnoCount++;
+        });
+    });
+</script>
