@@ -25,12 +25,23 @@ class TurnosServices:
         return TurnosCalls.modificar_turno(turno)
 
     def borrar(id):
+        turnoBD = TurnosCalls.get_turno_id(id)
+        if len(turnoBD.empleados) > 0:
+            return "01|No se puede borrar el turno ya que tiene trabajadores asociados"
         return TurnosCalls.borrar_turno(id)
+    
+    def guardarTurnos(listaTurnos):
+        for turnoJson in listaTurnos:
+            if turnoJson['id'] == 0:
+                TurnosServices.crear(turnoJson)
+            else :
+                TurnosServices.modificar(turnoJson)
+        return "00|OK"
 
 def deserealizarJson(json):
     turno = Turno(nombre=json['nombre'], 
                       hora_llegada=json['hora_llegada'], 
                       hora_salida=json['hora_salida'])
     if 'id' in json:
-        turno.id = json['id']
+        turno.id = int(json['id'])
     return turno

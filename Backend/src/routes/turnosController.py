@@ -31,6 +31,12 @@ def modificar_turno():
     respuesta = TurnosServices.modificar(request.json)
     return turno_schema.dump(respuesta)
 
+@app.route('/turnos/guardar', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def guardarTurnos():
+    respuesta = TurnosServices.guardarTurnos(request.json)
+    return make_response(jsonify(respuesta))
+
 @app.route('/turnos/borrar/<int:id>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def borrar_turno(id):

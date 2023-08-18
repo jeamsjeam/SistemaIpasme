@@ -19,55 +19,21 @@
                 <h1>Turnos</h1>
             </div>
             <div class="col-auto">
-                <button class="btn btn-success btn-sm px-5" id="agregarBtn" onclick="">Agregar</button>
+                <button class="btn btn-outline-secondary btn-sm px-5" id="agregarBtn" onclick="agregarNuevoTurno()">Agregar</button>
+                <button class="btn btn-success btn-sm px-5" id="guardarBtn" onclick="guardarTurnos()">Guardar</button>
             </div>
         </div>
-        <div id="nuevos-turnos"></div>
+        <div id="turnos" class="my-3"></div>
     <script src="js/toastify.js"></script>
     <script src="js/util.js"></script>
     <script src="bootstrap-5/js/bootstrap.min.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/turnos.js"></script>
 </body>
 
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const addButton = document.getElementById("agregarBtn");
-        const nuevosTurnosContainer = document.getElementById("nuevos-turnos");
-        let turnoCount = 1;
-
-        addButton.addEventListener("click", function () {
-            const nuevoTurno = document.createElement("div");
-            nuevoTurno.className = "row pt-3";
-            nuevoTurno.innerHTML = `
-                <div class="col-lg-3">
-                    Nombre Turno
-                    <input type="text" class="form-control" name="nombre-turno-${turnoCount}" />
-                </div>
-                <div class="col-lg-4">
-                    Hora Entrada
-                    <div class="cs-form">
-                        <input type="time" class="form-control" name="hora-entrada-${turnoCount}" value="10:05" />
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    Hora Salida
-                    <div class="cs-form">
-                        <input type="time" class="form-control" name="hora-salida-${turnoCount}" value="10:05" />
-                    </div>
-                </div>
-                <div class="col-lg-1 align-self-end">
-                    <button class="btn btn-danger btn-sm" onclick="eliminarTurno(this)">Eliminar</button>
-                </div>
-            `;
-
-            nuevosTurnosContainer.appendChild(nuevoTurno);
-            turnoCount++;
-        });
-
-        function eliminarTurno(button) {
-            const turnoAEliminar = button.parentElement.parentElement;
-            nuevosTurnosContainer.removeChild(turnoAEliminar);
-        }
+        cargarTurnos()
     });
 </script>

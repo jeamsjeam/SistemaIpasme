@@ -35,4 +35,4 @@ class TurnosCalls():
         turnoBD = Turno.query.get(id)
         db.session.delete(turnoBD)
         db.session.commit()
-        return "Ok"
+        return "00|Ok"
