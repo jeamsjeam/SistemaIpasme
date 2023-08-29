@@ -16,7 +16,7 @@ from ..schemas.municipioSchema import municipio_schema,municipios_schema
 import pdb
 
 class PacientesServices:
-        
+
     def buscar(cedula):
         pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
         if pacienteConsulta is not None:
@@ -42,35 +42,81 @@ class PacientesServices:
                 return paciente
         else:
             return None
+        
+    def crear_paciente(datos_completos):
+        # Creamos el objeto paciente con los datos recibidos
+        paciente = PacienteCalls.crear_obj_paciente(datos_completos)
+        paciente_creado = PacienteCalls.crear_paciente(paciente)
+        return paciente_creado
+    
+    def registrar_grupo_reposo(datos_completos):
+
+        # Se busca al paciente
+        pacienteConsulta = PacienteCalls.get_paciente_cedula(datos_completos['cedula'])
+
+        # Si no se encuentra se retorna el mensaje
+        if pacienteConsulta is None:
+            return "02|No se encontro paciente"
+        
+        # Creamos el objeto grupo_reposo con los datos recibidos
+        grupo_reposo = GrupoReposoCalls.retornar_obj_grupoReposo(datos_completos)
+
+        # Se consulta el servicio que trae el ultimo grupoReposo y sus reposos
+        # Si no han pasado mas de 180 dias desde la fecha inicio del grupo hasta la fecha inicio del reporte nuevo
+        resultado = GrupoReposoCalls.buscar_grupoReposo(datos_completos['cedula'], datos_completos['fecha_inicio'])
+
+        # Se pregunta si el resultado es un string, de ser asi quiere decir que o no tiene o los dias son mayores a 180
+        if isinstance(resultado, str) or resultado is None:
+            
+            # Se crea el nuevo grupo reposo
+            grupoReposo_nuevo = GrupoReposoCalls.crear_grupo_reposo(grupo_reposo)
+
+            # Creamos una lista de objetos reposo con los datos recibidos
+            reposos = []
+
+            # Se recorren todos los reposos que se enviaron, normalmente seria 1 solo
+            for reposo_info in datos_completos['reposos']:
+                reposo = ReposoCalls.retornar_obj_reposo(reposo_info)  # Asociaremos este campo más adelante
+                reposos.append(reposo)
+            
+            # Se pregunta si existre grupo de reporte nuevo y si la lista de reposos tiene algo
+            if grupoReposo_nuevo and len(reposos) > 0:
+
+                # Se recorren y se crean
+                for i, reposo in enumerate(reposos):
+                    reposo.grupo_reposo_id = grupoReposo_nuevo.id
+                    ReposoCalls.crear_reposo(reposo)
+                return "00|Reposo creado"
+            
+            return None
+        
+        # Parte por hacer
+        elif resultado[0]:
+
+            grupo_reposo_encontrado = resultado[0]
+            reposos_asociados = resultado[1]
+            print("Último Grupo de Reposo:", grupo_reposo_encontrado.id)
+            print("Reposos asociados:")
+            for reposo in reposos_asociados:
+                print("ID Reposo:", reposo.id, "Código Asistencial:", reposo.codigo_asistencial)
+        else:
+            print("No se encontró ningún Grupo de Reposo para el paciente.")
+
+
+
+
     
     def registrar_datos_paciente_nuevo(datos_completos):
         # Creamos el objeto paciente con los datos recibidos
-        paciente = Paciente(cedula=datos_completos['cedula'],
-                            nombre=datos_completos['nombre'],
-                            apellido=datos_completos['apellido'],
-                            institucion_laboral=datos_completos['institucion_laboral'],
-                            fecha_nacimiento=datos_completos['fecha_nacimiento'],
-                            direccion=datos_completos['direccion'],
-                            telefono=datos_completos['telefono'],
-                            permiso_dias_extra=datos_completos['permiso_dias_extra'],
-                            cargo_id=datos_completos['cargo_id'],
-                            dependencia_id=datos_completos['dependencia_id'],
-                            municipio_id=datos_completos['municipio_id'])
+        paciente = PacienteCalls.crear_obj_paciente(datos_completos)
         
         # Creamos el objeto grupo_reposo con los datos recibidos
-        grupo_reposo = GrupoReposo(paciente_cedula=datos_completos['cedula'],
-                                   especialidad_id=datos_completos['especialidad_id'],
-                                   fecha_inicio=datos_completos['grupo_reposo_fecha_inicio'])
+        grupo_reposo = GrupoReposoCalls.retornar_obj_grupoReposo
         
         # Creamos una lista de objetos reposo con los datos recibidos
         reposos = []
         for reposo_info in datos_completos['reposos']:
-            reposo = Reposo(codigo_asistencial=reposo_info['codigo_asistencial'],
-                            codigo_registro=reposo_info['codigo_registro'],
-                            fecha_inicio=reposo_info['fecha_inicio'],
-                            fecha_fin=reposo_info['fecha_fin'],
-                            quien_valida=reposo_info['quien_valida'],
-                            grupo_reposo_id=None)  # Asociaremos este campo más adelante
+            reposo = ReposoCalls.retornar_obj_reposo(reposo_info)  # Asociaremos este campo más adelante
             reposos.append(reposo)
 
         # Registramos los datos en las tres tablas
@@ -89,4 +135,7 @@ class PacientesServices:
                 return "01|Error en el registro del grupo de reposo"
         else:
             return "02|Error en el registro del paciente"
+        
+    
+        
         

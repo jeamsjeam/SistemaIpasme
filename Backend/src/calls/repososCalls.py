@@ -18,3 +18,12 @@ class ReposoCalls:
     def get_reposo_paciente(grupo_reposo_id):
         reposos = sorted(Reposo.query.filter_by(grupo_reposo_id = grupo_reposo_id), key=lambda rep: rep.fecha_inicio)  
         return reposos
+    
+    def retornar_obj_reposo(reposo_info):
+        reposo = Reposo(codigo_asistencial=reposo_info['codigo_asistencial'],
+                            codigo_registro=reposo_info['codigo_registro'],
+                            fecha_inicio=reposo_info['fecha_inicio'],
+                            fecha_fin=reposo_info['fecha_fin'],
+                            quien_valida=reposo_info['quien_valida'],
+                            grupo_reposo_id=None)
+        return reposo

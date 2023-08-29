@@ -54,5 +54,19 @@ class PacienteCalls():
         else:
             return "01|Error"
         
+    def crear_obj_paciente(datos_completos):
+        paciente = Paciente(cedula=datos_completos['cedula'],
+                        nombre=datos_completos['nombre'],
+                        apellido=datos_completos['apellido'],
+                        institucion_laboral=datos_completos['institucion_laboral'],
+                        fecha_nacimiento=datos_completos['fecha_nacimiento'],
+                        direccion=datos_completos['direccion'],
+                        telefono=datos_completos['telefono'],
+                        permiso_dias_extra=datos_completos['permiso_dias_extra'],
+                        cargo_id=datos_completos['cargo_id'],
+                        dependencia_id=datos_completos['dependencia_id'],
+                        municipio_id=datos_completos['municipio_id'])
+        return paciente
+        
     # def usuario_por_nombre(usuario):
     #     return Usuario.query.filter_by(usuario = usuario).first()
