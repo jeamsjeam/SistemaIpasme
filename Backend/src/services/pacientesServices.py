@@ -92,20 +92,60 @@ class PacientesServices:
         
         # Parte por hacer
         elif resultado[0]:
-
             grupo_reposo_encontrado = resultado[0]
             reposos_asociados = resultado[1]
             print("Último Grupo de Reposo:", grupo_reposo_encontrado.id)
             print("Reposos asociados:")
+
+            total_dias_reposos = 0  # Inicializamos la variable para almacenar el total de días
+
             for reposo in reposos_asociados:
                 print("ID Reposo:", reposo.id, "Código Asistencial:", reposo.codigo_asistencial)
+
+                # Calculamos la duración del reposo en días
+                duracion_reposo = (reposo.fecha_fin - reposo.fecha_inicio).days + 1
+                total_dias_reposos += duracion_reposo  # Sumamos los días al total
+
+            reposos = []
+
+            total_dias_completos = 0  # Inicializamos el total de días de los rangos en datos_completos
+
+            # Se recorren los reposos que se enviaron al servicio
+            for reposo_info in datos_completos['reposos']:
+                fecha_inicio_reposo = reposo_info['fecha_inicio']
+                fecha_fin_reposo = reposo_info['fecha_fin']
+                duracion_reposo_completo = (fecha_fin_reposo - fecha_inicio_reposo).days + 1
+
+                # Se recorren los reposos que se consultaron de la base de datos para las validaciones
+                for reposo_existente in reposos_asociados:
+                    if (fecha_inicio_reposo <= reposo_existente.fecha_fin and fecha_fin_reposo >= reposo_existente.fecha_inicio):
+                        return "06|Fecha de reposo se superpone con reposo existente"
+                    elif (fecha_inicio_reposo >= reposo_existente.fecha_inicio and fecha_inicio_reposo <= reposo_existente.fecha_fin) or \
+                        (fecha_fin_reposo >= reposo_existente.fecha_inicio and fecha_fin_reposo <= reposo_existente.fecha_fin):
+                        return "07|Existen 2 o más reposos asociados dentro del rango de fechas"
+
+                total_dias_completos += duracion_reposo_completo
+
+                # Se agregan a una lista los reposos nuevos para ser creados mas adelante
+                reposo = ReposoCalls.retornar_obj_reposo(reposo_info)
+                reposos.append(reposo)
+
+            total_dias_totales = total_dias_reposos + total_dias_completos
+
+            if total_dias_totales > 63:
+                return "04|La suma de días de reposos es mayor a 63"
+            else:
+                # Se recorren y se crean
+                for i, reposo in enumerate(reposos):
+                    reposo.grupo_reposo_id = grupo_reposo_encontrado.id
+                    ReposoCalls.crear_reposo(reposo)
+                return "00|Reposo creado"
         else:
             print("No se encontró ningún Grupo de Reposo para el paciente.")
 
 
 
 
-    
     def registrar_datos_paciente_nuevo(datos_completos):
         # Creamos el objeto paciente con los datos recibidos
         paciente = PacienteCalls.crear_obj_paciente(datos_completos)
@@ -137,5 +177,43 @@ class PacientesServices:
             return "02|Error en el registro del paciente"
         
     
-        
+"""
+{
+  "cedula": 1234567890,
+  "fecha_inicio": "2023-08-01",
+  "reposos": [
+    {
+      "codigo_asistencial": "COD123",
+      "codigo_registro": "REG456",
+      "fecha_inicio": "2023-08-05",
+      "fecha_fin": "2023-08-10",
+      "quien_valida": "Dr. Validador"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    },
+    {
+      "codigo_asistencial": "COD789",
+      "codigo_registro": "REG012",
+      "fecha_inicio": "2023-08-15",
+      "fecha_fin": "2023-08-20",
+      "quien_valida": "Dra. Validadora"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    }
+  ]
+}
+"""
+"""
+{
+  "cedula": 1234567890,
+  "nombre": "Juan",
+  "apellido": "Pérez",
+  "institucion_laboral": "Hospital ABC",
+  "fecha_nacimiento": "1985-05-10",
+  "direccion": "Calle 123, Ciudad",
+  "telefono": "555-1234",
+  "permiso_dias_extra": true,
+  "cargo_id": 1,
+  "dependencia_id": 2,
+  "municipio_id": 3
+}
+"""
         
