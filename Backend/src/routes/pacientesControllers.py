@@ -34,6 +34,19 @@ def crear_paciente():
 
     # Llamamos al método registrar_datos del objeto registro_paciente
     respuesta = PacientesServices.crear_paciente(datos_completos)
+    
+    # Devolvemos la respuesta como JSON en la respuesta HTTP
+    return make_response(jsonify(respuesta))
+
+@app.route('/CrearReposo', methods=['POST'])
+@cross_origin()  # Para manejar problemas de CORS
+def crear_reposos():
+    
+    # Obtenemos los datos del JSON enviado en la solicitud HTTP
+    datos_completos = request.json
+
+    # Llamamos al método registrar_datos del objeto registro_paciente
+    respuesta = PacientesServices.registrar_reposo(datos_completos)
 
     # Devolvemos la respuesta como JSON en la respuesta HTTP
     return make_response(jsonify(respuesta))

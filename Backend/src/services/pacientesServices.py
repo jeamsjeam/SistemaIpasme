@@ -13,6 +13,7 @@ from ..schemas.reposoSchema import reposo_schema,reposos_schema
 from ..schemas.cargoSchema import cargo_schema,cargos_schema
 from ..schemas.dependenciaSchema import dependecia_schema,dependecias_schema
 from ..schemas.municipioSchema import municipio_schema,municipios_schema
+from datetime import datetime
 import pdb
 
 class PacientesServices:
@@ -47,9 +48,9 @@ class PacientesServices:
         # Creamos el objeto paciente con los datos recibidos
         paciente = PacienteCalls.crear_obj_paciente(datos_completos)
         paciente_creado = PacienteCalls.crear_paciente(paciente)
-        return paciente_creado
+        return paciente_schema.dump(paciente_creado)
     
-    def registrar_grupo_reposo(datos_completos):
+    def registrar_reposo(datos_completos):
 
         # Se busca al paciente
         pacienteConsulta = PacienteCalls.get_paciente_cedula(datos_completos['cedula'])
@@ -63,7 +64,7 @@ class PacientesServices:
 
         # Se consulta el servicio que trae el ultimo grupoReposo y sus reposos
         # Si no han pasado mas de 180 dias desde la fecha inicio del grupo hasta la fecha inicio del reporte nuevo
-        resultado = GrupoReposoCalls.buscar_grupoReposo(datos_completos['cedula'], datos_completos['fecha_inicio'])
+        resultado = GrupoReposoCalls.buscar_grupoReposo(datos_completos['cedula'], datos_completos['grupo_reposo_fecha_inicio'])
 
         # Se pregunta si el resultado es un string, de ser asi quiere decir que o no tiene o los dias son mayores a 180
         if isinstance(resultado, str) or resultado is None:
@@ -100,7 +101,7 @@ class PacientesServices:
             total_dias_reposos = 0  # Inicializamos la variable para almacenar el total de días
 
             for reposo in reposos_asociados:
-                print("ID Reposo:", reposo.id, "Código Asistencial:", reposo.codigo_asistencial)
+                print("ID Reposo:", reposo.id, "Código Asistencial:", reposo.codigo_asistencial, "Fecha Inicio", reposo.fecha_inicio, "Fecha Fin", reposo.fecha_fin)
 
                 # Calculamos la duración del reposo en días
                 duracion_reposo = (reposo.fecha_fin - reposo.fecha_inicio).days + 1
@@ -112,13 +113,14 @@ class PacientesServices:
 
             # Se recorren los reposos que se enviaron al servicio
             for reposo_info in datos_completos['reposos']:
-                fecha_inicio_reposo = reposo_info['fecha_inicio']
-                fecha_fin_reposo = reposo_info['fecha_fin']
+                fecha_inicio_reposo = datetime.strptime(reposo_info['fecha_inicio'], "%Y-%m-%d")
+                fecha_fin_reposo = datetime.strptime(reposo_info['fecha_fin'], "%Y-%m-%d")
                 duracion_reposo_completo = (fecha_fin_reposo - fecha_inicio_reposo).days + 1
 
                 # Se recorren los reposos que se consultaron de la base de datos para las validaciones
                 for reposo_existente in reposos_asociados:
                     if (fecha_inicio_reposo <= reposo_existente.fecha_fin and fecha_fin_reposo >= reposo_existente.fecha_inicio):
+                        pdb.set_trace()  
                         return "06|Fecha de reposo se superpone con reposo existente"
                     elif (fecha_inicio_reposo >= reposo_existente.fecha_inicio and fecha_inicio_reposo <= reposo_existente.fecha_fin) or \
                         (fecha_fin_reposo >= reposo_existente.fecha_inicio and fecha_fin_reposo <= reposo_existente.fecha_fin):
@@ -179,7 +181,7 @@ class PacientesServices:
     
 """
 {
-  "cedula": 1234567890,
+  "cedula": 19925888,
   "fecha_inicio": "2023-08-01",
   "reposos": [
     {
@@ -200,12 +202,35 @@ class PacientesServices:
     }
   ]
 }
+{
+  "cedula": 19925888,
+  "grupo_reposo_fecha_inicio": "2023-08-01",
+  "especialidad_id": 1,
+  "reposos": [
+    {
+      "codigo_asistencial": "COD123",
+      "codigo_registro": "REG456",
+      "fecha_inicio": "2023-08-11",
+      "fecha_fin": "2023-08-14",
+      "quien_valida": "Dr. Validador"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    },
+    {
+      "codigo_asistencial": "COD789",
+      "codigo_registro": "REG012",
+      "fecha_inicio": "2023-08-21",
+      "fecha_fin": "2023-08-25",
+      "quien_valida": "Dra. Validadora"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    }
+  ]
+}
 """
 """
 {
-  "cedula": 1234567890,
-  "nombre": "Juan",
-  "apellido": "Pérez",
+  "cedula": 19925888,
+  "nombre": "Jesus",
+  "apellido": "Acevedo",
   "institucion_laboral": "Hospital ABC",
   "fecha_nacimiento": "1985-05-10",
   "direccion": "Calle 123, Ciudad",
@@ -213,7 +238,7 @@ class PacientesServices:
   "permiso_dias_extra": true,
   "cargo_id": 1,
   "dependencia_id": 2,
-  "municipio_id": 3
+  "municipio_id": 1
 }
 """
         

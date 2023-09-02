@@ -1,5 +1,6 @@
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
+from datetime import datetime
 from src import db
 
 class GrupoReposoCalls:
@@ -29,7 +30,7 @@ class GrupoReposoCalls:
         if grupoReposo:
             
             # Calcular la diferencia de días entre la fechaInicioReposo y la fecha_inicio del grupo
-            dias_transcurridos = (fechaInicioReposo - grupoReposo.fecha_inicio).days
+            dias_transcurridos = (datetime.strptime(fechaInicioReposo, "%Y-%m-%d") - grupoReposo.fecha_inicio).days
 
             if dias_transcurridos > 180:
                 return "04"  # Retorna el mensaje "04" si han pasado más de 180 días
