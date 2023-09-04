@@ -108,7 +108,7 @@ class PacientesServices:
             resultadoDiccionario["mensaje"] = "00|Paciente Registrado con exito"
             resultado = paciente_schema.dump(paciente_creado)
             resultado["dias_reposo"] = 0
-            resultado["reposo"] = []
+            resultado["reposos"] = []
             resultadoDiccionario["paciente"] = resultado
             return resultadoDiccionario
         else:
