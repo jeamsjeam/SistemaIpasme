@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
         <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="css/all.min.css">
     <title>Reposos</title>
 </head>
 <body>
@@ -13,41 +14,20 @@
 
     <div class="container mt-5">
         <section class="row d-flex justify-content-center mb-5">
-            <div class="col-lg-8 bordeSeccion">
+            <div class="col-12">
                 <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarPaciente()">
-                    <div class="mb-3 mt-3">
-                        <label for="buscarCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
-                        <input type="text" name="cedula" class="form-control" id="buscarCedula" required pattern="[0-9]{5,8}" placeholder="Ingresar solo numeros">
-                      </div>						
                     <div class="col-12">
-                          <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn btn-secondary">Consultar</button>
-                      </div>
-                </form>
-            </div>
-            <div class="col-lg-3 cajas mb-2 bordeSeccion">
-
-                <div class="d-flex justify-content-center">
-                        <label class="form-label carta mt-3">Consulta Todos los datos</label>
-                </div>
-
-                <form name="formulariocantidadConsulta" method="post" action="#" onsubmit="event.preventDefault();">
-                    <div class="row mt-4 mb-4 d-flex">
-                        <div class="col">	
-                            <label for="cantidadConsultar" class="form-label">Cantidad por pagina<span class = "requerido">*</span></label>	
+                        <div class="searchbar">
+                            <input type="text" name="cedula"  id="buscarCedula" required pattern="[0-9]{5,8}" class="search_input" type="text" placeholder="Buscar Paciente">
+                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn search_icon"><i class="fas fa-search"></i></button>
                         </div>
-                        <div class="col">
-                            <input type="text" name="cantidadConsulta" id="cantidadConsultar" value="50" class="form-control" pattern="[0-9]{1,3}" required id="InputConsulta" style="width: 60px;">
-                        </div>
-                        <div class="col">
-                            <button type="submit" name="botonConsultar" value="1" class="btn btn-secondary">Consultar</button>
-                        </div>
-                      </div>
+                    </div>
                 </form>
             </div>
         </section>
         <section class="row accordion-content" id="contenidoDesplegable">
             <div class="col-12">
-                <div class="row bordeSeccion d-none mt-3 mb-3" id="formularioRegistrarPaciente">
+                <div class="row  d-none mt-3 mb-3" id="formularioRegistrarPaciente">
                     <div class="d-flex justify-content-center mt-2">
                         <h3>Registrar Paciente</h3>
                     </div>
@@ -258,6 +238,7 @@
 
     <script src="js/toastify.js"></script>
     <script src="js/util.js"></script>
+    <script src="js/all.min.js"></script>
     <script src="js/asistencial.js"></script>
     <script src="bootstrap-5/js/bootstrap.min.js"></script>
     <script src="js/navbar.js"></script>
