@@ -15,7 +15,6 @@ class PacienteSchema(ma.SQLAlchemyAutoSchema):
     fecha_nacimiento = ma.auto_field()
     direccion = ma.auto_field()
     telefono = ma.auto_field()
-    permiso_dias_extra = ma.auto_field()
     cargo = ma.Nested('CargoSchema')
     dependencia = ma.Nested('DependenciaSchema')
     municipio = ma.Nested('MunicipioSchema')

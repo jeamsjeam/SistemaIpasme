@@ -8,7 +8,7 @@ from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 def buscar_paciente(cedula):
     respuesta = PacientesServices.buscar(cedula)
     if respuesta is not None and len(respuesta) > 0:
-        return respuesta
+        return make_response(jsonify(respuesta))
     else:
         return jsonify(None)
     
@@ -25,7 +25,7 @@ def registrar_datos_paciente_nuevo():
     # Devolvemos la respuesta como JSON en la respuesta HTTP
     return make_response(jsonify(respuesta))
 
-@app.route('/CrearPaciente', methods=['POST'])
+@app.route('/pacientes/CrearPaciente', methods=['POST'])
 @cross_origin()  # Para manejar problemas de CORS
 def crear_paciente():
     
@@ -38,7 +38,7 @@ def crear_paciente():
     # Devolvemos la respuesta como JSON en la respuesta HTTP
     return make_response(jsonify(respuesta))
 
-@app.route('/CrearReposo', methods=['POST'])
+@app.route('/pacientes/CrearReposo', methods=['POST'])
 @cross_origin()  # Para manejar problemas de CORS
 def crear_reposos():
     

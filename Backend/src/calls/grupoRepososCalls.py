@@ -6,7 +6,7 @@ from src import db
 class GrupoReposoCalls:
     def crear_grupo_reposo(grupo_reposo):
         grupo_reposo_nuevo = GrupoReposo(paciente_cedula=grupo_reposo.paciente_cedula,
-                                         especialidad_id=grupo_reposo.especialidad_id,
+                                         tipo_reposo_id=grupo_reposo.tipo_reposo_id,
                                          fecha_inicio=grupo_reposo.fecha_inicio)
         db.session.add(grupo_reposo_nuevo)
         db.session.commit()
@@ -14,12 +14,12 @@ class GrupoReposoCalls:
         return grupo_reposo_nuevo
     
     def get_grupoReposo_paciente(cedula):
-        grupoReposos = sorted(GrupoReposo.query.filter_by(paciente_cedula = cedula), key=lambda grupo: grupo.fecha_inicio)
+        grupoReposos = sorted(GrupoReposo.query.filter_by(paciente_cedula=cedula), key=lambda grupo: grupo.fecha_inicio, reverse=True)
         return grupoReposos
     
     def retornar_obj_grupoReposo(datos_completos):
         grupo_reposo = GrupoReposo(paciente_cedula=datos_completos['cedula'],
-                                   especialidad_id=datos_completos['especialidad_id'],
+                                   tipo_reposo_id=datos_completos['tipo_reposo_id'],
                                    fecha_inicio=datos_completos['grupo_reposo_fecha_inicio'])
         return grupo_reposo
     
@@ -43,6 +43,7 @@ class GrupoReposoCalls:
                     return grupoReposo, []
         else:
             return "05"
+    
         
 """
 # Uso de la función

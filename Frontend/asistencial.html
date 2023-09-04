@@ -53,73 +53,78 @@
                     </div>
                     <form name="formulario" method="post" action="#" onsubmit="event.preventDefault(); registrarPacienteNuevo()">
                         <div class="row">
-                        
-                              <div class="mb-3">
-                                  <label for="registrarPacienteCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
-                                <input type="text" name="cedulaDisabled" class="form-control" id="registrarPacienteCedula" value="" required disabled>
-                              </div>	
-    
-                              <div class="mb-3">
-                                <label for="registrarPacienteNombre" class="form-label">Nombres<span class = "requerido">*</span></label>
-                                <input type="text" name="nombres" class="form-control" id="registrarPacienteNombre" required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${3,40}" placeholder="Primer y/o Segundo Nombre">
-                              </div>
-    
-                              <div class="mb-3">
-                                <label for="registrarPacienteApellido" class="form-label">Apellidos<span class = "requerido">*</span></label>
-                                <input type="text" name="apellidos" class="form-control" id="registrarPacienteApellido" required pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${3,40}" placeholder="Primer y/o Segundo apellido">
-                              </div>
-                         
-                              <div class="mb-3">
-                                <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
-                                <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
-                              </div>
-                         
-                              <div class="mb-3">
-                                <label for="registrarPacienteDireccion" class="form-label">Direccion</label>
-                                <input type="text" name="direccion" class="form-control" id="registrarPacienteDireccion" placeholder="Direccion">
-                              </div>
-                          
-                              <div class="mb-3">
-                                <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
-                                <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
-                              </div>
+                              
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="registrarPacienteCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
+                                        <input type="text" name="cedulaDisabled" class="form-control" id="registrarPacienteCedula" value="" required disabled>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="registrarPacienteFechaNacimiento" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01" max="2024-01-01">
+                                    </div>
+                                </div>
+                            </div>	
 
-                              <div class="mb-3">
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="registrarPacienteNombre" class="form-label">Nombres<span class = "requerido">*</span></label>
+                                        <input type="text" name="nombres" class="form-control" id="registrarPacienteNombre" required pattern="[A-Za-zÁ-Úá-úÑñ]{3,40}" placeholder="Primer y/o Segundo Nombre">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="registrarPacienteApellido" class="form-label">Apellidos<span class = "requerido">*</span></label>
+                                        <input type="text" name="apellidos" class="form-control" id="registrarPacienteApellido" required pattern="[A-Za-zÁ-Úá-úÑñ]{3,40}" placeholder="Primer y/o Segundo apellido">
+                                    </div>
+                                </div>
+                            </div>	
+    
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
+                                <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
+                                <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
+                                    </div>
+                                </div>
+                            </div>	
+                        
+                            <div class="mb-3">
+                                <label for="registrarPacienteDireccion" class="form-label">Direccion</label>
+                                <textarea class="form-control" name="direccion" id="registrarPacienteDireccion" aria-label="Direccion" placeholder="Ingresar Direccion"></textarea>
+                            </div>
+
+                            <div class="mb-3">
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="seleccionCargo" class="form-label">Cargo <span class = "requerido">*</span></label>
                                         <select name="cargo" id ="seleccionCargo" class="form-select" aria-label="Default select example" required>
-                                            
-                                      </select>
+
+                                        </select>
                                     </div>
 
                                     <div class="col-4">
                                         <label for="seleccionDependencia" class="form-label">Dependencia <span class = "requerido">*</span></label>
                                         <select name="dependencia" id ="seleccionDependencia" class="form-select" aria-label="Default select example" required>
-                                            
-                                      </select>
+
+                                        </select>
                                     </div>
 
                                     <div class="col-4">
                                         <label for="seleccionMunicipio" class="form-label">Municipio <span class = "requerido">*</span></label>
                                         <select name="municipio" id ="seleccionMunicipio" class="form-select" aria-label="Default select example" required>
-                                            
-                                      </select>
+
+                                        </select>
                                     </div>
-                              </div>
+                                </div>
                             </div>
                        
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                      <label for="registrarPacienteFechaNacimiento" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
-                                      <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01" max="2024-01-01">
-                                  </div>
-                              </div>
-                            </div>	
-
-                            <div class="d-flex justify-content-center mt-2">
-                                <h3>Registrar Paciente</h3>
+                            <!-- <div class="d-flex justify-content-center mt-2">
+                                <h3>Registrar Reposo</h3>
                             </div>
                             <div class="mb-3">
                                 <label for="primerReposoCodAsistencial" class="form-label">Codigo Asistencial<span class = "requerido">*</span></label>
@@ -147,26 +152,18 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label for="primerReposoValida" class="form-label">Quien Valida</label>
-                                        <input type="text" name="quienvalida" class="form-control" id="primerReposoValida" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${3,40}" placeholder="Quien Valida">
+                                        <input type="text" name="quienvalida" class="form-control" id="primerReposoValida" pattern="[A-Za-zÁ-Úá-úÑñ]{3,4}" placeholder="Quien Valida">
                                     </div>
 
                                     <div class="col-6">
-                                        <label for="primerReposoEspecialidades" class="form-label">Expecialidad <span class = "requerido">*</span></label>
-                                        <select name="expecialidad" id ="primerReposoEspecialidades" class="form-select" aria-label="Default select example" required>
+                                        <label for="primerReposoTipoReposo" class="form-label">Tipo Reposo<span class = "requerido">*</span></label>
+                                        <select name="tipoReposo" id ="primerReposoTipoReposo" class="form-select" aria-label="Default select example" required>
                                             
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <div class="form-check mt-4">
-                                    <input class="form-check-input" type="checkbox" id="primerReposoDiasExtras">
-                                    <label class="form-check-label" for="primerReposoDiasExtras">
-                                        Dias Extras?
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        </div> -->
 
                         <div class="row mt-4 mb-3">
                             <!-- Boton Registrar -->
@@ -183,75 +180,77 @@
                           </div>
                     </form>
                 </div>
-                <div class="row bordeSeccion d-none" id="formularioDatosEncontrados">
-                    <div class="col-12">
-                        <table class="table table-sm table-hover">
-                            <!-- Primera Fila-->
-                            <tr>
-                                <th>Cedula</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Institucion Laboral</th>
-                                <th>Fecha de Nacimiento</th>
-                                <th>Dias Reposo</th>
-                            </tr>
-                            <tr>
-                                <td id="datosPaciente_cedula"></td>
-                                <td id="datosPaciente_nombres"></td>
-                                <td id="datosPaciente_apellidos"></td>
-                                <td id="datosPaciente_institucion_laboral"></td>
-                                <td id="datosPaciente_fecha_nacimiento"></td>
-                                <td id="datosPaciente_dias_reposo"></td>
-                            </tr>
-                            <tr>
-                                <th>Telefono</th>
-                                <th>Direccion</th>
-                                <th>Cargo</th>
-                                <th>Dependencia</th>
-                                <th>Municipio</th>
-                                <th>Accion</th>
-                            </tr>
-                            <tr>
-                                <td id="datosPaciente_telefono"></td>
-                                <td id="datosPaciente_direccion"></td>
-                                <td id="datosPaciente_cargo"></td>
-                                <td id="datosPaciente_dependencia"></td>
-                                <td id="datosPaciente_municipio"></td>
-                                <td>
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <button id="modificarButton" class="btn btn-secondary" type="button" disabled>
-                                                <img src="css/imagenes/pencil.svg">
-                                            </button>
-                                        </div>
-                                        <div class="col-3">
-                                            <button id="eliminarButton" class="btn btn-secondary" type="button" disabled>
-                                                <img src="css/imagenes/trash.svg">
-                                            </button>
-                                        </div>
+            </div>
+        </section>
+        <section>
+            <div class="row bordeSeccion d-none" id="formularioDatosEncontrados">
+                <div class="col-12">
+                    <table class="table table-sm table-hover">
+                        <!-- Primera Fila-->
+                        <tr>
+                            <th>Cedula</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Institucion Laboral</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Dias Reposo</th>
+                        </tr>
+                        <tr>
+                            <td id="datosPaciente_cedula"></td>
+                            <td id="datosPaciente_nombres"></td>
+                            <td id="datosPaciente_apellidos"></td>
+                            <td id="datosPaciente_institucion_laboral"></td>
+                            <td id="datosPaciente_fecha_nacimiento"></td>
+                            <td id="datosPaciente_dias_reposo"></td>
+                        </tr>
+                        <tr>
+                            <th>Telefono</th>
+                            <th>Direccion</th>
+                            <th>Cargo</th>
+                            <th>Dependencia</th>
+                            <th>Municipio</th>
+                            <th>Accion</th>
+                        </tr>
+                        <tr>
+                            <td id="datosPaciente_telefono"></td>
+                            <td id="datosPaciente_direccion"></td>
+                            <td id="datosPaciente_cargo"></td>
+                            <td id="datosPaciente_dependencia"></td>
+                            <td id="datosPaciente_municipio"></td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <button id="modificarButton" class="btn btn-secondary" type="button" disabled>
+                                            <img src="css/imagenes/pencil.svg">
+                                        </button>
                                     </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                                    <div class="col-3">
+                                        <button id="eliminarButton" class="btn btn-secondary" type="button" disabled>
+                                            <img src="css/imagenes/trash.svg">
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="row bordeSeccion d-none" id="tablaReposos">
-                    <div class="col-12">
-                        <table class="table table-sm table-hover">							
-                            <!-- Primera Fila-->
-                            <tr>
-                                <th>Codigo Asistencial</th>
-                                <th>Codigo Registro</th>
-                                <th >Reposo o Cuido</th>
-                                <th >Fecha Desde</th>
-                                <th >Fecha Hasta</th>
-                                <th >Quien Valida</th>
-                                <th >Especialidad Valida</th>
-                                <th >Accion</th>
-                            </tr>
-                            <tbody id="tabla-body"></tbody>
-                        </table>
-                    </div>
+            </div>
+            <div class="row bordeSeccion d-none" id="tablaReposos">
+                <div class="col-12">
+                    <table class="table table-sm table-hover">							
+                        <!-- Primera Fila-->
+                        <tr>
+                            <th>Codigo Asistencial</th>
+                            <th>Codigo Registro</th>
+                            <th >Reposo o Cuido</th>
+                            <th >Fecha Desde</th>
+                            <th >Fecha Hasta</th>
+                            <th >Quien Valida</th>
+                            <th >Especialidad Valida</th>
+                            <th >Accion</th>
+                        </tr>
+                        <tbody id="tabla-body"></tbody>
+                    </table>
                 </div>
             </div>
         </section>

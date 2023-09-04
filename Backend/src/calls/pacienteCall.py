@@ -18,7 +18,6 @@ class PacienteCalls():
                                  fecha_nacimiento=paciente.fecha_nacimiento,
                                  direccion=paciente.direccion,
                                  telefono=paciente.telefono,
-                                 permiso_dias_extra=paciente.permiso_dias_extra,
                                  cargo_id=paciente.cargo_id,
                                  dependencia_id=paciente.dependencia_id,
                                  municipio_id=paciente.municipio_id)
@@ -35,7 +34,6 @@ class PacienteCalls():
             pacienteBD.institucion_laboral = paciente.institucion_laboral
             pacienteBD.fecha_nacimiento = paciente.fecha_nacimiento
             pacienteBD.direccion = paciente.direccion
-            pacienteBD.permiso_dias_extra = paciente.permiso_dias_extra
             pacienteBD.cargo_id = paciente.cargo_id
             pacienteBD.dependencia_id = paciente.dependencia_id
             pacienteBD.municipio_id = paciente.municipio_id
@@ -62,7 +60,6 @@ class PacienteCalls():
                         fecha_nacimiento=datos_completos['fecha_nacimiento'],
                         direccion=datos_completos['direccion'],
                         telefono=datos_completos['telefono'],
-                        permiso_dias_extra=datos_completos['permiso_dias_extra'],
                         cargo_id=datos_completos['cargo_id'],
                         dependencia_id=datos_completos['dependencia_id'],
                         municipio_id=datos_completos['municipio_id'])

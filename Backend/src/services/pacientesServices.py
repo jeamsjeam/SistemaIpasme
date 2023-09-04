@@ -4,6 +4,7 @@ from ..calls.repososCalls import ReposoCalls
 from ..calls.cargosCalls import CargosCalls
 from ..calls.dependenciasCalls import DependenciasCalls
 from ..calls.municipiosCalls import MunicipiosCalls
+from ..calls.tipoReposoCall import TipoReposoCalls
 from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
@@ -19,36 +20,101 @@ import pdb
 class PacientesServices:
 
     def buscar(cedula):
+
+        # Se busca al paciente
         pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
+
+        # Guarda la cantidad de dias de los reposos
+        total_dias_reposos = 0
+
+        # Si existe el paciente se procede a buscar sus reposos
         if pacienteConsulta is not None:
+
+            # Se convierte el objeto Paciente a un diccionario
             paciente = paciente_schema.dump(pacienteConsulta)   
             #pdb.set_trace()  
+
+            # Se buscan los grupos de reposos de ese paciente y se retornan en orden de la fecha mas actual a la mas antigua
             grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
+
+            # Se verifica que exista al menos un grupo de reposo
             if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
+
+                # Se convierte el objeto GrupoReposo en un diccionario
                 grupoReposo = grupoReposos_schema.dump(grupoReposoConsulta)
+
+                # Se crea una lista donde se van a guardar los reposos del paciente
                 listaReposos = []
+                
+                # Se utiliza para poder saber cual es el primer grupo reposo para sumar solo esos dias
+                banderaDias = True
+
+                # Se recorren todos los grupos de reposos encontrados
                 for grupo in grupoReposo:
+
+                    # Se buscan los reposos de cada grupo de reposos y se traen en orden de la fecha mas actual a la mas antigua
                     reposoConsulta = ReposoCalls.get_reposo_paciente(grupo['id'])
+
+                    # Se verifica que existan reposos
                     if reposoConsulta is not None and len(reposoConsulta) > 0:
-                        repososAux = reposos_schema.dump(reposoConsulta)
-                        for rep in repososAux:
+
+                        # Se recorren todos los reposos y se agregan a la lista 
+                        for rep in reposoConsulta:
+
+                            # Se suman los dias del grupo reposo mas nuevo
+                            if banderaDias:
+                                total_dias_reposos += (rep.fecha_fin - rep.fecha_inicio).days + 1
+
                             listaReposos.append(rep)
+
+                    # se cambia la bandera de estado para que ya no cuente mas dias
+                    banderaDias = False
+                
+                # Si se agrego algo a lista se agrega al objeto paciente un nuevo campo llamado reposo donde estara la lista que se acabo de llenar
+                # En caso de que no exista nada en la lista se agrega vacia
                 if listaReposos is not None and len(listaReposos) > 0:
-                    paciente['reposos'] = listaReposos
+
+                    # Se convierte el objeto Reposos en un diccionario y se agrega al objeto paciente
+                    paciente['reposos'] = reposos_schema.dump(listaReposos)
+                    paciente["dias_reposo"] = total_dias_reposos
                 else:
                     paciente['reposos'] = []
+                    paciente["dias_reposo"] = total_dias_reposos
                 return paciente
             else:
+                # Si el paciente no se le encontraron grupo de reposos se envia la lista de reposos vacia 
                 paciente['reposos'] = []
+                paciente["dias_reposo"] = total_dias_reposos
                 return paciente
         else:
+            # Si no se encuentra paciente se retorna null
             return None
         
     def crear_paciente(datos_completos):
+
         # Creamos el objeto paciente con los datos recibidos
         paciente = PacienteCalls.crear_obj_paciente(datos_completos)
+
+        # Se cre ale paciente 
         paciente_creado = PacienteCalls.crear_paciente(paciente)
-        return paciente_schema.dump(paciente_creado)
+
+        # Se crea un diccionario de salida
+        resultadoDiccionario = {}
+
+        # Se verifica si la creacion del paciente se hizo con existo
+        # Si fue exitosa se retona un mensaje y el objeto paciente agregandole un campo mas de reposos que es una lista vacia
+        # Si no se pudo crear se retorna un mensaje de error y el objeto paciente null
+        if paciente_creado is not None:
+            resultadoDiccionario["mensaje"] = "00|Paciente Registrado con exito"
+            resultado = paciente_schema.dump(paciente_creado)
+            resultado["dias_reposo"] = 0
+            resultado["reposo"] = []
+            resultadoDiccionario["paciente"] = resultado
+            return resultadoDiccionario
+        else:
+            resultadoDiccionario["mensaje"] = "01|Error al registrar el paciente"
+            resultadoDiccionario["paciente"] = None
+            return resultadoDiccionario
     
     def registrar_reposo(datos_completos):
 
@@ -95,13 +161,10 @@ class PacientesServices:
         elif resultado[0]:
             grupo_reposo_encontrado = resultado[0]
             reposos_asociados = resultado[1]
-            print("Último Grupo de Reposo:", grupo_reposo_encontrado.id)
-            print("Reposos asociados:")
 
             total_dias_reposos = 0  # Inicializamos la variable para almacenar el total de días
 
             for reposo in reposos_asociados:
-                print("ID Reposo:", reposo.id, "Código Asistencial:", reposo.codigo_asistencial, "Fecha Inicio", reposo.fecha_inicio, "Fecha Fin", reposo.fecha_fin)
 
                 # Calculamos la duración del reposo en días
                 duracion_reposo = (reposo.fecha_fin - reposo.fecha_inicio).days + 1
@@ -120,11 +183,10 @@ class PacientesServices:
                 # Se recorren los reposos que se consultaron de la base de datos para las validaciones
                 for reposo_existente in reposos_asociados:
                     if (fecha_inicio_reposo <= reposo_existente.fecha_fin and fecha_fin_reposo >= reposo_existente.fecha_inicio):
-                        pdb.set_trace()  
-                        return "06|Fecha de reposo se superpone con reposo existente"
+                        return "05|Fecha de reposo se superpone con reposo existente"
                     elif (fecha_inicio_reposo >= reposo_existente.fecha_inicio and fecha_inicio_reposo <= reposo_existente.fecha_fin) or \
                         (fecha_fin_reposo >= reposo_existente.fecha_inicio and fecha_fin_reposo <= reposo_existente.fecha_fin):
-                        return "07|Existen 2 o más reposos asociados dentro del rango de fechas"
+                        return "06|Existen 2 o más reposos asociados dentro del rango de fechas"
 
                 total_dias_completos += duracion_reposo_completo
 
@@ -134,7 +196,14 @@ class PacientesServices:
 
             total_dias_totales = total_dias_reposos + total_dias_completos
 
-            if total_dias_totales > 63:
+            diasMaximos = 63
+
+            tipoReposo = TipoReposoCalls.get_tipoReposo_id(grupo_reposo_encontrado.tipo_reposo_id)
+
+            if tipoReposo is not None:
+                diasMaximos = tipoReposo.maximo_dias
+
+            if total_dias_totales > diasMaximos:
                 return "04|La suma de días de reposos es mayor a 63"
             else:
                 # Se recorren y se crean
@@ -143,10 +212,7 @@ class PacientesServices:
                     ReposoCalls.crear_reposo(reposo)
                 return "00|Reposo creado"
         else:
-            print("No se encontró ningún Grupo de Reposo para el paciente.")
-
-
-
+            return "03|No se encontró ningún Grupo de Reposo para el paciente"
 
     def registrar_datos_paciente_nuevo(datos_completos):
         # Creamos el objeto paciente con los datos recibidos
@@ -177,12 +243,37 @@ class PacientesServices:
                 return "01|Error en el registro del grupo de reposo"
         else:
             return "02|Error en el registro del paciente"
+    
+    def sumar_dias_reposos_ultimo_grupo(cedula):
+        # Obtener el último grupo de reposos del paciente por su cédula
+        grupo_reposos = GrupoReposoCalls.get_grupoReposo_paciente(cedula)
+
+        if grupo_reposos:
+            # Obtener el último grupo de reposos (el primero en la lista ordenada)
+            ultimo_grupo = grupo_reposos[0]
+
+            # Obtener los reposos asociados al último grupo
+            reposos_asociados = ultimo_grupo.reposos
+
+            # Inicializar la variable para almacenar el total de días
+            total_dias_reposos = 0
+
+            # Sumar los días de cada reposo
+            for reposo in reposos_asociados:
+                duracion_reposo = (reposo.fecha_fin - reposo.fecha_inicio).days + 1
+                total_dias_reposos += duracion_reposo
+
+            return total_dias_reposos
+        else:
+            # No se encontraron grupos de reposos para el paciente
+            return 0
         
     
 """
 {
   "cedula": 19925888,
-  "fecha_inicio": "2023-08-01",
+  "grupo_reposo_fecha_inicio": "2023-08-01",
+  "tipo_reposo_id": 1,
   "reposos": [
     {
       "codigo_asistencial": "COD123",
@@ -199,14 +290,7 @@ class PacientesServices:
       "fecha_fin": "2023-08-20",
       "quien_valida": "Dra. Validadora"
       // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
-    }
-  ]
-}
-{
-  "cedula": 19925888,
-  "grupo_reposo_fecha_inicio": "2023-08-01",
-  "especialidad_id": 1,
-  "reposos": [
+    },
     {
       "codigo_asistencial": "COD123",
       "codigo_registro": "REG456",
@@ -235,7 +319,6 @@ class PacientesServices:
   "fecha_nacimiento": "1985-05-10",
   "direccion": "Calle 123, Ciudad",
   "telefono": "555-1234",
-  "permiso_dias_extra": true,
   "cargo_id": 1,
   "dependencia_id": 2,
   "municipio_id": 1

@@ -75,28 +75,28 @@ document.addEventListener("DOMContentLoaded", function () {
             mostrarNotificacion("Error al obtener los Cargos: " + error.message,"#FF0000")
         });
 
-    //------------------------------Especialidades------------------------------
+    //------------------------------Tipo Reposo------------------------------
     // URL del servicio REST que retorna la lista de roles
-    const urlEspecialidad = "http://127.0.0.1:5000/especialidades";
+    const urlTipoReposo = "http://127.0.0.1:5000/tipoReposo";
     // Elemento select donde agregaremos las opciones de los roles
-    const cargosEspecialidades = document.getElementById("primerReposoEspecialidades");
+    //const cargosTipoReposo = document.getElementById("primerReposoTipoReposo");
 
     // Llamada al servicio REST utilizando fetch
-    fetch(urlEspecialidad)
+    fetch(urlTipoReposo)
         .then(response => response.json())
-        .then(Especialidadesdata => {
+        .then(TipoReposodata => {
             // data es un array con los objetos de los roles
             // Recorremos cada objeto y agregamos las opciones al select
-            Especialidadesdata.forEach(data => {
+            TipoReposodata.forEach(data => {
                 // Creamos una opción para cada rol
                 const option = document.createElement("option");
                 option.value = data.id;
                 option.textContent = data.nombre;
-                cargosEspecialidades.appendChild(option);
+                //cargosTipoReposo.appendChild(option);
             });
         })
         .catch(error => {
-            mostrarNotificacion("Error al obtener los Especialidades: " + error.message,"#FF0000")
+            mostrarNotificacion("Error al obtener los Tipo Reposo: " + error.message,"#FF0000")
         });
 });
 
@@ -110,9 +110,9 @@ function buscarPaciente(){
         console.log(data)
         if(typeof data !== 'undefined' && data !== null){
             var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
-            var tablaReposos = document.getElementById("tablaReposos");
+            //var tablaReposos = document.getElementById("tablaReposos");
             pacienteEncontrado.classList.remove("d-none");
-            tablaReposos.classList.remove("d-none");
+            //tablaReposos.classList.remove("d-none");
             
             datosPacienteTabla(data)
             toggleDesplegable()
@@ -145,13 +145,12 @@ function registrarPacienteNuevo(){
     let dependencia = document.getElementById('seleccionDependencia').value;
     let municipio = document.getElementById('seleccionMunicipio').value;
     let fechaNacimiento = document.getElementById('registrarPacienteFechaNacimiento').value;
-    let codAsistencial = document.getElementById('primerReposoCodAsistencial').value;
-    let codRegistro = document.getElementById('primerReposoCodRegistro').value;
-    let fechaDesde = document.getElementById('primerReposofechaDesde').value;
-    let fechaHasta = document.getElementById('primerReposofechaHasta').value;
-    let quienValida = document.getElementById('primerReposoValida').value;
-    let especialidad = document.getElementById('primerReposoEspecialidades').value;
-    let diasExtras = document.getElementById('primerReposoDiasExtras').checked;
+    // let codAsistencial = document.getElementById('primerReposoCodAsistencial').value;
+    // let codRegistro = document.getElementById('primerReposoCodRegistro').value;
+    // let fechaDesde = document.getElementById('primerReposofechaDesde').value;
+    // let fechaHasta = document.getElementById('primerReposofechaHasta').value;
+    // let quienValida = document.getElementById('primerReposoValida').value;
+    // let tipo_reposo_id = document.getElementById('primerReposoTipoReposo').value;
 
     // Crear objeto con los valores obtenidos
     let datosPaciente = {
@@ -162,21 +161,20 @@ function registrarPacienteNuevo(){
         "fecha_nacimiento": fechaNacimiento,
         "direccion": direccion,
         "telefono": telefono,
-        "permiso_dias_extra": diasExtras,
         "cargo_id": parseInt(cargo),
         "dependencia_id": parseInt(dependencia),
-        "municipio_id": parseInt(municipio),
-        "especialidad_id": parseInt(especialidad),
-        "grupo_reposo_fecha_inicio": fechaDesde,
-        "reposos": [
-            {
-                "codigo_asistencial": codAsistencial,
-                "codigo_registro": codRegistro,
-                "fecha_inicio": fechaDesde,
-                "fecha_fin": fechaHasta,
-                "quien_valida": quienValida
-            }
-        ]
+        "municipio_id": parseInt(municipio)
+        // "tipo_reposo_id": parseInt(especialidad),
+        // "grupo_reposo_fecha_inicio": fechaDesde,
+        // "reposos": [
+        //     {
+        //         "codigo_asistencial": codAsistencial,
+        //         "codigo_registro": codRegistro,
+        //         "fecha_inicio": fechaDesde,
+        //         "fecha_fin": fechaHasta,
+        //         "quien_valida": quienValida
+        //     }
+        // ]
     };
 
     // Opciones para la petición fetch
@@ -189,7 +187,7 @@ function registrarPacienteNuevo(){
     };
 
     // URL del servicio que crea el usuario
-    const url = "http://127.0.0.1:5000/pacientes/registrarNuevo";
+    const url = "http://127.0.0.1:5000/pacientes/CrearPaciente";
 
     document.getElementById('registrarPacienteCedula').value = "";
     document.getElementById('registrarPacienteNombre').value = "";
@@ -201,29 +199,34 @@ function registrarPacienteNuevo(){
     document.getElementById('seleccionDependencia').value = "";
     document.getElementById('seleccionMunicipio').value = "";
     document.getElementById('registrarPacienteFechaNacimiento').value = "";
-    document.getElementById('primerReposoCodAsistencial').value = "";
-    document.getElementById('primerReposoCodRegistro').value = "";
-    document.getElementById('primerReposofechaDesde').value = "";
-    document.getElementById('primerReposofechaHasta').value = "";
-    document.getElementById('primerReposoValida').value = "";
-    document.getElementById('primerReposoEspecialidades').value = "";
-    document.getElementById('primerReposoDiasExtras').checked = false;
-    debugger
+    // document.getElementById('primerReposoCodAsistencial').value = "";
+    // document.getElementById('primerReposoCodRegistro').value = "";
+    // document.getElementById('primerReposofechaDesde').value = "";
+    // document.getElementById('primerReposofechaHasta').value = "";
+    // document.getElementById('primerReposoValida').value = "";
+    // document.getElementById('primerReposoEspecialidades').value = "";
+    // document.getElementById('primerReposoDiasExtras').checked = false;
+
+    let datosPacienteResultado = {}
     fetch(url, options)
     .then(Response => Response.json())
     .then(data => {
 
-        resultado = data.toString().split('|')
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        let mensajeResultado = data.mensaje.toString().split('|')
 
-        if(typeof resultado[1] !== 'undefined' && resultado[1] !== null){
-            if(resultado[0] === '00'){
-                mostrarNotificacion(resultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+        if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
+            if(mensajeResultado[0] === '00'){
+
+                // Guardamos los datos del paciente en una variable
+                datosPacienteResultado = data.paciente 
+                mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
                 resetearEtquitasOcultas()
             }else{
-                mostrarNotificacion(resultado[1],"#FF0000") 
+                mostrarNotificacion(mensajeResultado[1],"#FF0000") 
             }
         }else{
-            mostrarNotificacion(resultado[0],"#FF0000") 
+            mostrarNotificacion(mensajeResultado[0],"#FF0000") 
         }
     })
     .catch(err => {
@@ -233,14 +236,13 @@ function registrarPacienteNuevo(){
 
 function datosPacienteTabla(datos){
 
-
     // Asignar valores a las celdas de la tabla
     document.getElementById("datosPaciente_cedula").textContent = datos.cedula;
     document.getElementById("datosPaciente_nombres").textContent = datos.nombre;
     document.getElementById("datosPaciente_apellidos").textContent = datos.apellido;
     document.getElementById("datosPaciente_institucion_laboral").textContent = datos.institucion_laboral;
     document.getElementById("datosPaciente_fecha_nacimiento").textContent = formatearFecha(datos.fecha_nacimiento);
-    let datosPaciente_dias_reposo = 3
+    let datosPaciente_dias_reposo = datos.dias_reposo
     let datosPaciente_permiso = 2
     if (datosPaciente_dias_reposo > 62) {
         document.getElementById("datosPaciente_dias_reposo").innerHTML = '<span class="requerido">' + datosPaciente_dias_reposo + '</span>';
@@ -265,7 +267,7 @@ function datosPacienteTabla(datos){
         eliminarButton.disabled = false;
     }
 
-    llenarTablaReposos(datos.reposos);
+    //llenarTablaReposos(datos.reposos);
 }
 
 
@@ -327,6 +329,25 @@ function resetearEtquitasOcultas(){
     //Formulario con datos del paciente y registro de reposos
     var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
     pacienteEncontrado.classList.add("d-none");
+
+    //Tabla de los reposos
+    var tablaReposos = document.getElementById("tablaReposos");
+    tablaReposos.classList.add("d-none");
+
+    //Formulario para paciente nuevo
+    var registrarPaciente = document.getElementById("formularioRegistrarPaciente");
+    registrarPaciente.classList.add("d-none");
+
+    //Desplegable
+    var contenido = document.getElementById("contenidoDesplegable");
+    contenido.style.maxHeight = "";
+}
+
+function PacienteEncontrado(){
+
+    //Formulario con datos del paciente y registro de reposos
+    var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
+    pacienteEncontrado.classList.remove("d-none");
 
     //Tabla de los reposos
     var tablaReposos = document.getElementById("tablaReposos");

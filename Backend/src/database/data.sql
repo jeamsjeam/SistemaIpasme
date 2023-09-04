@@ -9,7 +9,8 @@ INSERT INTO ESTADO_EMPLEADO (nombre) VALUES ('Activo'),('Inactivo'),('Jubilado')
 
 INSERT INTO cargo (nombre) VALUES ('Docente'),('Administrativo'),('Obrero'),('Madres elaboradora');
 INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal');
-INSERT INTO especialidad (nombre,maximo_dias) VALUES ('Cardiología Clínica',63),('Cirugía General',63),('Dermatología',63);
+INSERT INTO especialidad (nombre) VALUES ('Cardiología Clínica'),('Cirugía General'),('Dermatología');
+INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',63),('Especial',80);
 INSERT INTO estado (nombre) VALUES ('Tachira'),('Merida'),('Zulia'),('Trujillo'),('Apure');
 INSERT INTO municipio (nombre) VALUES ('Junin'),('Ayacucho'),('Libertador'),('San Cristóbal'),('Lobatera');
 

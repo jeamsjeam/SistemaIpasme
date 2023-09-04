@@ -16,7 +16,7 @@ class ReposoCalls:
         return reposo_nuevo
     
     def get_reposo_paciente(grupo_reposo_id):
-        reposos = sorted(Reposo.query.filter_by(grupo_reposo_id = grupo_reposo_id), key=lambda rep: rep.fecha_inicio)  
+        reposos = sorted(Reposo.query.filter_by(grupo_reposo_id = grupo_reposo_id), key=lambda rep: rep.fecha_inicio, reverse=True)  
         return reposos
     
     def retornar_obj_reposo(reposo_info):

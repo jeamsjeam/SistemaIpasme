@@ -114,7 +114,6 @@ CREATE TABLE PACIENTE (
     fecha_nacimiento TIMESTAMP,
     direccion TEXT,
     telefono VARCHAR(11),
-    permiso_dias_extra BOOLEAN,
     cargo_id BIGINT,
     dependencia_id BIGINT,
     municipio_id BIGINT

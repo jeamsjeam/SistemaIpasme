@@ -384,7 +384,6 @@ CREATE TABLE public.paciente (
     fecha_nacimiento timestamp without time zone,
     direccion text,
     telefono character varying(11),
-    permiso_dias_extra boolean,
     cargo_id bigint,
     dependencia_id bigint,
     municipio_id bigint
