@@ -49,7 +49,6 @@
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
       -webkit-box-shadow: none !important;
-
       background-color: inherit !important;
       transition: background-color 5000s ease-in-out 0s !important;
   }
@@ -62,4 +61,11 @@
         -webkit-text-fill-color: white !important;
     }
   
-  
+    .datos-paciente{
+        padding: 20px;
+        width: 80%;
+        margin: auto;
+        box-shadow: 5px 5px 3px 3px rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+    }
+      

@@ -37,11 +37,6 @@ a{
   /* transition: max-height 0.2s ease-out; */
 }
 
-.formulario-paciente{
-  width: 70%;
-  margin: auto;
-}
-
 .nav-item{
   min-width: 120px;
     text-align: center;

@@ -27,8 +27,8 @@
             </div>
         </section>
         <section class="row" id="contenidoDesplegable">
-            <div class="col-12 formulario-paciente">
-                <div class="row d-none mb-3" id="formularioRegistrarPaciente">
+            <div class="col-12">
+                <div class="row d-none datos-paciente mb-3" id="formularioRegistrarPaciente">
                     <div class="d-flex justify-content-center mb-2">
                         <h3>Registrar Paciente</h3>
                     </div>
@@ -160,7 +160,7 @@
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col-4">
-                                        <button type="submit" name="botonRegistrarTodo" value="1" class="btn btn-secondary">Registrar</button>
+                                        <button type="submit" name="botonRegistrarTodo" value="1" class="btn btn-primary">Registrar</button>
                                     </div>
                                     <div class="col-8">
                                         <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
@@ -174,8 +174,8 @@
         </section>
         <section>
             <div class="row d-none" id="formularioDatosEncontrados">
-                <div class="col-12">
-                    <table class="table table-sm table-hover">
+                <div class="col-12 datos-paciente">
+                    <table class="table table-sm table-borderless ">
                         <!-- Primera Fila-->
                         <tr>
                             <th>Cedula</th>
@@ -183,7 +183,6 @@
                             <th>Apellidos</th>
                             <th>Institucion Laboral</th>
                             <th>Fecha de Nacimiento</th>
-                            <th>Dias Reposo</th>
                         </tr>
                         <tr>
                             <td id="datosPaciente_cedula"></td>
@@ -191,11 +190,9 @@
                             <td id="datosPaciente_apellidos"></td>
                             <td id="datosPaciente_institucion_laboral"></td>
                             <td id="datosPaciente_fecha_nacimiento"></td>
-                            <td id="datosPaciente_dias_reposo"></td>
                         </tr>
                         <tr>
                             <th>Telefono</th>
-                            <th>Direccion</th>
                             <th>Cargo</th>
                             <th>Dependencia</th>
                             <th>Municipio</th>
@@ -203,24 +200,31 @@
                         </tr>
                         <tr>
                             <td id="datosPaciente_telefono"></td>
-                            <td id="datosPaciente_direccion"></td>
                             <td id="datosPaciente_cargo"></td>
                             <td id="datosPaciente_dependencia"></td>
                             <td id="datosPaciente_municipio"></td>
                             <td>
                                 <div class="row">
                                     <div class="col-3">
-                                        <button id="modificarButton" class="btn btn-secondary" type="button" disabled>
+                                        <button id="modificarButton" class="btn btn-secondary" type="button">
                                             <img src="css/imagenes/pencil.svg">
                                         </button>
                                     </div>
                                     <div class="col-3">
-                                        <button id="eliminarButton" class="btn btn-secondary" type="button" disabled>
+                                        <button id="eliminarButton" class="btn btn-secondary" type="button">
                                             <img src="css/imagenes/trash.svg">
                                         </button>
                                     </div>
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
+                            <th>Dias Reposo</th>
+                            <th colspan="4">Direccion</th>
+                        </tr>
+                        <tr>
+                            <td id="datosPaciente_dias_reposo"></td>
+                            <td id="datosPaciente_direccion" colspan="4"></td>
                         </tr>
                     </table>
                 </div>
