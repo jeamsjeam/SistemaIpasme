@@ -104,6 +104,9 @@ function buscarPaciente(){
     resetearEtquitasOcultas()
     var cedula = document.getElementById("buscarCedula").value;
     const url = "http://127.0.0.1:5000/pacientes/" + cedula;
+
+    document.getElementById("buscarCedula").value = ""
+    
     fetch(url)
     .then(response => response.json() )
     .then(data => {

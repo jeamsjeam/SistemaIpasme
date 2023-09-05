@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
         <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/asistencia.css">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <link rel="stylesheet" type="text/css" href="css/all.min.css">
     <title>Reposos</title>
@@ -18,87 +19,96 @@
                 <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarPaciente()">
                     <div class="col-12">
                         <div class="searchbar">
-                            <input type="text" name="cedula"  id="buscarCedula" required pattern="[0-9]{5,8}" class="search_input" type="text" placeholder="Buscar Paciente">
-                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn search_icon"><i class="fas fa-search"></i></button>
+                            <input type="text" name="cedula"  id="buscarCedula" required pattern="[0-9]{5,8}" class="search_input input-personalizado" type="text" placeholder="Buscar Paciente">
+                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn search_icon pl-2"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                 </form>
             </div>
         </section>
-        <section class="row accordion-content" id="contenidoDesplegable">
-            <div class="col-12">
-                <div class="row  d-none mt-3 mb-3" id="formularioRegistrarPaciente">
-                    <div class="d-flex justify-content-center mt-2">
+        <section class="row" id="contenidoDesplegable">
+            <div class="col-12 formulario-paciente">
+                <div class="row d-none mb-3" id="formularioRegistrarPaciente">
+                    <div class="d-flex justify-content-center mb-2">
                         <h3>Registrar Paciente</h3>
                     </div>
                     <form name="formulario" method="post" action="#" onsubmit="event.preventDefault(); registrarPacienteNuevo()">
                         <div class="row">
-                              
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="registrarPacienteCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
-                                        <input type="text" name="cedulaDisabled" class="form-control" id="registrarPacienteCedula" value="" required disabled>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="registrarPacienteCedula" class="form-label">Cedula<span class = "requerido">*</span></label>
+                                            <input type="text" name="cedulaDisabled" class="form-control" id="registrarPacienteCedula" value="" required disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="registrarPacienteFechaNacimiento" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
+                                            <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01" max="2024-01-01">
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="registrarPacienteFechaNacimiento" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
-                                        <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01" max="2024-01-01">
-                                    </div>
-                                </div>
-                            </div>	
+                                </div>	
+                            </div>  
 
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="registrarPacienteNombre" class="form-label">Nombres<span class = "requerido">*</span></label>
-                                        <input type="text" name="nombres" class="form-control" id="registrarPacienteNombre" required pattern="[A-Za-zÁ-Úá-úÑñ]{3,40}" placeholder="Primer y/o Segundo Nombre">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="registrarPacienteNombre" class="form-label">Nombres<span class = "requerido">*</span></label>
+                                            <input type="text" name="nombres" class="form-control" id="registrarPacienteNombre" required pattern="[A-Za-zÁ-Úá-úÑñ]{3,40}" placeholder="Primer y/o Segundo Nombre">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="registrarPacienteApellido" class="form-label">Apellidos<span class = "requerido">*</span></label>
+                                            <input type="text" name="apellidos" class="form-control" id="registrarPacienteApellido" required pattern="[A-Za-zÁ-Úá-úÑñ]{3,40}" placeholder="Primer y/o Segundo apellido">
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="registrarPacienteApellido" class="form-label">Apellidos<span class = "requerido">*</span></label>
-                                        <input type="text" name="apellidos" class="form-control" id="registrarPacienteApellido" required pattern="[A-Za-zÁ-Úá-úÑñ]{3,40}" placeholder="Primer y/o Segundo apellido">
-                                    </div>
-                                </div>
-                            </div>	
+                                </div>	
+                            </div>
     
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
-                                <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
+                                    <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
+                                    <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
-                                <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
-                                    </div>
-                                </div>
-                            </div>	
+                                </div>	
+                            </div>
                         
-                            <div class="mb-3">
-                                <label for="registrarPacienteDireccion" class="form-label">Direccion</label>
-                                <textarea class="form-control" name="direccion" id="registrarPacienteDireccion" aria-label="Direccion" placeholder="Ingresar Direccion"></textarea>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <label for="registrarPacienteDireccion" class="form-label">Direccion</label>
+                                    <textarea class="form-control" name="direccion" id="registrarPacienteDireccion" aria-label="Direccion" placeholder="Ingresar Direccion"></textarea>
+                                </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="seleccionCargo" class="form-label">Cargo <span class = "requerido">*</span></label>
-                                        <select name="cargo" id ="seleccionCargo" class="form-select" aria-label="Default select example" required>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label for="seleccionDependencia" class="form-label">Dependencia <span class = "requerido">*</span></label>
-                                        <select name="dependencia" id ="seleccionDependencia" class="form-select" aria-label="Default select example" required>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-4">
-                                        <label for="seleccionMunicipio" class="form-label">Municipio <span class = "requerido">*</span></label>
-                                        <select name="municipio" id ="seleccionMunicipio" class="form-select" aria-label="Default select example" required>
-
-                                        </select>
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label for="seleccionCargo" class="form-label">Cargo <span class = "requerido">*</span></label>
+                                            <select name="cargo" id ="seleccionCargo" class="form-select" aria-label="Default select example" required>
+    
+                                            </select>
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label for="seleccionDependencia" class="form-label">Dependencia <span class = "requerido">*</span></label>
+                                            <select name="dependencia" id ="seleccionDependencia" class="form-select" aria-label="Default select example" required>
+    
+                                            </select>
+                                        </div>
+    
+                                        <div class="col-4">
+                                            <label for="seleccionMunicipio" class="form-label">Municipio <span class = "requerido">*</span></label>
+                                            <select name="municipio" id ="seleccionMunicipio" class="form-select" aria-label="Default select example" required>
+    
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
