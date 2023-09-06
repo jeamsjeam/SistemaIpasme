@@ -35,25 +35,31 @@ class EmpleadosServices:
     def borrar(id):
         return EmpleadosCalls.borrar_empleado(id)
     
-    def get_empleados_especialidad(id):
-        empleadosConsulta = EmpleadosCalls.get_empleados()
-        empleados = empleados_schema.dump(empleadosConsulta)
-        retorno = []
-        if len(empleados) > 0:
-            for empleado in empleados:
-                if any(especialidad['especialidad'] == empleado['especialidad']['nombre'] for especialidad in retorno):
-                    for item in retorno:
-                        if item['especialidad'] == empleado['especialidad']['nombre']:
-                            agregar = infoBasica(empleado)
-                            item['trabajadores'].append(agregar)
-                else :
-                    nuevo = { 'especialidad' : empleado['especialidad']['nombre'], 'trabajadores' : []}
-                    agregar = infoBasica(empleado)
-                    nuevo['trabajadores'].append(agregar)
-                    retorno.append(nuevo)
-            return retorno
-        return []
+    def get_empleados_especialidad():
+        return agruparEmpleados('especialidad')
     
+    def get_empleados_turno():
+        return agruparEmpleados('turno')
+    
+def agruparEmpleados(filtro):
+    empleadosConsulta = EmpleadosCalls.get_empleados()
+    empleados = empleados_schema.dump(empleadosConsulta)
+    retorno = []
+    if len(empleados) > 0:
+        for empleado in empleados:
+            if any(especialidad[filtro] == empleado[filtro]['nombre'] for especialidad in retorno):
+                for item in retorno:
+                    if item[filtro] == empleado[filtro]['nombre']:
+                        agregar = infoBasica(empleado)
+                        item['trabajadores'].append(agregar)
+            else :
+                nuevo = { filtro : empleado[filtro]['nombre'], 'trabajadores' : []}
+                agregar = infoBasica(empleado)
+                nuevo['trabajadores'].append(agregar)
+                retorno.append(nuevo)
+        return retorno
+    return []
+
 def deserealizarJson(json):
     empleado = Empleado(cedula= int(json['cedula']),
                             nombre= json['nombre'],

@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <small class="card-meta mb-2">Recursos Humanos</small>
                             <h4 class="card-title mt-0 text-dark">Personal</h4>
-                            <small><i class="far fa-clock"></i>Listado del personal actual</small>
+                            <small><i class=""></i>Listado del personal actual</small>
                         </div>
                         <div class="card-footer">
                             <div class="media">
@@ -46,7 +46,7 @@
                         <div class="card-body">
                             <small class="card-meta mb-2">Recursos Humanos</small>
                             <h4 class="card-title mt-0 text-dark">Asistencia de personal</h4>
-                            <small><i class="far fa-clock"></i>Lleva control de las horas de entrada y salida. Facilita
+                            <small><i class=""></i>Lleva control de las horas de entrada y salida. Facilita
                                 el seguimiento de la asistencia y puntualidad del personal.</small>
                         </div>
                         <div class="card-footer">
@@ -70,7 +70,30 @@
                         <div class="card-body">
                             <small class="card-meta mb-2">Recursos Humanos</small>
                             <h4 class="card-title mt-0 text-dark">Turnos</h4>
-                            <small><i class="far fa-clock"></i>Define los turnos del personal.</small>
+                            <small><i class=""></i>Define los turnos del personal.</small>
+                        </div>
+                        <div class="card-footer">
+                            <div class="media">
+                                <img class="mr-3 rounded-circle" src="css\imagenes\asistencias.png"
+                                    alt="Generic placeholder image" style="max-width:50px">
+                                <div class="media-body">
+                                    <h6 class="my-0 text-white d-block">Recursos</h6>
+                                    <h6 class="my-0 text-white d-block">Humanos</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
+                <div id="reporte" class="card text-white card-has-bg click-col"
+                    style="background-image:url('css/imagenes/reporte.jpg');">
+                    <img class="card-img d-none">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <small class="card-meta mb-2">Recursos Humanos</small>
+                            <h4 class="card-title mt-0 text-dark">Reporte de Asistencia</h4>
+                            <small><i class=""></i>Consulta la asistencia semanal de todo el personal.</small>
                         </div>
                         <div class="card-footer">
                             <div class="media">
@@ -105,5 +128,8 @@
     });
     document.getElementById("turnos").addEventListener("click", function() {
         window.location.href = "turnos.html";
+    });
+    document.getElementById("reporte").addEventListener("click", function() {
+        window.location.href = "reporteAsistencial.html";
     });
 </script>

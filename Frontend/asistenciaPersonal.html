@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/asistencia.css">
+        <link rel="stylesheet" type="text/css" href="css/estilos_dashboard.css">
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="css/all.min.css">
+    <title>Asistencias</title>
+</head>
+<body>
+    <div id="navbarContainer"></div>
+
+    <div class="container mt-5">
+        <section class="row d-flex justify-content-center mb-5">
+            <div class="col-12">
+                <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarEmpleado()">
+                    <div class="col-12">
+                        <div class="searchbar">
+                            <input type="text" name="cedula"  id="buscarCedula" required pattern="[0-9]{5,8}" class="search_input input-personalizado" type="text" placeholder="Buscar Empleado">
+                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn search_icon pl-2"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/all.min.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

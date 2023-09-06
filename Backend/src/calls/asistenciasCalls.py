@@ -9,7 +9,7 @@ class AsistenciasCalls():
         asistencias = Asistencia.query.filter_by(empleado_cedula=cedula).filter(\
             extract('month', Asistencia.hora_llegada) == date.month,\
             extract('year', Asistencia.hora_llegada) == date.year\
-            ).order_by(Asistencia.hora_llegada.desc())
+            ).order_by(Asistencia.hora_llegada)
         return asistencias
     
     def registrar_asistencia(asistencia):
@@ -53,5 +53,10 @@ class AsistenciasCalls():
         asistencias = Asistencia.query.filter_by(empleado_cedula=cedula).filter(\
             Asistencia.hora_llegada >= inicioSemana,\
             Asistencia.hora_llegada <= finSemana\
-            ).order_by(Asistencia.hora_llegada.desc())
+            ).order_by(Asistencia.hora_llegada)
         return asistencias
+    
+    def get_asistencias_empleado_dia(cedula, fecha):
+        date = datetime.strptime(fecha, "%d/%m/%Y")
+        asistencia = Asistencia.query.filter_by(empleado_cedula=cedula).filter(extract('date', Asistencia.hora_llegada) == date.date()).first()
+        return asistencia
