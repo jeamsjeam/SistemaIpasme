@@ -21,5 +21,9 @@ VALUES(1111111,'Prueba','Prueba',current_timestamp,'Prueba','11111111',1,1,1,1,1
 
 INSERT INTO ASISTENCIA (comentario, hora_llegada, hora_salida, empleado_cedula) 
 VALUES ('A tiempo', current_timestamp, current_timestamp,1111111);
+
+INSERT INTO PERMISO (descripcion_motivo,fecha_inicio,fecha_fin,empleado_cedula)
+VALUES ('Permiso por comision de servicio', '2023-09-04 00:00:00.307429', '2023-09-06 00:00:00.307429', 1111111);
+
 --INSERT INTO DEPENDENCIA (nombre) VALUES ('');
 --INSERT INTO DEPENDENCIA (nombre) VALUES ('');
