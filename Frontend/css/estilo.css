@@ -74,12 +74,8 @@ li {
   grid-column-start: var(--first-day-start, 0);
 }
 
-.asistencia {
-  background: lightblue;
-}
-
-.permiso {
-  background: lightgray;
+.asistencia, .permiso {
+  position: relative;
 }
 
 .day-name {
@@ -104,4 +100,26 @@ li {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
+}
+
+li.permiso:before, li.asistencia:before {
+  content: "";
+  position: absolute;
+  height: 29px;
+  width: 29px;
+  border-radius: 100px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  z-index: -1;
+}
+li.permiso:before{
+  background: lightblue;
+  border: 1px solid lightblue;
+}
+li.asistencia:before{
+  background: palegreen;
+  border: 1px solid palegreen;
 }

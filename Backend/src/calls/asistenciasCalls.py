@@ -58,5 +58,7 @@ class AsistenciasCalls():
     
     def get_asistencias_empleado_dia(cedula, fecha):
         date = datetime.strptime(fecha, "%d/%m/%Y")
-        asistencia = Asistencia.query.filter_by(empleado_cedula=cedula).filter(extract('date', Asistencia.hora_llegada) == date.date()).first()
+        asistencia = Asistencia.query.filter_by(empleado_cedula=cedula).filter(extract('day', Asistencia.hora_llegada) == date.day,
+                                                                               extract('month', Asistencia.hora_llegada) == date.month,
+                                                                               extract('year', Asistencia.hora_llegada) == date.year).first()
         return asistencia

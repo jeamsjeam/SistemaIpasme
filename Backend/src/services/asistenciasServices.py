@@ -6,10 +6,26 @@ from ..schemas.permisoSchema import permiso_schema,permisos_schema
 from datetime import datetime, timedelta
 import locale
 
+
 class AsistenciasServices:
     def get_asistencias_empleado_mes(cedula, fecha):
+        retorno = []
+
         asistencias = AsistenciasCalls.get_asistencias_empleado_mes(cedula, fecha)
-        return asistencias_schema.dump(asistencias)
+        asistenciasJson = asistencias_schema.dump(asistencias)
+
+        # Se buscan las fechas de la semana
+        date = datetime.strptime(fecha, "%d/%m/%Y")
+        inicioMes = datetime(date.year, date.month, 1)
+        finMes = date.replace(day=28) + timedelta(days=4) 
+        finMes = finMes - timedelta(days=finMes.day)
+
+        # Se buscam los permisos
+        permisos = PermisoCalls.get_permisos_empleado_fecha(cedula, fechaInicio=inicioMes.strftime('%d/%m/%Y'), fechaFin=finMes.strftime('%d/%m/%Y'))
+        permisosJson = permisos_schema.dump(permisos)
+
+        retorno = formatearAsistencias(asistenciasJson, permisosJson, inicioMes, finMes, False)
+        return retorno
     
     def get_asistencias_permisos_reporte(turnos_empleados, fecha):
         for turno in turnos_empleados:
@@ -28,21 +44,25 @@ class AsistenciasServices:
                 permisos = PermisoCalls.get_permisos_empleado_fecha(empleado['cedula'], fechaInicio=inicioSemana.strftime('%d/%m/%Y'), fechaFin=finSemana.strftime('%d/%m/%Y'))
                 permisosJson = permisos_schema.dump(permisos)
 
-                semana = formatearAsistencias(asistenciasJson, permisosJson, inicioSemana, True)
+                semana = formatearAsistencias(asistenciasJson, permisosJson, inicioSemana, finSemana, True)
                 empleado['semana'] = semana
         return turnos_empleados
 
     def get_asistencias_empleado_semana(cedula, fecha):
         asistencias = AsistenciasCalls.get_asistencias_empleado_semana(cedula, fecha)
         return asistencias_schema.dump(asistencias)
+    
+    def get_asistencias_empleado_dia(cedula, fecha):
+        asistencia = AsistenciasCalls.get_asistencias_empleado_dia(cedula, fecha)
+        return asistencia_schema.dump(asistencia)
 
 # ----------------------------- FUNCIONES GENERALES ------------------------------
-def formatearAsistencias(asistencias, permisos, fechaInicio, semana):
+def formatearAsistencias(asistencias, permisos, fechaInicio, fechaFin, semana):
     retorno = []
     if semana == True:
         retorno = semanaBase()
     else:
-        retorno = mesBase(fechaInicio)
+        retorno = mesBase(fechaFin)
     # Se llenan los permisos
     retorno = llenarPermisos(permisos, fechaInicio, retorno)
     # Se llenan las asistencias
@@ -53,7 +73,7 @@ def formatearAsistencias(asistencias, permisos, fechaInicio, semana):
                 # Obtener el día de la semana (0 para lunes, 6 para domingo)
                 retorno[date.weekday()]['asistencia'] = True
             else:
-                retorno[date.day]['asistencia'] = True
+                retorno[date.day - 1]['asistencia'] = True
     return retorno
 
 def semanaBase():
@@ -66,20 +86,20 @@ def semanaBase():
         retorno.append(base)
     return retorno
 
-def mesBase(fechaInicio):
+def mesBase(fechaFin):
     configuracion_original = locale.getlocale()
     retorno = []
-    fecha = datetime(fechaInicio.year, fechaInicio.month + 1, 1)
-    fecha = fecha - timedelta(days=1)
+    fechaActual = fechaFin
     locale.setlocale(locale.LC_TIME, 'es_ES')
-    for i in range(fecha.day):
+    for i in range(fechaFin.day):
         base = asistenciaBase()
-        base['dia'] = fecha.strftime("%A").capitalize()
-        base['numeroDia'] = fecha.day
-        fecha = fecha - timedelta(days=1)
+        base['dia'] = fechaActual.strftime("%A").capitalize()
+        base['numeroDia'] = fechaActual.day
         retorno.append(base)
+        fechaActual = fechaActual - timedelta(days=1)
     locale.setlocale(locale.LC_TIME, configuracion_original)
-    return retorno.reverse()
+    retorno.reverse()
+    return retorno
 
 def asistenciaBase():
     base = {

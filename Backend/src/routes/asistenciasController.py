@@ -18,3 +18,10 @@ def get_asistencias_permisos_reporte():
     empleados = EmpleadosServices.get_empleados_turno()
     respuesta = AsistenciasServices.get_asistencias_permisos_reporte(empleados, json['fecha'])
     return respuesta
+
+@app.route('/asistencias/empleado', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def get_asistencias_empleado_dia():
+    json = request.json
+    respuesta = AsistenciasServices.get_asistencias_empleado_dia(json['cedula'], json['fecha'])
+    return respuesta
