@@ -48,3 +48,60 @@ a{
 @media (min-width: 0px) and (max-width: 1199px){
 
 }
+
+.calendar {
+  text-align: center;
+  width: 600px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: auto;
+}
+
+ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  font-size: 1.5ch;
+  padding: 5px;
+}
+
+.first-day {
+  grid-column-start: var(--first-day-start, 0);
+}
+
+.asistencia {
+  background: lightblue;
+}
+
+.permiso {
+  background: lightgray;
+}
+
+.day-name {
+  background: #eee;
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 2px;
+  padding: 4px;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  padding: 10px;
+}
+
+.prev, .next {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}

@@ -28,10 +28,30 @@
             </div>
         </section>
     </div>
+    <div class="container">
+        <div class="row botonesAsistencia justify-content-center">
+        </div>
+    </div>
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-12">
+                <div class="calendar">
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="js/toastify.js"></script>
     <script src="js/util.js"></script>
     <script src="js/all.min.js"></script>
     <script src="bootstrap-5/js/bootstrap.min.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/recursoshumanos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            cargarCalendario(0)
+            cargarOpcionesBotones()
+        });
+    </script>
 </body>
 </html>
