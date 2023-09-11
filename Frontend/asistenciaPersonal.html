@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
-        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/asistencia.css">
-        <link rel="stylesheet" type="text/css" href="css/estilos_dashboard.css">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css">
-        <link rel="stylesheet" type="text/css" href="css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/asistencia.css">
+    <link rel="stylesheet" type="text/css" href="css/estilos_dashboard.css">
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <link rel="stylesheet" type="text/css" href="css/all.min.css">
     <title>Asistencias</title>
 </head>
+
 <body>
     <div id="navbarContainer"></div>
 
     <div class="container mt-5">
         <section class="row d-flex justify-content-center mb-5">
             <div class="col-12">
-                <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarEmpleado()">
+                <form name="formularioBuscarCedula" action="#" method="post"
+                    onsubmit="event.preventDefault(); buscarEmpleado()">
                     <div class="col-12">
                         <div class="searchbar">
-                            <input type="text" name="cedula"  id="buscarCedula" required pattern="[0-9]{5,8}" class="search_input input-personalizado" type="text" placeholder="Buscar Empleado">
-                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn search_icon pl-2"><i class="fas fa-search"></i></button>
+                            <input type="text" name="cedula" id="buscarCedula" required pattern="[0-9]{5,8}"
+                                class="search_input input-personalizado" type="text" placeholder="Buscar Empleado">
+                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1"
+                                class="btn search_icon pl-2"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                 </form>
@@ -36,6 +41,64 @@
         <div class="row">
             <div class="col-12">
                 <div class="calendar">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="asistenciaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Desea añadir un comentario?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend input-group-sm">
+                            <span class="input-group-text">Comentario</span>
+                        </div>
+                        <textarea id="comentario" class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="registrarAsistencia()">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="permisoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Complete los datos del permiso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row pb-2 justify-content-around">
+                        <div class="col-lg-6">
+                            Fecha Inicio
+                            <div class="cs-form">
+                                <input type="date" class="form-control" id="hora-salida-${turno.id}" value="" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            Fecha Fin
+                            <div class="cs-form">
+                                <input type="date" class="form-control" id="hora-salida-${turno.id}" value="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group input-group-sm">
+                        <div class="input-group-prepend input-group-sm">
+                            <span class="input-group-text">Motivo</span>
+                        </div>
+                        <textarea id="Motivo" class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="registrarPermiso()">Registrar</button>
                 </div>
             </div>
         </div>

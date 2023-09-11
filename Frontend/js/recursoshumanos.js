@@ -122,16 +122,22 @@ function cargarOpcionesBotones(cedula){
     fetch(url, options)
     .then(response => response.json() )
     .then(data => {
-        botonEntrada = `<button class="col-4 btn btn-success btn-sm px-5  mx-1" onclick="verPerfil(0)">Registrar Entrada</button>`
-        botonSalida = `<button class="col-4 btn btn-success btn-sm px-5  mx-1" onclick="verPerfil(0)">Registrar Salida</button>`
-        botonPermiso = `<button class="col-4 btn btn-primary btn-sm px-5 mx-1" onclick="verPerfil(0)">Registrar Permiso</button>`
-        let html = typeof data !== 'undefined' &&
-                   data !== null && 
-                   Object.keys(data).length > 0 ? 
-                        data.hora_salida === null ? 
-                            botonSalida + botonPermiso :            
-                        botonPermiso:
-                    botonEntrada + botonPermiso
+        botonEntrada = `<button class="col-4 btn btn-success btn-sm px-5  mx-1" data-bs-toggle="modal" data-bs-target="#asistenciaModal" >Registrar Entrada</button>`
+        botonSalida = `<button class="col-4 btn btn-success btn-sm px-5  mx-1" data-bs-toggle="modal" data-bs-target="#asistenciaModal" >Registrar Salida</button>`
+        botonPermiso = `<button class="col-4 btn btn-primary btn-sm px-5 mx-1" data-bs-toggle="modal" data-bs-target="#permisoModal" >Registrar Permiso</button>`
+        let html = ""
+
+        if(typeof data !== 'undefined' && data !== null && Object.keys(data).length > 0){
+            if (data.hora_salida === null) {
+                html = botonPermiso
+                
+            }else{
+                html = botonSalida + botonPermiso
+                document.getElementById("comentario").value = data.comentario;
+            }
+        } else{
+            html = botonEntrada + botonPermiso
+        }
         document.querySelector('.botonesAsistencia').innerHTML = html
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )
