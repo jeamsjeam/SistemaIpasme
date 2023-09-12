@@ -31,8 +31,8 @@ function cargarCalendario(sumar){
     }
     fechaConsulta = new Date(year, mes, 1)
     sessionStorage.setItem('mesCalendario', fechaConsulta)
-        
-    let cedula = document.getElementById("buscarCedula").value;
+
+    let cedula = JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'));    
     let url = "http://127.0.0.1:5000/asistencias/empleado/mes"; 
     data = {
         cedula : cedula,
@@ -130,13 +130,14 @@ function cargarOpcionesBotones(cedula){
         if(typeof data !== 'undefined' && data !== null && Object.keys(data).length > 0){
             if (data.hora_salida === null) {
                 html = botonPermiso
-                
             }else{
                 html = botonSalida + botonPermiso
                 document.getElementById("comentario").value = data.comentario;
+                document.getElementById("botonAsistencia").onclick = registrarSalida;
             }
         } else{
             html = botonEntrada + botonPermiso
+            document.getElementById("botonAsistencia").onclick = registrarEntrada;
         }
         document.querySelector('.botonesAsistencia').innerHTML = html
     })
@@ -152,6 +153,7 @@ function buscarEmpleado(){
     .then(response => response.json() )
     .then(data => {
         if(typeof data !== 'undefined' && data !== null && Object.keys(data).length > 0 ){
+            sessionStorage.setItem('cedulaBuscarEmpleado', cedula)
             cargarOpcionesBotones(cedula)
             cargarCalendario(0)
             document.getElementById("buscarCedula").value = ""
@@ -160,4 +162,12 @@ function buscarEmpleado(){
         }
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000"))
+}
+
+function registrarEntrada(){
+    
+}
+
+function registrarSalida(){
+    
 }
