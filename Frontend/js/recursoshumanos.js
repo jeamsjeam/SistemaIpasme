@@ -126,15 +126,15 @@ function cargarOpcionesBotones(cedula){
         botonSalida = `<button class="col-4 btn btn-success btn-sm px-5  mx-1" data-bs-toggle="modal" data-bs-target="#asistenciaModal" >Registrar Salida</button>`
         botonPermiso = `<button class="col-4 btn btn-primary btn-sm px-5 mx-1" data-bs-toggle="modal" data-bs-target="#permisoModal" >Registrar Permiso</button>`
         let html = ""
-
         if(typeof data !== 'undefined' && data !== null && Object.keys(data).length > 0){
-            if (data.hora_salida === null) {
-                html = botonPermiso
-            }else{
+            if (data.hora_salida === null && data.hora_salida === "null" && data.hora_salida === "") {
                 html = botonSalida + botonPermiso
                 document.getElementById("comentario").value = data.comentario;
                 document.getElementById("botonAsistencia").onclick = registrarSalida;
+            }else{
+                html = botonPermiso
             }
+            sessionStorage.setItem('asistenciaDiaria', JSON.stringify(data))
         } else{
             html = botonEntrada + botonPermiso
             document.getElementById("botonAsistencia").onclick = registrarEntrada;
@@ -145,8 +145,11 @@ function cargarOpcionesBotones(cedula){
 
 }
 
-function buscarEmpleado(){
+function buscarEmpleado(recarga){
     let cedula = document.getElementById("buscarCedula").value;
+    if (recarga) {
+        cedula = JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'));    
+    }
     const url = "http://127.0.0.1:5000/empleados/" + cedula;
 
     fetch(url)
@@ -165,9 +168,70 @@ function buscarEmpleado(){
 }
 
 function registrarEntrada(){
-    
+    let url = "http://127.0.0.1:5000/asistencias/registrarEntrada"; 
+    data = {
+        comentario : document.getElementById("comentario").value,
+        hora_salida : new Date().toISOString(),
+        hora_llegada : null,
+        empleado_cedula : JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'))
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        resultado = data.toString().split('|')
+        if (typeof resultado[1] !== 'undefined' && resultado[1] !== null) {
+            if (resultado[0] === '00') {
+                mostrarNotificacion("Registrado con Exito", "#198754")
+                buscarEmpleado(true)
+            } else {
+                mostrarNotificacion(resultado[1], "#FF0000")
+            }
+        } else {
+            mostrarNotificacion(resultado[0], "#FF0000")
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
 }
 
 function registrarSalida(){
-    
+    let url = "http://127.0.0.1:5000/asistencias/registrarSalida"; 
+    let asistencia = JSON.parse(sessionStorage.getItem('asistenciaDiaria'))
+    data = {
+        id : asistencia.id,
+        comentario : document.getElementById("comentario").value,
+        hora_salida : asistencia.hora_salida,
+        hora_llegada : new Date().toISOString(), 
+        empleado_cedula : JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'))
+    }
+    debugger
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        resultado = data.toString().split('|')
+        if (typeof resultado[1] !== 'undefined' && resultado[1] !== null) {
+            if (resultado[0] === '00') {
+                mostrarNotificacion("Registrado con Exito", "#198754")
+                buscarEmpleado(true)
+            } else {
+                mostrarNotificacion(resultado[1], "#FF0000")
+            }
+        } else {
+            mostrarNotificacion(resultado[0], "#FF0000")
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
 }

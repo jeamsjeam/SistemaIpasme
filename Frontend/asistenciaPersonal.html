@@ -20,7 +20,7 @@
         <section class="row d-flex justify-content-center mb-5">
             <div class="col-12">
                 <form name="formularioBuscarCedula" action="#" method="post"
-                    onsubmit="event.preventDefault(); buscarEmpleado()">
+                    onsubmit="event.preventDefault(); buscarEmpleado(false)">
                     <div class="col-12">
                         <div class="searchbar">
                             <input type="text" name="cedula" id="buscarCedula" required pattern="[0-9]{5,8}"
@@ -62,7 +62,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="botonAsistencia">Registrar</button>
+                    <button type="button" class="btn btn-success" id="botonAsistencia" data-bs-dismiss="modal">Registrar</button>
                 </div>
             </div>
         </div>

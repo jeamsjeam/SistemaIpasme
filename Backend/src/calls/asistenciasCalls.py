@@ -24,7 +24,7 @@ class AsistenciasCalls():
     
     def registrar_entrada(asistencia):
         asistenciaNueva = Asistencia(comentario=asistencia.comentario,
-                                     hora_llegada=None,
+                                     hora_llegada=asistencia.hora_llegada,
                                      hora_salida=None,
                                      empleado_cedula=asistencia.empleado_cedula)
         db.session.add(asistenciaNueva)

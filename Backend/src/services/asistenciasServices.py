@@ -55,7 +55,23 @@ class AsistenciasServices:
     def get_asistencias_empleado_dia(cedula, fecha):
         asistencia = AsistenciasCalls.get_asistencias_empleado_dia(cedula, fecha)
         return asistencia_schema.dump(asistencia)
-
+    
+    def registrar_entrada(json):
+        asistencia = deserealizarJson(json)
+        retorno = AsistenciasCalls.registrar_entrada(asistencia)
+        if retorno is not None:
+            return "00|OK"
+        else:
+            return "01|Problemas al registrar la asistencia"
+    
+    def registrar_salida(json):
+        asistencia = deserealizarJson(json)
+        retorno = AsistenciasCalls.registrar_salida(asistencia)
+        if retorno is not None:
+            return "00|OK"
+        else:
+            return "01|Problemas al registrar la asistencia"
+        
 # ----------------------------- FUNCIONES GENERALES ------------------------------
 def formatearAsistencias(asistencias, permisos, fechaInicio, fechaFin, semana):
     retorno = []
@@ -120,3 +136,12 @@ def llenarPermisos(permisos, fechaInicio, retorno):
                     dia['asistencia'] = False
                 fechaDia = fechaDia + timedelta(days=1)
     return retorno
+
+def deserealizarJson(json):
+    asistencia = Asistencia(comentario=json['comentario'], 
+                      hora_llegada=json['hora_llegada'], 
+                      hora_salida=json['hora_salida'],
+                      empleado_cedula=int(json['empleado_cedula']))
+    if 'id' in json:
+        asistencia.id = int(json['id'])
+    return asistencia

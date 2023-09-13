@@ -25,3 +25,15 @@ def get_asistencias_empleado_dia():
     json = request.json
     respuesta = AsistenciasServices.get_asistencias_empleado_dia(json['cedula'], json['fecha'])
     return respuesta
+
+@app.route('/asistencias/registrarEntrada', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def registrar_entrada():
+    respuesta = AsistenciasServices.registrar_entrada(request.json)
+    return make_response(jsonify(respuesta))
+
+@app.route('/asistencias/registrarSalida', methods=['POST'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def registrar_salida():
+    respuesta = AsistenciasServices.registrar_salida(request.json)
+    return make_response(jsonify(respuesta))
