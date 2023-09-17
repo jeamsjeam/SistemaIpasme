@@ -113,8 +113,10 @@ function buscarPaciente(){
         console.log(data)
         if(typeof data !== 'undefined' && data !== null){
             var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
+            //var formularioRegistrarReposo = document.getElementById("formularioRegistrarReposo");
             //var tablaReposos = document.getElementById("tablaReposos");
             pacienteEncontrado.classList.remove("d-none");
+            //formularioRegistrarReposo.classList.remove("d-none");
             //tablaReposos.classList.remove("d-none");
             
             datosPacienteTabla(data)
@@ -333,9 +335,12 @@ function resetearEtquitasOcultas(){
     var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
     pacienteEncontrado.classList.add("d-none");
 
+    // var formularioRegistrarReposo = document.getElementById("formularioRegistrarReposo");
+    // formularioRegistrarReposo.classList.add("d-none");
+
     //Tabla de los reposos
-    var tablaReposos = document.getElementById("tablaReposos");
-    tablaReposos.classList.add("d-none");
+    // var tablaReposos = document.getElementById("tablaReposos");
+    // tablaReposos.classList.add("d-none");
 
     //Formulario para paciente nuevo
     var registrarPaciente = document.getElementById("formularioRegistrarPaciente");
@@ -352,9 +357,12 @@ function PacienteEncontrado(){
     var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
     pacienteEncontrado.classList.remove("d-none");
 
+    // var formularioRegistrarReposo = document.getElementById("formularioRegistrarReposo");
+    // formularioRegistrarReposo.classList.remove("d-none");
+
     //Tabla de los reposos
-    var tablaReposos = document.getElementById("tablaReposos");
-    tablaReposos.classList.add("d-none");
+    // var tablaReposos = document.getElementById("tablaReposos");
+    // tablaReposos.classList.add("d-none");
 
     //Formulario para paciente nuevo
     var registrarPaciente = document.getElementById("formularioRegistrarPaciente");
