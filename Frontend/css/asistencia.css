@@ -12,23 +12,23 @@
     }
   
     .search_input{
-    color: white;
-    border: 0;
-    outline: 0;
-    width: 90%;
-    background: transparent !important;
-    caret-color:transparent;
-    line-height: 40px;
-    font-weight: bold;
+        color: white;
+        border: 0;
+        outline: 0;
+        width: 90%;
+        background: transparent !important;
+        caret-color:transparent;
+        line-height: 40px;
+        font-weight: bold;
     }
   
     .searchbar:hover > .search_input{
-    caret-color:red;
+        caret-color:red;
     }
   
     .searchbar:hover > .search_icon{
-    background: rgb(33, 137, 255);
-    color: white;
+        background: rgb(33, 137, 255);
+        color: white;
     }
   
     .search_icon{
@@ -38,7 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    border-radius: 50% !important;
     color:black;
     text-decoration:none;
     }
@@ -68,4 +68,12 @@
         box-shadow: 5px 5px 3px 3px rgba(0, 0, 0, 0.3);
         border-radius: 5px;
     }
+
+    .tabla-reposos{
+        padding: 40px;
+    }
       
+    .centered {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
