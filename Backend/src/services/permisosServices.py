@@ -5,7 +5,7 @@ from ..schemas.permisoSchema import permiso_schema,permisos_schema
 class PermisosServices:
     def registrarPermiso(json):
         permiso = deserealizarJson(json)
-        anteriores = PermisoCalls.get_permisos_empleado_fecha(permiso.empleado_cedula, permiso.fecha_inicio, permiso.fecha_fin)
+        anteriores = permisos_schema.dump(PermisoCalls.get_permisos_empleado_fecha(permiso.empleado_cedula, permiso.fecha_inicio, permiso.fecha_fin))
         if len(anteriores) == 0:
             done = PermisoCalls.registrar_permiso(permiso)
             if done is not None:
@@ -17,6 +17,10 @@ class PermisosServices:
         
     def consultarPermisosEmpleado(cedula):
         permisos = PermisoCalls.get_permisos_empleado(cedula)
+        return permisos_schema.dump(permisos) 
+    
+    def get_permisos_cedula_fecha(cedula, fechaInicio, fechaFin):
+        permisos = PermisoCalls.get_permisos_empleado_fecha(cedula, fechaInicio, fechaFin)
         return permisos_schema.dump(permisos) 
 
 def deserealizarJson(json):

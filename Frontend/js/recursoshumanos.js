@@ -127,7 +127,7 @@ function cargarOpcionesBotones(cedula){
         botonPermiso = `<button class="col-4 btn btn-primary btn-sm px-5 mx-1" data-bs-toggle="modal" data-bs-target="#permisoModal" >Registrar Permiso</button>`
         let html = ""
         if(typeof data !== 'undefined' && data !== null && Object.keys(data).length > 0){
-            if (data.hora_salida === null && data.hora_salida === "null" && data.hora_salida === "") {
+            if (data.hora_salida === null || data.hora_salida === "null" || data.hora_salida === "") {
                 html = botonSalida + botonPermiso
                 document.getElementById("comentario").value = data.comentario;
                 document.getElementById("botonAsistencia").onclick = registrarSalida;
@@ -159,6 +159,7 @@ function buscarEmpleado(recarga){
             sessionStorage.setItem('cedulaBuscarEmpleado', cedula)
             cargarOpcionesBotones(cedula)
             cargarCalendario(0)
+            buscarPermisos()
             document.getElementById("buscarCedula").value = ""
         }else{
             mostrarNotificacion("No se encontro el empleado","#FF0000") 
@@ -210,7 +211,6 @@ function registrarSalida(){
         hora_llegada : new Date().toISOString(), 
         empleado_cedula : JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'))
     }
-    debugger
     let options = {
         method: "POST",
         headers: {
@@ -232,6 +232,84 @@ function registrarSalida(){
         } else {
             mostrarNotificacion(resultado[0], "#FF0000")
         }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
+
+function registrarPermiso(){
+    let descripcion_motivo = document.getElementById("motivo").value;
+    let fecha_inicio = document.getElementById("fecha-inicio-permiso").value;
+    let fecha_fin = document.getElementById("fecha-fin-permiso").value; 
+    if (descripcion_motivo == '' || fecha_inicio == '' || fecha_fin == '') {
+        mostrarNotificacion('Por favor, complete todos los campos', "#FF0000")
+        return 0
+    }
+
+    let url = "http://127.0.0.1:5000/permisos/registrar"; 
+    data = {
+        descripcion_motivo : descripcion_motivo,
+        fecha_inicio : formatearFecha(fecha_inicio),
+        fecha_fin : formatearFecha(fecha_fin), 
+        empleado_cedula : JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'))
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        resultado = data.toString().split('|')
+        if (typeof resultado[1] !== 'undefined' && resultado[1] !== null) {
+            if (resultado[0] === '00') {
+                mostrarNotificacion("Registrado con Exito", "#198754")
+                document.getElementById("motivo").value = "";
+                document.getElementById("fecha-inicio-permiso").value = "";
+                document.getElementById("fecha-fin-permiso").value = ""; 
+                buscarEmpleado(true)
+            } else {
+                mostrarNotificacion(resultado[1], "#FF0000")
+            }
+        } else {
+            mostrarNotificacion(resultado[0], "#FF0000")
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
+
+function formatearFecha(fecha) {
+    let data = fecha.split('-')
+    return data[2] + "/" + data[1] + "/" + data[0]
+}
+
+function buscarPermisos(){
+    let url = "http://127.0.0.1:5000/permisos/consultar"; 
+    let fechaConsulta = sessionStorage.getItem('mesCalendario')
+    let fechaInicio = new Date(fechaConsulta)
+    let fechaFin =  new Date(fechaConsulta)
+    fechaFin.setMonth(fechaFin.getMonth() + 1)
+    fechaFin.setDate(fechaFin.Date() - fechaFin.getDay())
+
+
+    data = {
+        cedula : cedula,
+        fechaInicio : fechaInicio.toISOString(),
+        fechaFin : fechaFin.toISOString()
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )
 }
