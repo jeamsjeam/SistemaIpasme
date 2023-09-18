@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
-        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+        
         <link rel="stylesheet" type="text/css" href="css/asistencia.css">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <link rel="stylesheet" type="text/css" href="css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" type="text/css" href="css/DataTable/cdnjs.cloudflare.com_ajax_libs_font-awesome_6.2.0_css_all.min.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
     <title>Reposos</title>
 </head>
 <body>
@@ -27,7 +30,7 @@
             </div>
         </section>
         <section class="row" id="contenidoDesplegable">
-            <div class="col-12">
+            <div class="col-12 d-flex justify-content-center">
                 <div class="row d-none datos-paciente mb-3" id="formularioRegistrarPaciente">
                     <div class="d-flex justify-content-center mb-2">
                         <h3>Registrar Paciente</h3>
@@ -112,48 +115,7 @@
                                     </div>
                                 </div>
                             </div>
-                       
-                            <!-- <div class="d-flex justify-content-center mt-2">
-                                <h3>Registrar Reposo</h3>
-                            </div>
-                            <div class="mb-3">
-                                <label for="primerReposoCodAsistencial" class="form-label">Codigo Asistencial<span class = "requerido">*</span></label>
-                                <input type="text" name="codasistencial" class="form-control" id="primerReposoCodAsistencial" required placeholder="Codigo Asistencial">
-                            </div>
-                        
-                            <div class="mb-3">
-                                <label for="primerReposoCodRegistro" class="form-label">Codigo Registro<span class = "requerido">*</span></label>
-                                <input type="text" name="codregistro" class="form-control" id="primerReposoCodRegistro" required placeholder="Codigo Registro">
-                            </div>
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="primerReposofechaDesde" class="form-label">Fecha Desde<span class = "requerido">*</span></label>
-                                        <input type="date" name="fechadesde" class="form-control" id="primerReposofechaDesde" required min="1900-01-01">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="primerReposofechaHasta" class="form-label">Fecha Hasta<span class = "requerido">*</span></label>
-                                        <input type="date" name="fechahasta" class="form-control" id="primerReposofechaHasta" required min="1900-01-01">
-                                    </div>
-                                </div>
-                            </div>	
-
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="primerReposoValida" class="form-label">Quien Valida</label>
-                                        <input type="text" name="quienvalida" class="form-control" id="primerReposoValida" pattern="[A-Za-zÁ-Úá-úÑñ]{3,4}" placeholder="Quien Valida">
-                                    </div>
-
-                                    <div class="col-6">
-                                        <label for="primerReposoTipoReposo" class="form-label">Tipo Reposo<span class = "requerido">*</span></label>
-                                        <select name="tipoReposo" id ="primerReposoTipoReposo" class="form-select" aria-label="Default select example" required>
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
+                        </div> 
 
                         <div class="row mt-4 mb-3">
                             <!-- Boton Registrar -->
@@ -173,88 +135,176 @@
             </div>
         </section>
         <section>
-            <div class="row d-none" id="formularioDatosEncontrados">
-                <div class="col-12 datos-paciente">
-                    <table class="table table-sm table-borderless ">
-                        <!-- Primera Fila-->
-                        <tr>
-                            <th>Cedula</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Institucion Laboral</th>
-                            <th>Fecha de Nacimiento</th>
-                        </tr>
-                        <tr>
-                            <td id="datosPaciente_cedula"></td>
-                            <td id="datosPaciente_nombres"></td>
-                            <td id="datosPaciente_apellidos"></td>
-                            <td id="datosPaciente_institucion_laboral"></td>
-                            <td id="datosPaciente_fecha_nacimiento"></td>
-                        </tr>
-                        <tr>
-                            <th>Telefono</th>
-                            <th>Cargo</th>
-                            <th>Dependencia</th>
-                            <th>Municipio</th>
-                            <th>Accion</th>
-                        </tr>
-                        <tr>
-                            <td id="datosPaciente_telefono"></td>
-                            <td id="datosPaciente_cargo"></td>
-                            <td id="datosPaciente_dependencia"></td>
-                            <td id="datosPaciente_municipio"></td>
-                            <td>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <button id="modificarButton" class="btn btn-secondary" type="button">
-                                            <img src="css/imagenes/pencil.svg">
-                                        </button>
+            <div class="datos-paciente d-none" id="formularioDatosEncontrados">
+                <div class="row">
+                    <div class="col-12 ">
+                        <table class="table table-sm table-borderless ">
+                            <!-- Primera Fila-->
+                            <tr>
+                                <th>Cedula</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Institucion Laboral</th>
+                                <th>Fecha de Nacimiento</th>
+                            </tr>
+                            <tr>
+                                <td id="datosPaciente_cedula"></td>
+                                <td id="datosPaciente_nombres"></td>
+                                <td id="datosPaciente_apellidos"></td>
+                                <td id="datosPaciente_institucion_laboral"></td>
+                                <td id="datosPaciente_fecha_nacimiento"></td>
+                            </tr>
+                            <tr>
+                                <th>Telefono</th>
+                                <th>Cargo</th>
+                                <th>Dependencia</th>
+                                <th>Municipio</th>
+                                <th>Accion</th>
+                            </tr>
+                            <tr>
+                                <td id="datosPaciente_telefono"></td>
+                                <td id="datosPaciente_cargo"></td>
+                                <td id="datosPaciente_dependencia"></td>
+                                <td id="datosPaciente_municipio"></td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <button id="modificarButton" class="btn btn-secondary" type="button">
+                                                <img src="css/imagenes/pencil.svg">
+                                            </button>
+                                        </div>
+                                        <div class="col-3">
+                                            <button id="eliminarButton" class="btn btn-secondary" type="button">
+                                                <img src="css/imagenes/trash.svg">
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col-3">
-                                        <button id="eliminarButton" class="btn btn-secondary" type="button">
-                                            <img src="css/imagenes/trash.svg">
-                                        </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Dias Reposo</th>
+                                <th colspan="4">Direccion</th>
+                            </tr>
+                            <tr>
+                                <td id="datosPaciente_dias_reposo"></td>
+                                <td id="datosPaciente_direccion" colspan="4"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-2" id="formularioRegistrarReposo">
+                    <div class="col-12">
+                        <form name="formulario" method="post" action="#" onsubmit="event.preventDefault(); registrarReposo()">
+                            <div class="d-flex justify-content-center mt-2">
+                                <h3>Registrar Reposo</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoCodAsistencial" class="form-label">Codigo Asistencial<span class = "requerido">*</span></label>
+                                        <input type="text" name="codasistencial" class="form-control" id="reposoCodAsistencial" required placeholder="Codigo Asistencial">
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Dias Reposo</th>
-                            <th colspan="4">Direccion</th>
-                        </tr>
-                        <tr>
-                            <td id="datosPaciente_dias_reposo"></td>
-                            <td id="datosPaciente_direccion" colspan="4"></td>
-                        </tr>
-                    </table>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoCodRegistro" class="form-label">Codigo Registro<span class = "requerido">*</span></label>
+                                        <input type="text" name="codregistro" class="form-control" id="reposoCodRegistro" required placeholder="Codigo Registro">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">  
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposofechaDesde" class="form-label">Fecha Desde<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechadesde" class="form-control" id="reposofechaDesde" required min="1900-01-01">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposofechaHasta" class="form-label">Fecha Hasta<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechahasta" class="form-control" id="reposofechaHasta" required min="1900-01-01">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoValida" class="form-label">Quien Valida</label>
+                                        <input type="text" name="quienvalida" class="form-control" id="reposoValida" placeholder="Quien Valida">
+                                    </div>
+                                </div>
+                                <!-- <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoTipoReposo" class="form-label">Tipo Reposo<span class = "requerido">*</span></label>
+                                        <select name="tipoReposo" id ="reposoTipoReposo" class="form-select" aria-label="Default select example" required>
+                                    </div>
+                                </div> -->
+                            </div>    
+                            <div class="row mt-4 mb-3">
+                                <!-- Boton Registrar -->
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <button type="submit" name="botonRegistrarReposo" value="1" class="btn btn-primary">Registrar</button>
+                                        </div>
+                                        <div class="col-8">
+                                            <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                        </div>
+                                    </div>
+                                  </div>
+                              </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="row bordeSeccion d-none" id="tablaReposos">
-                <div class="col-12">
-                    <table class="table table-sm table-hover">							
-                        <!-- Primera Fila-->
-                        <tr>
-                            <th>Codigo Asistencial</th>
-                            <th>Codigo Registro</th>
-                            <th >Reposo o Cuido</th>
-                            <th >Fecha Desde</th>
-                            <th >Fecha Hasta</th>
-                            <th >Quien Valida</th>
-                            <th >Especialidad Valida</th>
-                            <th >Accion</th>
-                        </tr>
-                        <tbody id="tabla-body"></tbody>
+            
+            <div class="row p-4 mt-3 d-none" id="tablaReposos">
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <table id="datatable_reposos" class="table table-striped">
+                        <caption>
+                            Reposos
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th class="centered">#</th>
+                                <th class="centered">Codigo Asistencial</th>
+                                <th class="centered">Codigo Registro</th>
+                                <th class="centered">Fecha Desde</th>
+                                <th class="centered">Fecha Hasta</th>
+                                <th class="centered">Quien Valida</th>
+                                <!-- <th class="centered">Status</th> -->
+                                <th class="centered">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody_reposos"></tbody>
                     </table>
                 </div>
             </div>
         </section>
     </div>
 
+    
+
+    <script src="js/DataTable/cdnjs.cloudflare.com_ajax_libs_jquery_3.6.0_jquery.min.js"></script>
+    
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_jquery.dataTables.min.js"></script>
+
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_dataTables.bootstrap5.min.js"></script>
+
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
     <script src="js/toastify.js"></script>
     <script src="js/util.js"></script>
     <script src="js/all.min.js"></script>
     <script src="js/asistencial.js"></script>
-    <script src="bootstrap-5/js/bootstrap.min.js"></script>
     <script src="js/navbar.js"></script>
+    <!-- <script src="js/dataTableReposos.js"></script> -->
+    
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> -->
 </body>
 </html>
