@@ -241,12 +241,18 @@ function llenarSelects() {
 function guardarPerfil() {
     let fieldsToRead = ["cedula", "nombre", "apellido", "telefono", "fecha_nacimiento", "direccion", "dependencias", "generos", "especialidades", "cargos", "turnos", "estados_empleados"];
     let empleado = {}
+    let valido = false
     fieldsToRead.forEach(x => {
         let elemento = document.getElementById(x);
         if (elemento) {
+            valido = valido || elemento.value == ""
             empleado[x] = elemento.value
         }
     });
+    if (valido) {
+        mostrarNotificacion('Por favor, complete todos los campos', "#FF0000")
+        return 0
+    }
 
     let urlGuardar = urlEmpleados + "/guardar";
     // Opciones para la petición fetch

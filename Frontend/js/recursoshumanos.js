@@ -377,7 +377,7 @@ function list(lista) {
         });
         tableBody_permisos.innerHTML = content;
     } catch (ex) {
-        alert(ex);
+        console.error("Error initializing DataTable:", error);
     }
 }
 
