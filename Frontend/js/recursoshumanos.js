@@ -159,7 +159,7 @@ function buscarEmpleado(recarga){
             sessionStorage.setItem('cedulaBuscarEmpleado', cedula)
             cargarOpcionesBotones(cedula)
             cargarCalendario(0)
-            buscarPermisos()
+            buscarPermisos(cedula)
             document.getElementById("buscarCedula").value = ""
         }else{
             mostrarNotificacion("No se encontro el empleado","#FF0000") 
@@ -285,19 +285,19 @@ function formatearFecha(fecha) {
     return data[2] + "/" + data[1] + "/" + data[0]
 }
 
-function buscarPermisos(){
+function buscarPermisos(cedula){
     let url = "http://127.0.0.1:5000/permisos/consultar"; 
     let fechaConsulta = sessionStorage.getItem('mesCalendario')
     let fechaInicio = new Date(fechaConsulta)
     let fechaFin =  new Date(fechaConsulta)
     fechaFin.setMonth(fechaFin.getMonth() + 1)
-    fechaFin.setDate(fechaFin.Date() - fechaFin.getDay())
+    fechaFin.setDate(fechaFin.getDate() - fechaFin.getDay())
 
 
     data = {
         cedula : cedula,
-        fechaInicio : fechaInicio.toISOString(),
-        fechaFin : fechaFin.toISOString()
+        fechaInicio : fechaInicio.toLocaleDateString('en-GB'),
+        fechaFin : fechaFin.toLocaleDateString('en-GB')
     }
     let options = {
         method: "POST",
@@ -309,7 +309,74 @@ function buscarPermisos(){
     fetch(url, options)
     .then(response => response.json() )
     .then(data => {
-        
+        document.getElementById("tablaPermisos").classList.remove("d-none");
+        initDataTable(data)
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
+
+
+let dataTable = null;
+let dataTableIsInitialized = false;
+const dataTableOptions = {
+    //scrollX: "2000px",
+    lengthMenu: [5, 10, 15, 20, 100, 200, 500],
+    columnDefs: [
+        { className: "centered", targets: [0, 1, 2, 3] },
+        { orderable: false, targets: [0, 1] },
+        { searchable: false, targets: [1] }
+        //{ width: "50%", targets: [0] }
+    ],
+    pageLength: 3,
+    destroy: true,
+    language: {
+        lengthMenu: "Mostrar _MENU_ registros por página",
+        zeroRecords: "Ningún permiso encontrado",
+        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+        infoEmpty: "Ningún permiso encontrado",
+        infoFiltered: "(filtrados desde _MAX_ registros totales)",
+        search: "Buscar:",
+        loadingRecords: "Cargando...",
+        paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior"
+        }
+    }
+};
+
+function initDataTable(lista) { 
+    if (dataTableIsInitialized) {
+        dataTable.destroy();
+    }
+
+    try{
+        list(lista);
+        dataTable = $("#datatable_permisos").DataTable(dataTableOptions);
+    }catch(error){
+        console.error("Error initializing DataTable:", error);
+    }
+
+    dataTableIsInitialized = true;
+}
+
+function list(lista) {
+    try {
+        let content = ``;
+        lista.forEach((data, index) => {
+            let fechaInicio = new Date(data.fecha_inicio)
+            let fechaFin = new Date(data.fecha_fin)
+            content += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${data.descripcion_motivo}</td>
+                    <td>${fechaInicio.toLocaleDateString('en-GB')}</td>
+                    <td>${fechaFin.toLocaleDateString('en-GB')}</td>
+                </tr>`;
+        });
+        tableBody_permisos.innerHTML = content;
+    } catch (ex) {
+        alert(ex);
+    }
 }
