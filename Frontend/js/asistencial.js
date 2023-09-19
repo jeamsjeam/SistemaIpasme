@@ -192,9 +192,9 @@ function registrarPacienteNuevo(){
     document.getElementById('registrarPacienteInstitucion').value = "";
     document.getElementById('registrarPacienteDireccion').value = "";
     document.getElementById('registrarPacienteTelefono').value = "";
-    document.getElementById('seleccionCargo').value = "";
-    document.getElementById('seleccionDependencia').value = "";
-    document.getElementById('seleccionMunicipio').value = "";
+    document.getElementById('seleccionCargo').value = 1;
+    document.getElementById('seleccionDependencia').value = 1;
+    document.getElementById('seleccionMunicipio').value = 1;
     document.getElementById('registrarPacienteFechaNacimiento').value = "";
 
     let datosPacienteResultado = {}
@@ -250,13 +250,13 @@ function datosPacienteTabla(datos){
     var modificarButton = document.getElementById("modificarButton");
     var eliminarButton = document.getElementById("eliminarButton");
 
-    if (datosPaciente_permiso === 2) {
-        modificarButton.disabled = true;
-        eliminarButton.disabled = true;
-    } else {
-        modificarButton.disabled = false;
-        eliminarButton.disabled = false;
-    }
+    // if (datosPaciente_permiso === 2) {
+    //     modificarButton.disabled = true;
+    //     eliminarButton.disabled = true;
+    // } else {
+    //     modificarButton.disabled = false;
+    //     eliminarButton.disabled = false;
+    // }
 
     //llenarTablaReposos(datos.reposos);
 }
@@ -436,11 +436,11 @@ let numeroPorPagona = 5;
 
 const dataTableOptions = {
     //scrollX: "2000px",
-    lengthMenu: [5, 10, 15, 20, 100, 200, 500],
+    //lengthMenu: [5, 10, 15, 20, 100, 200, 500],
     columnDefs: [
         { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6] },
-        { orderable: false, targets: [5, 6] },
-        { searchable: false, targets: [1] }
+        //{ orderable: false, targets: [1, 2] },
+        //{ searchable: false, targets: [1] }
         //{ width: "50%", targets: [0] }
     ],
     pageLength: numeroPorPagona,
@@ -470,7 +470,7 @@ function initDataTable(reposos) {
     // Añade registros vacíos si es necesario para mantener el tamaño deseado
     let numeroFilasAgregar =  reposos.length;
     let banderaAgregarFilas = true
-    debugger
+
     if(numeroFilasAgregar >= numeroPorPagona){
         while(banderaAgregarFilas){
             if(numeroFilasAgregar >= numeroPorPagona){
@@ -483,11 +483,10 @@ function initDataTable(reposos) {
         numeroFilasAgregar = numeroPorPagona - numeroFilasAgregar + 1;
     }
     
-    debugger
     for (let i = 1; i < numeroFilasAgregar; i++) {
         reposos.push({});
     }
-    debugger
+
     listUsers(reposos);
 
     dataTable = $("#datatable_reposos").DataTable(dataTableOptions);
@@ -523,19 +522,4 @@ function listUsers(reposos) {
     } catch (ex) {
         alert(ex);
     }
-}
-
-function formatDateString(dateString) {
-    // Crea un objeto Date a partir de la cadena de fecha
-    const date = new Date(dateString);
-    
-    if (isNaN(date.getTime())) {
-        return "Fecha no válida"; // Maneja casos en los que la cadena de fecha no es válida
-    }
-    
-    const day = String(date.getDate()).padStart(2, '0'); // Obtener el día y agregar ceros a la izquierda si es necesario
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Obtener el mes (los meses comienzan desde 0) y agregar ceros a la izquierda si es necesario
-    const year = date.getFullYear(); // Obtener el año
-
-    return `${day}-${month}-${year}`;
 }

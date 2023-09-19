@@ -19,6 +19,82 @@ import pdb
 
 class PacientesServices:
 
+    def buscarTodos():
+        # Se busca al paciente
+        pacientes = PacienteCalls.get_paciente()
+
+        if pacientes is None or len(pacientes) < 1:
+            return None
+
+        listaPacientes = []
+
+        for pacienteConsulta in pacientes:
+            # Guarda la cantidad de dias de los reposos
+            total_dias_reposos = 0
+
+            # Si existe el paciente se procede a buscar sus reposos
+            if pacienteConsulta is not None:
+
+                # Se convierte el objeto Paciente a un diccionario
+                paciente = paciente_schema.dump(pacienteConsulta)   
+                #pdb.set_trace()  
+
+                # Se buscan los grupos de reposos de ese paciente y se retornan en orden de la fecha mas actual a la mas antigua
+                grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
+
+                # Se verifica que exista al menos un grupo de reposo
+                if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
+
+                    # Se convierte el objeto GrupoReposo en un diccionario
+                    grupoReposo = grupoReposos_schema.dump(grupoReposoConsulta)
+
+                    # Se crea una lista donde se van a guardar los reposos del paciente
+                    #listaReposos = []
+                    
+                    # Se utiliza para poder saber cual es el primer grupo reposo para sumar solo esos dias
+                    #banderaDias = True
+
+                    # Se recorren todos los grupos de reposos encontrados
+                    for grupo in grupoReposo:
+
+                        # Se buscan los reposos de cada grupo de reposos y se traen en orden de la fecha mas actual a la mas antigua
+                        reposoConsulta = ReposoCalls.get_reposo_paciente(grupo['id'])
+
+                        # Se verifica que existan reposos
+                        if reposoConsulta is not None and len(reposoConsulta) > 0:
+
+                            # Se recorren todos los reposos y se agregan a la lista 
+                            for rep in reposoConsulta:
+
+                                # Se suman los dias del grupo reposo mas nuevo
+                                #if banderaDias:
+                                total_dias_reposos += (rep.fecha_fin - rep.fecha_inicio).days + 1
+
+                                #listaReposos.append(rep)
+
+                        # se cambia la bandera de estado para que ya no cuente mas dias
+                        #banderaDias = False
+                        break
+                    
+                    # Si se agrego algo a lista se agrega al objeto paciente un nuevo campo llamado reposo donde estara la lista que se acabo de llenar
+                    # En caso de que no exista nada en la lista se agrega vacia
+                    # if listaReposos is not None and len(listaReposos) > 0:
+
+                    #     # Se convierte el objeto Reposos en un diccionario y se agrega al objeto paciente
+                    #     #paciente['reposos'] = reposos_schema.dump(listaReposos)
+                    #     paciente["dias_reposo"] = total_dias_reposos
+                    # else:
+                    #     #paciente['reposos'] = []
+                    #     paciente["dias_reposo"] = total_dias_reposos
+                    paciente["dias_reposo"] = total_dias_reposos
+                    listaPacientes.append(paciente)
+                else:
+                    # Si el paciente no se le encontraron grupo de reposos se envia la lista de reposos vacia 
+                    #paciente['reposos'] = []
+                    paciente["dias_reposo"] = total_dias_reposos
+                    listaPacientes.append(paciente)
+        return listaPacientes
+
     def buscar(cedula):
 
         # Se busca al paciente
@@ -89,7 +165,7 @@ class PacientesServices:
         else:
             # Si no se encuentra paciente se retorna null
             return None
-        
+    
     def crear_paciente(datos_completos):
 
         # Creamos el objeto paciente con los datos recibidos

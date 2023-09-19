@@ -12,6 +12,15 @@ def buscar_paciente(cedula):
     else:
         return jsonify(None)
     
+@app.route('/pacientes', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def buscar_paciente_todos():
+    respuesta = PacientesServices.buscarTodos()
+    if respuesta is not None and len(respuesta) > 0:
+        return make_response(jsonify(respuesta))
+    else:
+        return jsonify(None)
+    
 @app.route('/pacientes/registrarNuevo', methods=['POST'])
 @cross_origin()  # Para manejar problemas de CORS
 def registrar_datos_paciente_nuevo():

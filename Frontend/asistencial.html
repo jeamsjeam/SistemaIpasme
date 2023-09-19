@@ -7,10 +7,10 @@
         
         <link rel="stylesheet" type="text/css" href="css/asistencia.css">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
-        <link rel="stylesheet" type="text/css" href="css/all.min.css">
         <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" type="text/css" href="css/DataTable/cdnjs.cloudflare.com_ajax_libs_font-awesome_6.2.0_css_all.min.css">
         <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/all.min.css">
     <title>Reposos</title>
 </head>
 <body>
@@ -18,7 +18,7 @@
 
     <div class="container mt-5">
         <section class="row d-flex justify-content-center mb-5">
-            <div class="col-12">
+            <div class="col-11">
                 <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarPaciente()">
                     <div class="col-12">
                         <div class="searchbar">
@@ -27,6 +27,9 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="col-1">
+                <a href="listapacientes.html"><button type="button" class="btn btn-outline-secondary botonTodosPacientes">Todos los pacientes</button></a>
             </div>
         </section>
         <section class="row" id="contenidoDesplegable">
@@ -167,18 +170,8 @@
                                 <td id="datosPaciente_dependencia"></td>
                                 <td id="datosPaciente_municipio"></td>
                                 <td>
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <button id="modificarButton" class="btn btn-secondary" type="button">
-                                                <img src="css/imagenes/pencil.svg">
-                                            </button>
-                                        </div>
-                                        <div class="col-3">
-                                            <button id="eliminarButton" class="btn btn-secondary" type="button">
-                                                <img src="css/imagenes/trash.svg">
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <button id="modificarButton" class="btn btn-sm btn-primary"><i class="fa-solid fa-pencil"></i></button>
+                                    <button id="eliminarButton" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
                             </tr>
                             <tr>
