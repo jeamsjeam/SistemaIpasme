@@ -98,6 +98,10 @@ function guardarTurnos() {
 
         turno.id = parseInt(turnosContainer.children[index].id);
         turno.nombre = turnosContainer.children[index].children[0].children[0].value;
+        if (turno.nombre == "") {
+            mostrarNotificacion('Por favor, complete todos los campos', "#FF0000")
+            return 0
+        }
 
         let hora_llegada = turnosContainer.children[index].children[1].children[0].children[0].value;
         turno.hora_llegada = "2023-01-01T" + hora_llegada + ":00.000Z";
