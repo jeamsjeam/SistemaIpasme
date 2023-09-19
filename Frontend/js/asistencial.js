@@ -432,6 +432,7 @@ function PacienteEncontrado(){
 
 let dataTable;
 let dataTableIsInitialized = false;
+let numeroPorPagona = 5;
 
 const dataTableOptions = {
     //scrollX: "2000px",
@@ -442,7 +443,7 @@ const dataTableOptions = {
         { searchable: false, targets: [1] }
         //{ width: "50%", targets: [0] }
     ],
-    pageLength: 3,
+    pageLength: numeroPorPagona,
     destroy: true,
     language: {
         lengthMenu: "Mostrar _MENU_ registros por página",
@@ -466,7 +467,29 @@ function initDataTable(reposos) {
         dataTable.destroy();
     }
 
+    // Añade registros vacíos si es necesario para mantener el tamaño deseado
+    let numeroFilasAgregar =  reposos.length;
+    let banderaAgregarFilas = true
+    debugger
+    if(numeroFilasAgregar >= numeroPorPagona){
+        while(banderaAgregarFilas){
+            if(numeroFilasAgregar >= numeroPorPagona){
+                numeroFilasAgregar = numeroFilasAgregar - numeroPorPagona;
+            }else{
+                banderaAgregarFilas = false
+            }
+        }
+    }else{
+        numeroFilasAgregar = numeroPorPagona - numeroFilasAgregar + 1;
+    }
+    
+    debugger
+    for (let i = 1; i < numeroFilasAgregar; i++) {
+        reposos.push({});
+    }
+    debugger
     listUsers(reposos);
+
     dataTable = $("#datatable_reposos").DataTable(dataTableOptions);
 
     dataTableIsInitialized = true;
@@ -479,15 +502,20 @@ function listUsers(reposos) {
             content += `
                 <tr>
                     <td>${index + 1}</td>
-                    <td>${reposo.codigo_asistencial}</td>
-                    <td>${reposo.codigo_registro}</td>
-                    <td>${reposo.fecha_inicio}</td>
-                    <td>${reposo.fecha_fin}</td>
-                    <td>${reposo.quien_valida}</td>
+                    <td>${reposo.codigo_asistencial != null && typeof reposo.codigo_asistencial !== 'undefined' ? reposo.codigo_asistencial : ''}</td>
+                    <td>${reposo.codigo_registro != null && typeof reposo.codigo_registro !== 'undefined' ? reposo.codigo_registro : ''}</td>
+                    <td>${reposo.fecha_inicio != null && typeof reposo.fecha_inicio !== 'undefined' ? formatDateString(reposo.fecha_inicio) : ''}</td>
+                    <td>${reposo.fecha_fin != null && typeof reposo.fecha_fin !== 'undefined' ? formatDateString(reposo.fecha_fin) : ''}</td>
+                    <td>${reposo.quien_valida != null && typeof reposo.quien_valida !== 'undefined' ? reposo.quien_valida : ''}</td>
                     <!-- <td><i class="fa-solid fa-check" style="color: green;"></i></td> -->
                     <td>
-                        <button class="btn btn-sm btn-primary"><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="btn btn-sm btn-primary"
+                        ${reposo.quien_valida != null && typeof reposo.quien_valida !== 'undefined' ? '' : 'disabled'}
+                        ><i class="fa-solid fa-pencil"></i></button>
+                        <button class="btn btn-sm btn-danger"
+                        ${reposo.quien_valida != null && typeof reposo.quien_valida !== 'undefined' ? '' : 'disabled'}
+                        ><i class="fa-solid fa-trash-can"></i></button>
+                        
                     </td>
                 </tr>`;
         });
@@ -495,4 +523,19 @@ function listUsers(reposos) {
     } catch (ex) {
         alert(ex);
     }
+}
+
+function formatDateString(dateString) {
+    // Crea un objeto Date a partir de la cadena de fecha
+    const date = new Date(dateString);
+    
+    if (isNaN(date.getTime())) {
+        return "Fecha no válida"; // Maneja casos en los que la cadena de fecha no es válida
+    }
+    
+    const day = String(date.getDate()).padStart(2, '0'); // Obtener el día y agregar ceros a la izquierda si es necesario
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Obtener el mes (los meses comienzan desde 0) y agregar ceros a la izquierda si es necesario
+    const year = date.getFullYear(); // Obtener el año
+
+    return `${day}-${month}-${year}`;
 }
