@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
     <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/estilos_dashboard.css">
     <link rel="stylesheet" type="text/css" href="css/estilo.css">
     <title>Turnos</title>
 </head>
 
 <body>
     <div id="navbarContainer"></div>
-    <div class="container pt-4">
+    <div class="container pt-4" id="reporteSemana">
 
     </div>
+    <script src="js/recursoshumanos.js"></script>
     <script src="js/toastify.js"></script>
     <script src="js/util.js"></script>
     <script src="bootstrap-5/js/bootstrap.min.js"></script>
@@ -24,4 +24,29 @@
 
 </html>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        cargarReporteSemana()
+    });
 </script>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        margin-bottom: 10px;
+    }
+
+    .card-header {
+        background-color: rgba(33, 137, 255, 1);
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+
+</style>
