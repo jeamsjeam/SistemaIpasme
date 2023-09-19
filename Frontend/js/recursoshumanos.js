@@ -380,3 +380,54 @@ function list(lista) {
         alert(ex);
     }
 }
+
+const coloresBotones={
+    true : 'success',
+    null : 'danger',
+    false : 'primary'
+}
+function cargarReporteSemana(){
+    let url = "http://127.0.0.1:5000/asistencias/empleado/reporte"; 
+    data = {
+        fecha : new Date().toLocaleDateString('en-GB')
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        const reporteSemana = document.getElementById('reporteSemana');
+            data.forEach((turno) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                        <div class="card-header">${turno.turno}</div>
+                        <div class="card-body">
+                            <ul class="list-group col-12">
+                            ${turno.trabajadores.map((trabajador) => `
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="col-6">
+                                    <span class="text-muted">${trabajador.cedula}</span>
+                                    <span class = "ms-2">${trabajador.nombre}</span>
+                                    <span class = "ms-2 text-muted">${trabajador.cargo}</span>
+                                </div>
+                                <div class="col-6 d-flex justify-content-around">
+                                    ${trabajador.semana.map((asistencia) => 
+                                        `<button class="btn btn-${coloresBotones[asistencia.asistencia]} btn-sm">${asistencia.dia.substring(0,1)}</button>`
+                                    ).join('')}
+                                </div>
+                                </li>
+                            `).join('')}
+                            </ul>
+                        </div>
+                `;
+                reporteSemana.appendChild(card);
+            });
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
