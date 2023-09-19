@@ -81,3 +81,19 @@
     .botonTodosPacientes{
         border-radius: 30px !important;
     }
+
+    a.btn.btn-outline-secondary.botonTodosPacientes {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        height: 40px;
+    }
+
+    @media (max-width:997.9px){
+        a.btn.btn-outline-secondary.botonTodosPacientes {
+            position: relative;
+            margin-top: 10px;
+        }
+    }

@@ -18,7 +18,7 @@
 
     <div class="container mt-5">
         <section class="row d-flex justify-content-center mb-5">
-            <div class="col-11">
+            <div class="col-12" style="position: relative;">
                 <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarPaciente()">
                     <div class="col-12">
                         <div class="searchbar">
@@ -27,9 +27,8 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="col-1">
-                <a href="listapacientes.html"><button type="button" class="btn btn-outline-secondary botonTodosPacientes">Todos los pacientes</button></a>
+                <a href="listapacientes.html" class="btn btn-outline-secondary botonTodosPacientes">
+                    Todos los pacientes</a>
             </div>
         </section>
         <section class="row" id="contenidoDesplegable">
