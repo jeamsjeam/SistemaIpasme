@@ -1,16 +1,17 @@
 
 --DROP DATABASE IF EXISTS ipasprueba  WITH (FORCE);
 
-INSERT INTO ROL (nombre) VALUES ('Administrador'),('Administrador (Lectura)'),('Asistencial'),('Recursos Humanos');
-INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1);
-INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('jeam', '1234', 'Jesus',1);
+INSERT INTO ROL (nombre) VALUES ('Administrador'),('Central de Citas'),('Asistencial'),('Recursos Humanos'),('Paciente');
+INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1), ('jeam', '1234', 'Jesus',1);
 INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
 INSERT INTO ESTADO_EMPLEADO (nombre) VALUES ('Activo'),('Inactivo'),('Jubilado');
+INSERT INTO ESTADO_CITA (nombre) VALUES ('Agendada'),('Asistida'),('Cancelada');
 
-INSERT INTO cargo (nombre) VALUES ('Docente'),('Administrativo'),('Obrero'),('Madres elaboradora');
+INSERT INTO cargo (nombre) VALUES ('Medico'),('Enfermero'),('Docente'),('Administrativo'),('Obrero');
 INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal');
-INSERT INTO especialidad (nombre) VALUES ('Cardiología Clínica'),('Cirugía General'),('Dermatología');
+INSERT INTO especialidad (nombre) VALUES ('Odontologia'),('Medicina interna'),('Pediatria');
 INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',63),('Especial',80);
+INSERT INTO tipo_paciente (nombre) VALUES ('Afiliado'),('Beneficiario');
 INSERT INTO estado (nombre) VALUES ('Tachira'),('Merida'),('Zulia'),('Trujillo'),('Apure');
 INSERT INTO municipio (nombre) VALUES ('Junin'),('Ayacucho'),('Libertador'),('San Cristóbal'),('Lobatera');
 

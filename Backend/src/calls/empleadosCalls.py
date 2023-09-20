@@ -61,3 +61,6 @@ class EmpleadosCalls():
             return "00|Ok"
         else:
             return "01|Error"
+        
+    def get_medicos_especialidad(especialidad):
+        return 0

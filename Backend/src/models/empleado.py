@@ -19,6 +19,7 @@ class Empleado(db.Model):
 
     permisos = relationship('Permiso', backref='empleado')
     asistencias = relationship('Asistencia', backref='empleado')
+    citas = relationship('Cita', backref='empleado')
 
     def __init__(self, cedula, nombre, apellido, fecha_nacimiento, direccion, telefono, especialidad_id, cargo_id, dependencia_id, turno_id, genero_id, estado_empleado_id):
         self.cedula = cedula

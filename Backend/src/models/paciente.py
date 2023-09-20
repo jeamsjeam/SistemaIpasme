@@ -14,10 +14,13 @@ class Paciente(db.Model):
     cargo_id = db.Column(db.BigInteger(), db.ForeignKey('cargo.id'))
     dependencia_id = db.Column(db.BigInteger(), db.ForeignKey('dependencia.id'))
     municipio_id = db.Column(db.BigInteger(), db.ForeignKey('municipio.id'))
+    tipo_paciente_id = db.Column(db.BigInteger(), db.ForeignKey('tipo_paciente.id'))
+    usuario_id = db.Column(db.BigInteger(), db.ForeignKey('usuario.id'))
 
     grupos_reposo = relationship('GrupoReposo', backref='paciente')
+    citas = relationship('Cita', backref='empleado')
 
-    def __init__(self, cedula, nombre, apellido, institucion_laboral, fecha_nacimiento, direccion, telefono, cargo_id, dependencia_id, municipio_id):
+    def __init__(self, cedula, nombre, apellido, institucion_laboral, fecha_nacimiento, direccion, telefono, cargo_id, dependencia_id, municipio_id, tipo_paciente_id, usuario_id):
         self.cedula = cedula
         self.nombre = nombre
         self.apellido = apellido
@@ -28,3 +31,5 @@ class Paciente(db.Model):
         self.cargo_id = cargo_id
         self.dependencia_id = dependencia_id
         self.municipio_id = municipio_id
+        self.tipo_paciente_id = tipo_paciente_id
+        self.usuario_id = usuario_id

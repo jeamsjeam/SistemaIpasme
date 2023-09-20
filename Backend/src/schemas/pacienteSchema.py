@@ -18,6 +18,8 @@ class PacienteSchema(ma.SQLAlchemyAutoSchema):
     cargo = ma.Nested('CargoSchema')
     dependencia = ma.Nested('DependenciaSchema')
     municipio = ma.Nested('MunicipioSchema')
+    usuario = ma.Nested('UsuarioSchema')
+    tipo_paciente = ma.Nested('TipoPacienteSchema')
 
 paciente_schema = PacienteSchema()
 Pacientes_schema = PacienteSchema(many=True)

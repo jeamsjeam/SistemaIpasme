@@ -4,5 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "asistencial.html";
     }else if(datosUsuario.rol === 'Recursos Humanos'){
         window.location.href = "recursoshumanos.html";
+    }else if(datosUsuario.rol === 'Central de Citas'){
+        window.location.href = ".html";
+    }else{
+        window.location.href = ".html";
+
     }
+    
 });
