@@ -96,7 +96,7 @@ li {
   padding: 15px;
 }
 
-.prev, .next {
+.prev:not(.page-item), .next:not(.page-item ) {
   padding: 5px 10px;
   border: none;
   cursor: pointer;

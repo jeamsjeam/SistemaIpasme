@@ -459,7 +459,8 @@ const dataTableOptions = {
             next: "Siguiente",
             previous: "Anterior"
         }
-    }
+    },
+    sScrollY: (250),
 };
 
 function initDataTable(reposos) { 
@@ -471,21 +472,21 @@ function initDataTable(reposos) {
     let numeroFilasAgregar =  reposos.length;
     let banderaAgregarFilas = true
 
-    if(numeroFilasAgregar >= numeroPorPagona){
-        while(banderaAgregarFilas){
-            if(numeroFilasAgregar >= numeroPorPagona){
-                numeroFilasAgregar = numeroFilasAgregar - numeroPorPagona;
-            }else{
-                banderaAgregarFilas = false
-            }
-        }
-    }else{
-        numeroFilasAgregar = numeroPorPagona - numeroFilasAgregar + 1;
-    }
+    // if(numeroFilasAgregar >= numeroPorPagona){
+    //     while(banderaAgregarFilas){
+    //         if(numeroFilasAgregar >= numeroPorPagona){
+    //             numeroFilasAgregar = numeroFilasAgregar - numeroPorPagona;
+    //         }else{
+    //             banderaAgregarFilas = false
+    //         }
+    //     }
+    // }else{
+    //     numeroFilasAgregar = numeroPorPagona - numeroFilasAgregar + 1;
+    // }
     
-    for (let i = 1; i < numeroFilasAgregar; i++) {
-        reposos.push({});
-    }
+    // for (let i = 1; i < numeroFilasAgregar; i++) {
+    //     reposos.push({});
+    // }
 
     listUsers(reposos);
 
