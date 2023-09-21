@@ -9,3 +9,7 @@ class EspecialidadesCalls():
     def get_especialidad_id(id):
         especialidad = Especialidad.query.get(id)
         return especialidad
+    
+    def get_especialidades_consultas():
+        especialidades = Especialidad.query.filter_by(consultas = True)
+        return especialidades

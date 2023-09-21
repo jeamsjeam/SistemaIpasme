@@ -41,6 +41,16 @@ class EmpleadosServices:
     def get_empleados_turno():
         return agruparEmpleados('turno')
     
+    def get_medicos_especialidad(especialidad_id):
+        medicos = EmpleadosCalls.get_medicos_especialidad(especialidad_id)
+        medicosJson = empleados_schema.dump(medicos)
+        retorno = []
+        if len(medicosJson) > 0:
+            for medico in medicosJson:
+                agregar = infoBasica(medico)
+                retorno.append(agregar)
+        return retorno
+    
 def agruparEmpleados(filtro):
     empleadosConsulta = EmpleadosCalls.get_empleados()
     empleados = empleados_schema.dump(empleadosConsulta)

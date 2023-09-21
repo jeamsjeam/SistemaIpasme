@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/vistaPaciente.css">
+    <link rel="stylesheet" type="text/css" href="css/all.min.css">
+    <title>IPAS</title>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container contenido">
+        <div class="col-12 pb-3">
+            <h1 class="text-center">Bienvenid@ a Central de Citas</h1>
+            <h4 class="text-center subtitulo">En esta seccion puedes agendar una cita y llevar el seguimiento de estas</h4>
+        </div>
+        <div class="row pb-5 pt-2">
+            <div class="col-12">
+                <div class="calendar">
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="linea">
+    <div class="container">
+        <div class="col-12">
+            <h2 class="text-center py-4">Agenda tus citas</h2>
+            <div class="row" id="especialidades">                
+            </div>
+        </div>
+    </div>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/paciente.js"></script>
+    <script src="js/all.min.js"></script>
+</body>
+
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    cargarCalendario(0)
+    cargarEspecialidades()
+});
+</script>

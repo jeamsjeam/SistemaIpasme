@@ -1,5 +1,7 @@
 from ..models.empleado import Empleado
+from ..models.cargo import Cargo
 from src import db
+from sqlalchemy import and_
 
 class EmpleadosCalls():
     def get_empleados():
@@ -62,5 +64,7 @@ class EmpleadosCalls():
         else:
             return "01|Error"
         
-    def get_medicos_especialidad(especialidad):
-        return 0
+    def get_medicos_especialidad(especialidad_id):
+        medicos = Empleado.query.join(Cargo, Cargo.id == Empleado.cargo_id)\
+                          .filter(and_(Cargo.nombre == 'Medico', Empleado.especialidad_id == especialidad_id))
+        return medicos

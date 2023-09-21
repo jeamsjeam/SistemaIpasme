@@ -34,3 +34,8 @@ def borrar_empleado(id):
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def get_empleados_especialidad():
     return EmpleadosServices.get_empleados_especialidad()
+
+@app.route('/empleados/medicos/<int:especialidad_id>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def get_medicos_especialidad(especialidad_id):
+    return EmpleadosServices.get_medicos_especialidad(especialidad_id)

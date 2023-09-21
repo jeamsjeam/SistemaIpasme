@@ -9,3 +9,9 @@ from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 def get_especialidades():
     respuesta = EspecialidadesCalls.get_especialidades()
     return especialidades_schema.dump(respuesta)
+
+@app.route('/especialidades/consultas', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def get_especialidades_consultas():
+    respuesta = EspecialidadesCalls.get_especialidades_consultas()
+    return especialidades_schema.dump(respuesta)

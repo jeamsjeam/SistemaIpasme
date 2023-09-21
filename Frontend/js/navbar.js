@@ -1,3 +1,4 @@
+let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'))
 const navbar = document.createElement('nav');
 navbar.className = 'navbar navbar-expand-lg navbar-dark bg-primary bg-gradient';
 navbar.id = 'headerNav';
@@ -60,6 +61,10 @@ logoItem.className = 'nav-item d-none d-lg-block';
 
 const logoLink = document.createElement('a');
 logoLink.className = 'nav-link mx-2';
+if (datosUsuario.rol.toUpperCase() === 'ADMINISTRADOR') {
+    logoLink.href = 'index.html';
+}
+
 
 const logoImg = document.createElement('img');
 logoImg.src = 'css/imagenes/ipaslogo.png';
@@ -82,10 +87,18 @@ citasItem.className = 'nav-item';
 
 const citasLink = document.createElement('a');
 citasLink.className = 'nav-link mx-2';
-citasLink.href = '#';
+citasLink.href = 'citas.html';
 citasLink.textContent = 'Citas';
 citasItem.appendChild(citasLink);
 
+const logOutItem = document.createElement('li');
+logOutItem.className = 'nav-item';
+
+const logOutlLink = document.createElement('a');
+logOutlLink.className = 'nav-link mx-2';
+logOutlLink.href = "login.html";
+logOutlLink.textContent = 'Salir';
+logOutItem.appendChild(logOutlLink);
 // const companyItem = document.createElement('li');
 // companyItem.className = 'nav-item dropdown';
 
@@ -128,24 +141,17 @@ citasItem.appendChild(citasLink);
 // dropdownMenu.appendChild(contactUsItem);
 
 // companyItem.appendChild(dropdownMenu);
-let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'))
-ulList.appendChild(homeItem);
 if(datosUsuario.rol.toUpperCase() === 'ADMINISTRADOR'){
     ulList.appendChild(asistencialItem);
+    ulList.appendChild(citasItem);
     ulList.appendChild(logoItem);
     ulList.appendChild(rrhhItem);
-    ulList.appendChild(citasItem);
-}else if (datosUsuario.rol.toUpperCase() === 'ASISTENCIAL') {
+    ulList.appendChild(logOutItem);
+}else{
+    ulList.appendChild(homeItem);
     ulList.appendChild(logoItem);
-    ulList.appendChild(asistencialItem);
-}else if (datosUsuario.rol.toUpperCase() === 'RECURSOS HUMANOS') {
-    ulList.appendChild(logoItem);
-    ulList.appendChild(rrhhItem);
-}else if (datosUsuario.rol.toUpperCase() === 'USUARIO') {
-    ulList.appendChild(logoItem);
-    ulList.appendChild(citasItem);
+    ulList.appendChild(logOutItem);
 }
-
 collapseDiv.appendChild(ulList);
 
 container.appendChild(brandLink);
