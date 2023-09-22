@@ -11,6 +11,13 @@ class UsuariosServices:
             return rol
         else:
             return None
+        
+    def usuario_por_nombre(usuario):
+        usuario = UsuariosCalls.usuario_por_nombre(usuario)
+        if usuario is not None:
+            return usuario
+        else:
+            return None
 
     def login(usuario, clave):
         return UsuariosCalls.autenticar_usuario(usuario, clave)

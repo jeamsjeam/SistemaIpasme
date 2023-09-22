@@ -27,3 +27,10 @@ def usuario_rol_por_nombre(usuario):
     else:
         return make_response(jsonify(rol))
     
+@app.route('/DatosUsuarios/<usuario>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def usuario_por_nombre(usuario):
+    respuesta = UsuariosServices.usuario_por_nombre(usuario)
+    return make_response(usuario_schema.dump(respuesta))
+
+    

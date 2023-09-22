@@ -177,28 +177,40 @@ class PacientesServices:
         # Se busca el rol Paciente
         rol = RolesCalls.get_rol_nombre("Paciente")
 
-        # Se crea un diccionario que contendra la informacion del nuevo usuario
-        usuario_diccionario = {
-            "usuario": (datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])),
-            "clave": datos_completos["cedula"],
-            "nombre": datos_completos["nombre"],
-            "rol_id": rol.id
-        }
-        #pdb.set_trace()
-        # Se convierte en objeto el diccionario
-        usuario = UsuariosCalls.crear_obj_usuario(usuario_diccionario)
+        # Id del usuario
+        idUsuario = 0
 
-        # Se crea el usuario
-        usuarioNuevo = UsuariosCalls.crear_usuario(usuario)
+        # Se consulta si ya existe un usuario con ese usuario especifico
+        existeUsuario = UsuariosCalls.usuario_por_nombre((datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])))
 
-        # Si no se pudo crear el usuario se retorna un error 
-        if usuarioNuevo is None:
-            resultadoDiccionario["mensaje"] = "02|No se pudo crear usuario"
-            resultadoDiccionario["paciente"] = None
-            return resultadoDiccionario
+        # Si existe se guarda su id si no se crea uno nuevo
+        if existeUsuario is not None:
+            idUsuario = existeUsuario.id
+        else:
+            # Se crea un diccionario que contendra la informacion del nuevo usuario
+            usuario_diccionario = {
+                "usuario": (datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])),
+                "clave": datos_completos["cedula"],
+                "nombre": datos_completos["nombre"],
+                "rol_id": rol.id
+            }
+            #pdb.set_trace()
+            # Se convierte en objeto el diccionario
+            usuario = UsuariosCalls.crear_obj_usuario(usuario_diccionario)
+
+            # Se crea el usuario
+            usuarioNuevo = UsuariosCalls.crear_usuario(usuario)
+
+            # Si no se pudo crear el usuario se retorna un error 
+            if usuarioNuevo is None:
+                resultadoDiccionario["mensaje"] = "02|No se pudo crear usuario"
+                resultadoDiccionario["paciente"] = None
+                return resultadoDiccionario
+            idUsuario = usuarioNuevo.id
+
 
         # Se agrega un campo nuevo al objeto que tiene los datos del paciente con el usuario id
-        datos_completos["usuario_id"] = usuarioNuevo.id
+        datos_completos["usuario_id"] = idUsuario
 
         # Creamos el objeto paciente con los datos recibidos
         paciente = PacienteCalls.crear_obj_paciente(datos_completos)
@@ -319,36 +331,6 @@ class PacientesServices:
         else:
             return "03|No se encontró ningún Grupo de Reposo para el paciente"
 
-    def registrar_datos_paciente_nuevo(datos_completos):
-        # Creamos el objeto paciente con los datos recibidos
-        paciente = PacienteCalls.crear_obj_paciente(datos_completos)
-        
-        # Creamos el objeto grupo_reposo con los datos recibidos
-        grupo_reposo = GrupoReposoCalls.retornar_obj_grupoReposo
-        
-        # Creamos una lista de objetos reposo con los datos recibidos
-        reposos = []
-        for reposo_info in datos_completos['reposos']:
-            reposo = ReposoCalls.retornar_obj_reposo(reposo_info)  # Asociaremos este campo más adelante
-            reposos.append(reposo)
-
-        # Registramos los datos en las tres tablas
-        paciente_creado = PacienteCalls.crear_paciente(paciente)
-        if paciente_creado:
-            grupo_reposo.paciente_cedula = paciente_creado.cedula
-            grupo_reposo_creado = GrupoReposoCalls.crear_grupo_reposo(grupo_reposo)
-            if grupo_reposo_creado:
-                for i, reposo in enumerate(reposos):
-                    reposo.grupo_reposo_id = grupo_reposo_creado.id
-                    ReposoCalls.crear_reposo(reposo)
-                return "00|Registro exitoso de paciente, grupo de reposo y reposos asociados"
-            else:
-                # Si hubo un error en el registro del grupo de reposo, eliminamos el paciente creado previamente
-                PacienteCalls.borrar_paciente(paciente_creado.cedula)
-                return "01|Error en el registro del grupo de reposo"
-        else:
-            return "02|Error en el registro del paciente"
-    
     def sumar_dias_reposos_ultimo_grupo(cedula):
         # Obtener el último grupo de reposos del paciente por su cédula
         grupo_reposos = GrupoReposoCalls.get_grupoReposo_paciente(cedula)
