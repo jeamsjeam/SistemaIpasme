@@ -68,49 +68,59 @@
                                     </div>
                                 </div>	
                             </div>
-    
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
-                                    <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
-                                    <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
-                                        </div>
-                                    </div>
-                                </div>	
-                            </div>
-                        
+
                             <div class="col-12">
                                 <div class="mb-3">
                                     <label for="registrarPacienteDireccion" class="form-label">Direccion</label>
                                     <textarea class="form-control" name="direccion" id="registrarPacienteDireccion" aria-label="Direccion" placeholder="Ingresar Direccion"></textarea>
                                 </div>
                             </div>
-
+    
                             <div class="col-12">
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-4">
+                                            <label for="registrarPacienteTelefono" class="form-label">Telefono</label>
+                                            <input type="text" name="telefono" class="form-control" id="registrarPacienteTelefono" pattern="[0-9]{10,11}" placeholder="Ingresar solo numeros">
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="registrarPacienteCorreo" class="form-label">Correo</label>
+                                            <input type="email" name="Correo" class="form-control" id="registrarPacienteCorreo" placeholder="Ingresar correo">
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="registrarPacienteInstitucion" class="form-label">Institucion Laboral<span class = "requerido">*</span></label>
+                                            <input type="text" name="institucion" class="form-control" id="registrarPacienteInstitucion" required placeholder="Institucion Laboral">
+                                        </div>
+                                    </div>
+                                </div>	
+                            </div>
+                    
+                            <div class="col-12">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-3">
                                             <label for="seleccionCargo" class="form-label">Cargo <span class = "requerido">*</span></label>
                                             <select name="cargo" id ="seleccionCargo" class="form-select" aria-label="Default select example" required>
     
                                             </select>
                                         </div>
     
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label for="seleccionDependencia" class="form-label">Dependencia <span class = "requerido">*</span></label>
                                             <select name="dependencia" id ="seleccionDependencia" class="form-select" aria-label="Default select example" required>
     
                                             </select>
                                         </div>
     
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label for="seleccionMunicipio" class="form-label">Municipio <span class = "requerido">*</span></label>
                                             <select name="municipio" id ="seleccionMunicipio" class="form-select" aria-label="Default select example" required>
+    
+                                            </select>
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="seleccionTipoPaciente" class="form-label">Tipo Paciente <span class = "requerido">*</span></label>
+                                            <select name="tipoPaciente" id ="seleccionTipoPaciente" class="form-select" aria-label="Default select example" required>
     
                                             </select>
                                         </div>
@@ -158,28 +168,33 @@
                             </tr>
                             <tr>
                                 <th>Telefono</th>
+                                <th>Correo</th>
                                 <th>Cargo</th>
                                 <th>Dependencia</th>
                                 <th>Municipio</th>
-                                <th>Accion</th>
                             </tr>
                             <tr>
                                 <td id="datosPaciente_telefono"></td>
+                                <td id="datosPaciente_correo"></td>
                                 <td id="datosPaciente_cargo"></td>
                                 <td id="datosPaciente_dependencia"></td>
                                 <td id="datosPaciente_municipio"></td>
+                                
+                            </tr>
+                            <tr>
+                                <th>Dias Reposo</th>
+                                <th>Tipo Paciente</th>
+                                <th colspan="2">Direccion</th>
+                                <th>Accion</th>
+                            </tr>
+                            <tr>
+                                <td id="datosPaciente_dias_reposo"></td>
+                                <td id="datosPaciente_tipo_paciente"></td>
+                                <td id="datosPaciente_direccion" colspan="2"></td>
                                 <td>
                                     <button id="modificarButton" class="btn btn-sm btn-primary"><i class="fa-solid fa-pencil"></i></button>
                                     <button id="eliminarButton" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
-                            </tr>
-                            <tr>
-                                <th>Dias Reposo</th>
-                                <th colspan="4">Direccion</th>
-                            </tr>
-                            <tr>
-                                <td id="datosPaciente_dias_reposo"></td>
-                                <td id="datosPaciente_direccion" colspan="4"></td>
                             </tr>
                         </table>
                     </div>

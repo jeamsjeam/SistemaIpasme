@@ -4,16 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "index.html";
     }
     //------------------------------Dependencia------------------------------
-    // URL del servicio REST que retorna la lista de roles
+    // URL del servicio REST que retorna la lista de Dependencia
     const urlDependencia = "http://127.0.0.1:5000/dependencias";
-    // Elemento select donde agregaremos las opciones de los roles
+    // Elemento select donde agregaremos las opciones de als Dependencia
     const dependenciaSelect = document.getElementById("seleccionDependencia");
 
     // Llamada al servicio REST utilizando fetch
     fetch(urlDependencia)
         .then(response => response.json())
         .then(dataDependencia => {
-            // data es un array con los objetos de los roles
+            // data es un array con los objetos de las Dependencia
             // Recorremos cada objeto y agregamos las opciones al select
             dataDependencia.forEach(data => {
                 // Creamos una opción para cada rol
@@ -28,16 +28,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     //------------------------------Municipio------------------------------
-    // URL del servicio REST que retorna la lista de roles
+    // URL del servicio REST que retorna la lista de municipio
     const urlMunicipio = "http://127.0.0.1:5000/municipios";
-    // Elemento select donde agregaremos las opciones de los roles
+    // Elemento select donde agregaremos las opciones de los municipio
     const municipiosSelect = document.getElementById("seleccionMunicipio");
 
     // Llamada al servicio REST utilizando fetch
     fetch(urlMunicipio)
         .then(response => response.json())
         .then(dataMunicipio => {
-            // data es un array con los objetos de los roles
+            // data es un array con los objetos de los municipio
             // Recorremos cada objeto y agregamos las opciones al select
             dataMunicipio.forEach(data => {
                 // Creamos una opción para cada rol
@@ -52,16 +52,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     //------------------------------Cargo------------------------------
-    // URL del servicio REST que retorna la lista de roles
+    // URL del servicio REST que retorna la lista de cargo
     const urlCargos = "http://127.0.0.1:5000/cargos";
-    // Elemento select donde agregaremos las opciones de los roles
+    // Elemento select donde agregaremos las opciones de los cargo
     const cargosSelect = document.getElementById("seleccionCargo");
 
     // Llamada al servicio REST utilizando fetch
     fetch(urlCargos)
         .then(response => response.json())
         .then(Cargosdata => {
-            // data es un array con los objetos de los roles
+            // data es un array con los objetos de los cargo
             // Recorremos cada objeto y agregamos las opciones al select
             Cargosdata.forEach(data => {
                 // Creamos una opción para cada rol
@@ -76,16 +76,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     //------------------------------Tipo Reposo------------------------------
-    // URL del servicio REST que retorna la lista de roles
+    // URL del servicio REST que retorna la lista de tipo de reposo
     const urlTipoReposo = "http://127.0.0.1:5000/tipoReposo";
-    // Elemento select donde agregaremos las opciones de los roles
+    // Elemento select donde agregaremos las opciones de los tipo de reposo
     //const cargosTipoReposo = document.getElementById("primerReposoTipoReposo");
 
     // Llamada al servicio REST utilizando fetch
     fetch(urlTipoReposo)
         .then(response => response.json())
         .then(TipoReposodata => {
-            // data es un array con los objetos de los roles
+            // data es un array con los objetos de los tipo de reposo
             // Recorremos cada objeto y agregamos las opciones al select
             TipoReposodata.forEach(data => {
                 // Creamos una opción para cada rol
@@ -97,6 +97,30 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => {
             mostrarNotificacion("Error al obtener los Tipo Reposo: " + error.message,"#FF0000")
+        });
+
+        //------------------------------Cargo------------------------------
+        // URL del servicio REST que retorna la lista de tipo de pacientes
+        const urlTipoPaciente = "http://127.0.0.1:5000/tiposPaciente";
+        // Elemento select donde agregaremos las opciones de los tipos de pacientes
+        const tipoPacienteSelect = document.getElementById("seleccionTipoPaciente");
+
+        // Llamada al servicio REST utilizando fetch
+        fetch(urlTipoPaciente)
+            .then(response => response.json())
+            .then(tipoPacientedata => {
+                // data es un array con los objetos de lostipo de pacientes
+                // Recorremos cada objeto y agregamos las opciones al select
+                tipoPacientedata.forEach(data => {
+                    // Creamos una opción para cada rol
+                    const option = document.createElement("option");
+                    option.value = data.id;
+                    option.textContent = data.nombre;
+                    tipoPacienteSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                mostrarNotificacion("Error al obtener los TIpos de paciente: " + error.message,"#FF0000")
         });
 });
 
@@ -155,9 +179,11 @@ function registrarPacienteNuevo(){
     let institucion = document.getElementById('registrarPacienteInstitucion').value;
     let direccion = document.getElementById('registrarPacienteDireccion').value;
     let telefono = document.getElementById('registrarPacienteTelefono').value;
+    let correo = document.getElementById('registrarPacienteCorreo').value;
     let cargo = document.getElementById('seleccionCargo').value;
     let dependencia = document.getElementById('seleccionDependencia').value;
     let municipio = document.getElementById('seleccionMunicipio').value;
+    let tipoPaciente = document.getElementById('seleccionTipoPaciente').value;
     let fechaNacimiento = document.getElementById('registrarPacienteFechaNacimiento').value;
 
     // Crear objeto con los valores obtenidos
@@ -169,9 +195,11 @@ function registrarPacienteNuevo(){
         "fecha_nacimiento": fechaNacimiento,
         "direccion": direccion,
         "telefono": telefono,
+        "correo": (correo !== null && typeof correo !== 'undefined' ? correo : ""),
         "cargo_id": parseInt(cargo),
         "dependencia_id": parseInt(dependencia),
-        "municipio_id": parseInt(municipio)
+        "municipio_id": parseInt(municipio),
+        "tipo_paciente_id": parseInt(tipoPaciente)
     };
 
     // Opciones para la petición fetch
@@ -192,9 +220,11 @@ function registrarPacienteNuevo(){
     document.getElementById('registrarPacienteInstitucion').value = "";
     document.getElementById('registrarPacienteDireccion').value = "";
     document.getElementById('registrarPacienteTelefono').value = "";
+    document.getElementById('registrarPacienteCorreo').value = "";
     document.getElementById('seleccionCargo').value = 1;
     document.getElementById('seleccionDependencia').value = 1;
     document.getElementById('seleccionMunicipio').value = 1;
+    document.getElementById('seleccionTipoPaciente').value = 1;
     document.getElementById('registrarPacienteFechaNacimiento').value = "";
 
     let datosPacienteResultado = {}
@@ -241,10 +271,12 @@ function datosPacienteTabla(datos){
         document.getElementById("datosPaciente_dias_reposo").textContent = datosPaciente_dias_reposo;
     }
     document.getElementById("datosPaciente_telefono").textContent = datos.telefono;
+    document.getElementById("datosPaciente_correo").textContent = datos.correo;
     document.getElementById("datosPaciente_direccion").textContent = datos.direccion;
     document.getElementById("datosPaciente_cargo").textContent = datos.cargo.nombre;
     document.getElementById("datosPaciente_dependencia").textContent = datos.dependencia.nombre;
     document.getElementById("datosPaciente_municipio").textContent = datos.municipio.nombre;
+    document.getElementById("datosPaciente_tipo_paciente").textContent = datos.tipo_paciente.nombre;
 
     // Habilitar o deshabilitar botones según el permiso
     var modificarButton = document.getElementById("modificarButton");
@@ -467,26 +499,6 @@ function initDataTable(reposos) {
     if (dataTableIsInitialized) {
         dataTable.destroy();
     }
-
-    // Añade registros vacíos si es necesario para mantener el tamaño deseado
-    let numeroFilasAgregar =  reposos.length;
-    let banderaAgregarFilas = true
-
-    // if(numeroFilasAgregar >= numeroPorPagona){
-    //     while(banderaAgregarFilas){
-    //         if(numeroFilasAgregar >= numeroPorPagona){
-    //             numeroFilasAgregar = numeroFilasAgregar - numeroPorPagona;
-    //         }else{
-    //             banderaAgregarFilas = false
-    //         }
-    //     }
-    // }else{
-    //     numeroFilasAgregar = numeroPorPagona - numeroFilasAgregar + 1;
-    // }
-    
-    // for (let i = 1; i < numeroFilasAgregar; i++) {
-    //     reposos.push({});
-    // }
 
     listUsers(reposos);
 

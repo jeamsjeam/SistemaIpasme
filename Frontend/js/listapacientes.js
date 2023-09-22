@@ -35,9 +35,9 @@ const dataTableOptions = {
     //scrollX: "2000px",
     lengthMenu: [10],
     columnDefs: [
-        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] },
+        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] },
         //{ orderable: false, targets: [1, 2] },
-        { searchable: false, targets: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] }
+        { searchable: false, targets: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] }
         //{ width: "50%", targets: [0] }
     ],
     pageLength: numeroPorPagona,
@@ -56,32 +56,13 @@ const dataTableOptions = {
             next: "Siguiente",
             previous: "Anterior"
         }
-    }
+    },
+    sScrollY: (500)
 };
 
 function initDataTable(pacientes) { 
     if (dataTableIsInitialized) {
         dataTable.destroy();
-    }
-
-    // Añade registros vacíos si es necesario para mantener el tamaño deseado
-    let numeroFilasAgregar =  pacientes.length;
-    let banderaAgregarFilas = true
-
-    if(numeroFilasAgregar >= numeroPorPagona){
-        while(banderaAgregarFilas){
-            if(numeroFilasAgregar >= numeroPorPagona){
-                numeroFilasAgregar = numeroFilasAgregar - numeroPorPagona;
-            }else{
-                banderaAgregarFilas = false
-            }
-        }
-    }else{
-        numeroFilasAgregar = numeroPorPagona - numeroFilasAgregar + 1;
-    }
-    
-    for (let i = 1; i < numeroFilasAgregar; i++) {
-        pacientes.push({});
     }
 
     listPacientes(pacientes);
@@ -103,11 +84,13 @@ function listPacientes(datos) {
                     <td>${dato.apellido !== null && typeof dato.apellido !== 'undefined' ? dato.apellido : ''}</td>
                     <td>${dato.fecha_nacimiento != null && typeof dato.fecha_nacimiento !== 'undefined' ? formatDateString(dato.fecha_nacimiento) : ''}</td>
                     <td>${dato.telefono !== null && typeof dato.telefono !== 'undefined' ? dato.telefono : ''}</td>
+                    <td>${dato.correo !== null && typeof dato.correo !== 'undefined' ? dato.correo : ''}</td> 
                     <td>${dato.municipio !== null && typeof dato.municipio !== 'undefined' ? dato.municipio.nombre : ''}</td>
                     <td>${dato.institucion_laboral !== null && typeof dato.institucion_laboral !== 'undefined' ? dato.institucion_laboral : ''}</td>
                     <td>${dato.cargo !== null && typeof dato.cargo !== 'undefined' ? dato.cargo.nombre : ''}</td>
                     <td>${dato.dependencia !== null && typeof dato.dependencia !== 'undefined' ? dato.dependencia.nombre : ''}</td>
                     <td>${dato.dias_reposo !== null && typeof dato.dias_reposo !== 'undefined' ? dato.dias_reposo : ''}</td>
+                    <td>${dato.tipo_paciente !== null && typeof dato.tipo_paciente !== 'undefined' ? dato.tipo_paciente.nombre : ''}</td>
                     <!-- <td><i class="fa-solid fa-check" style="color: green;"></i></td> -->
                     <td>
                         <button class="btn btn-sm btn-primary"

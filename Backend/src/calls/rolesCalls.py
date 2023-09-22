@@ -16,4 +16,8 @@ class RolesCalls():
     def get_rol_id(id):
         rol = Rol.query.get(id)
         return rol
+    
+    def get_rol_nombre(nombre):
+        rol = Rol.query.filter_by(nombre=nombre).first()
+        return rol
 

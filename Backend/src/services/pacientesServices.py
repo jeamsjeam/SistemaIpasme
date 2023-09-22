@@ -2,12 +2,15 @@ from ..calls.pacienteCall import PacienteCalls
 from ..calls.grupoRepososCalls import GrupoReposoCalls
 from ..calls.repososCalls import ReposoCalls
 from ..calls.cargosCalls import CargosCalls
+from ..calls.usuariosCalls import UsuariosCalls
 from ..calls.dependenciasCalls import DependenciasCalls
 from ..calls.municipiosCalls import MunicipiosCalls
 from ..calls.tipoReposoCall import TipoReposoCalls
+from ..calls.rolesCalls import RolesCalls
 from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
+from ..models.usuario import Usuario
 from ..schemas.pacienteSchema import paciente_schema,Pacientes_schema
 from ..schemas.grupoReposoSchema import grupoReposo_schema,grupoReposos_schema
 from ..schemas.reposoSchema import reposo_schema,reposos_schema
@@ -168,20 +171,46 @@ class PacientesServices:
     
     def crear_paciente(datos_completos):
 
+        # Se crea un diccionario de salida
+        resultadoDiccionario = {}
+
+        # Se busca el rol Paciente
+        rol = RolesCalls.get_rol_nombre("Paciente")
+
+        # Se crea un diccionario que contendra la informacion del nuevo usuario
+        usuario_diccionario = {
+            "usuario": (datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])),
+            "clave": datos_completos["cedula"],
+            "nombre": datos_completos["nombre"],
+            "rol_id": rol.id
+        }
+        #pdb.set_trace()
+        # Se convierte en objeto el diccionario
+        usuario = UsuariosCalls.crear_obj_usuario(usuario_diccionario)
+
+        # Se crea el usuario
+        usuarioNuevo = UsuariosCalls.crear_usuario(usuario)
+
+        # Si no se pudo crear el usuario se retorna un error 
+        if usuarioNuevo is None:
+            resultadoDiccionario["mensaje"] = "02|No se pudo crear usuario"
+            resultadoDiccionario["paciente"] = None
+            return resultadoDiccionario
+
+        # Se agrega un campo nuevo al objeto que tiene los datos del paciente con el usuario id
+        datos_completos["usuario_id"] = usuarioNuevo.id
+
         # Creamos el objeto paciente con los datos recibidos
         paciente = PacienteCalls.crear_obj_paciente(datos_completos)
 
         # Se cre ale paciente 
         paciente_creado = PacienteCalls.crear_paciente(paciente)
 
-        # Se crea un diccionario de salida
-        resultadoDiccionario = {}
-
         # Se verifica si la creacion del paciente se hizo con existo
         # Si fue exitosa se retona un mensaje y el objeto paciente agregandole un campo mas de reposos que es una lista vacia
         # Si no se pudo crear se retorna un mensaje de error y el objeto paciente null
         if paciente_creado is not None:
-            resultadoDiccionario["mensaje"] = "00|Paciente Registrado con exito"
+            resultadoDiccionario["mensaje"] = "00|Paciente Registrados con exito"
             resultado = paciente_schema.dump(paciente_creado)
             resultado["dias_reposo"] = 0
             resultado["reposos"] = []

@@ -1,5 +1,6 @@
 from ..models.usuario import Usuario
 from src import db
+import pdb
 
 class UsuariosCalls():
     def get_usuarios():
@@ -45,3 +46,10 @@ class UsuariosCalls():
             
     def usuario_por_nombre(usuario):
         return Usuario.query.filter_by(usuario = usuario).first()
+    
+    def crear_obj_usuario(datos_usuario):
+        usuario = Usuario(usuario = datos_usuario["usuario"], 
+                               clave = datos_usuario["clave"], 
+                               nombre = datos_usuario["nombre"], 
+                               rol_id=datos_usuario["rol_id"])
+        return usuario

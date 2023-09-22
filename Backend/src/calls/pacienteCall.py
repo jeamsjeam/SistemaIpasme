@@ -18,9 +18,12 @@ class PacienteCalls():
                                  fecha_nacimiento=paciente.fecha_nacimiento,
                                  direccion=paciente.direccion,
                                  telefono=paciente.telefono,
+                                 correo=paciente.correo,
                                  cargo_id=paciente.cargo_id,
                                  dependencia_id=paciente.dependencia_id,
-                                 municipio_id=paciente.municipio_id)
+                                 municipio_id=paciente.municipio_id,
+                                 tipo_paciente_id=paciente.tipo_paciente_id,
+                                 usuario_id=paciente.usuario_id)
         db.session.add(pacienteNuevo)
         db.session.commit()
         db.session.refresh(pacienteNuevo)
@@ -34,9 +37,13 @@ class PacienteCalls():
             pacienteBD.institucion_laboral = paciente.institucion_laboral
             pacienteBD.fecha_nacimiento = paciente.fecha_nacimiento
             pacienteBD.direccion = paciente.direccion
+            pacienteBD.telefono=paciente.telefono,
+            pacienteBD.correo=paciente.correo,
             pacienteBD.cargo_id = paciente.cargo_id
             pacienteBD.dependencia_id = paciente.dependencia_id
             pacienteBD.municipio_id = paciente.municipio_id
+            pacienteBD.tipo_paciente_id = paciente.tipo_paciente_id
+            pacienteBD.usuario_id=paciente.usuario_id
             db.session.commit()
             db.session.refresh(pacienteBD)
             return pacienteBD
@@ -60,9 +67,12 @@ class PacienteCalls():
                         fecha_nacimiento=datos_completos['fecha_nacimiento'],
                         direccion=datos_completos['direccion'],
                         telefono=datos_completos['telefono'],
+                        correo=datos_completos['correo'],
                         cargo_id=datos_completos['cargo_id'],
                         dependencia_id=datos_completos['dependencia_id'],
-                        municipio_id=datos_completos['municipio_id'])
+                        municipio_id=datos_completos['municipio_id'],
+                        tipo_paciente_id=datos_completos['tipo_paciente_id'],
+                        usuario_id=datos_completos['usuario_id'])
         return paciente
         
     # def usuario_por_nombre(usuario):

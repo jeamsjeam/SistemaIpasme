@@ -29,3 +29,74 @@ VALUES ('Permiso por comision de servicio', '2023-09-04 00:00:00.307429', '2023-
 
 --INSERT INTO DEPENDENCIA (nombre) VALUES ('');
 --INSERT INTO DEPENDENCIA (nombre) VALUES ('');
+/*
+POST
+http://127.0.0.1:5000/pacientes/CrearPaciente
+{
+  "cedula": 19925000,
+  "nombre": "Oscar",
+  "apellido": "Perez",
+  "institucion_laboral": "Hospital ABC",
+  "fecha_nacimiento": "1985-05-10",
+  "direccion": "Calle 123, Ciudad",
+  "telefono": "04147863456",
+  "correo": "prueba@gmail.com",
+  "cargo_id": 1,
+  "dependencia_id": 2,
+  "municipio_id": 1,
+  "tipo_paciente_id": 1
+}
+{
+  "cedula": 19925001,
+  "nombre": "Pedro",
+  "apellido": "Zambrano",
+  "institucion_laboral": "Hospital ABC",
+  "fecha_nacimiento": "1985-05-10",
+  "direccion": "Calle 123, Ciudad",
+  "telefono": "04147863456",
+  "cargo_id": 2,
+  "dependencia_id": 1,
+  "municipio_id": 3,
+  "tipo_paciente_id": 1
+}
+http://127.0.0.1:5000/pacientes/CrearReposo
+{
+  "cedula": 19925000,
+  "grupo_reposo_fecha_inicio": "2020-08-01",
+  "tipo_reposo_id": 1,
+  "reposos": [
+    {
+      "codigo_asistencial": "COD123",
+      "codigo_registro": "REG456",
+      "fecha_inicio": "2020-08-01",
+      "fecha_fin": "2020-08-10",
+      "quien_valida": "Dr. Validador"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    },
+    {
+      "codigo_asistencial": "COD789",
+      "codigo_registro": "REG012",
+      "fecha_inicio": "2020-08-15",
+      "fecha_fin": "2020-08-20",
+      "quien_valida": "Dra. Validadora"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    },
+    {
+      "codigo_asistencial": "COD123",
+      "codigo_registro": "REG456",
+      "fecha_inicio": "2020-08-11",
+      "fecha_fin": "2020-08-14",
+      "quien_valida": "Dr. Validador"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    },
+    {
+      "codigo_asistencial": "COD789",
+      "codigo_registro": "REG012",
+      "fecha_inicio": "2020-08-21",
+      "fecha_fin": "2020-08-25",
+      "quien_valida": "Dra. Validadora"
+      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
+    }
+  ]
+}
+*/
