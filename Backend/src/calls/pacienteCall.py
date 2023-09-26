@@ -1,4 +1,5 @@
 from ..models.paciente import Paciente
+from ..models.usuario import Usuario
 from src import db
 
 class PacienteCalls():
@@ -77,3 +78,8 @@ class PacienteCalls():
         
     # def usuario_por_nombre(usuario):
     #     return Usuario.query.filter_by(usuario = usuario).first()
+ 
+    def get_paciente_usuario(usuario):
+        paciente = Paciente.query.join(Usuario, Usuario.id == Paciente.usuario_id)\
+                          .filter_by(Usuario.usuario == usuario).first()
+        return paciente
