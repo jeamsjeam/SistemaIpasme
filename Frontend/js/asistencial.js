@@ -462,6 +462,14 @@ function PacienteEncontrado(){
     contenido.style.maxHeight = "";
 }
 
+function ModificarPaciente(){
+
+}
+
+function EliminarrPaciente(){
+    
+}
+
 let dataTable;
 let dataTableIsInitialized = false;
 let numeroPorPagona = 5;
