@@ -58,6 +58,14 @@ class PacienteCalls():
         else:
             return "01|Error"
         
+    def borrar_paciente_sin_consultar(pacienteBD):
+        if pacienteBD is not None:
+            db.session.delete(pacienteBD)
+            db.session.commit()
+            return True
+        else:
+            return False
+        
     def crear_obj_paciente(datos_completos):
         paciente = Paciente(cedula=datos_completos['cedula'],
                         nombre=datos_completos['nombre'],

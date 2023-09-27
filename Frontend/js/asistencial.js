@@ -497,7 +497,7 @@ function AbrirModalModificarPaciente(datosPaciente){
     var fechaFormateada = año + '-' + mes + '-' + día;
     document.getElementById('registrarPacienteFechaNacimientoModal').value = fechaFormateada;
     
-    $('#exampleModal').modal('show');
+    $('#modificarModal').modal('show');
 }
 
 function ModificarPaciente(){
@@ -574,21 +574,57 @@ function ModificarPaciente(){
         }else{
             mostrarNotificacion(mensajeResultado[0],"#FF0000") 
         }
-        $('#exampleModal').modal('hide');
+        $('#modificarModal').modal('hide');
     })
     .catch(err => {
         mostrarNotificacion(err.message,"#FF0000") 
-        $('#exampleModal').modal('hide');
+        $('#modificarModal').modal('hide');
     })
     
 }
 
-function AbrirModalEliminarrPaciente(){
-
+function AbrirModalEliminarPaciente(){
+    
+    $('#eliminarModal').modal('show');
 }
 
-function EliminarrPaciente(){
+function EliminarPaciente(){
+    let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+    var cedula = datosPaciente.cedula
+
+    const url = "http://127.0.0.1:5000/pacientes/" + cedula;
+
+    // Opciones para la petición fetch
+    const options = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
     
+    fetch(url, options)
+    .then(Response => Response.json())
+    .then(data => {
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        let mensajeResultado = data.toString().split('|')
+        
+        if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
+            if(mensajeResultado[0] === '00'){
+            
+                mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+                resetearEtquitasOcultas()
+            }else{
+                mostrarNotificacion(mensajeResultado[1],"#FF0000") 
+            }
+        }else{
+            mostrarNotificacion(mensajeResultado[0],"#FF0000") 
+        }
+        $('#eliminarModal').modal('hide');
+    })
+    .catch(err => {
+        mostrarNotificacion(err.message,"#FF0000") 
+        $('#eliminarModal').modal('hide');
+    })
 }
 
 let dataTable;

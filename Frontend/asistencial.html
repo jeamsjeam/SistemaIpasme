@@ -192,7 +192,7 @@
                                 <td id="datosPaciente_tipo_paciente"></td>
                                 <td id="datosPaciente_direccion" colspan="2"></td>
                                 <td>
-                                    <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
+                                    <!-- data-bs-toggle="modal" data-bs-target="#modificarModal" -->
                                     <button id="modificarButton" class="btn btn-sm btn-primary" onclick="AbrirModalModificarPaciente()" ><i class="fa-solid fa-pencil"></i></button>
                                     <button id="eliminarButton" class="btn btn-sm btn-danger" onclick="AbrirModalEliminarPaciente()"><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
@@ -292,11 +292,11 @@
             </div>
         </section>
         <section>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="modificarModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modificar Paciente</h5>
+                      <h5 class="modal-title" id="modificarModalLabel">Modificar Paciente</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -397,10 +397,7 @@
                                 <div class="col-6">
                                     <div class="row">
                                         <div class="col-3">
-                                            <button type="submit" name="botonRegistrarTodoModal" value="1" class="btn btn-primary">Registrar</button>
-                                        </div>
-                                        <div class="col-3">
-                                            <button type="submit" data-bs-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                                            <button type="submit" name="botonRegistrarTodoModal" value="1" class="btn btn-primary">Modificar</button>
                                         </div>
                                         <div class="col-6">
                                             <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
@@ -409,10 +406,32 @@
                                   </div>
                               </div>
                         </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
                     </div>
                   </div>
                 </div>
               </div>
+        </section>
+        <section>
+            <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarModalLabel">Eliminar Paciente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Esta seguro de eliminar el paciente?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="EliminarPaciente()">Eliminar</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 

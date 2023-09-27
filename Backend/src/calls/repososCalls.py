@@ -27,3 +27,11 @@ class ReposoCalls:
                             quien_valida=reposo_info['quien_valida'],
                             grupo_reposo_id=None)
         return reposo
+
+    def borrar_reposo_sin_consultar(reposoBD):
+        if reposoBD is not None:
+            db.session.delete(reposoBD)
+            db.session.commit()
+            return True
+        else:
+            return False

@@ -24,6 +24,12 @@ def buscar_paciente_todos():
     else:
         return jsonify(None)
     
+@app.route('/pacientes/<int:cedula>', methods=['DELETE'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def eliminar_paciente(cedula):
+    respuesta = PacientesServices.eliminar_paciente(cedula)
+    return make_response(jsonify(respuesta))
+    
 @app.route('/pacientes/registrarNuevo', methods=['POST'])
 @cross_origin()  # Para manejar problemas de CORS
 def registrar_datos_paciente_nuevo():

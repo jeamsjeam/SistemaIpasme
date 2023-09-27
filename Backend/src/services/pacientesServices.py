@@ -168,6 +168,48 @@ class PacientesServices:
         else:
             # Si no se encuentra paciente se retorna null
             return None
+        
+    def eliminar_paciente(cedula):
+
+        # Se busca al paciente
+        pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
+
+        # Si existe el paciente se procede a buscar sus reposos
+        if pacienteConsulta is not None:
+
+            # Se convierte el objeto Paciente a un diccionario
+            paciente = paciente_schema.dump(pacienteConsulta)   
+            #pdb.set_trace()  
+
+            # Se buscan los grupos de reposos de ese paciente y se retornan en orden de la fecha mas actual a la mas antigua
+            grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
+
+            # Se verifica que exista al menos un grupo de reposo
+            if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
+
+                # Se recorren todos los grupos de reposos encontrados
+                for grupo in grupoReposoConsulta:
+
+                    # Se buscan los reposos de cada grupo de reposos y se traen en orden de la fecha mas actual a la mas antigua
+                    reposoConsulta = ReposoCalls.get_reposo_paciente(grupo.id)
+
+                    # Se verifica que existan reposos
+                    if reposoConsulta is not None and len(reposoConsulta) > 0:
+
+                        # Se recorren todos los reposos y se agregan a la lista 
+                        for rep in reposoConsulta:
+                            borradoReposo = ReposoCalls.borrar_reposo_sin_consultar(rep)  
+
+                    borradoGrupoReposo = GrupoReposoCalls.borrar_grupoReposo_sin_consultar(grupo)
+                
+            borradoPaciente = PacienteCalls.borrar_paciente_sin_consultar(pacienteConsulta)
+            if borradoPaciente == True:
+
+                return "00|Borrado exitoso"
+            else:
+                return "02|Error al borrar"
+        else:
+            return "01|No se encontro paciente"
     
     def crear_paciente(datos_completos):
 
