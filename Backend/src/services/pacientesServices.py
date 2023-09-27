@@ -181,7 +181,7 @@ class PacientesServices:
         idUsuario = 0
 
         # Se consulta si ya existe un usuario con ese usuario especifico
-        existeUsuario = UsuariosCalls.usuario_por_nombre((datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])))
+        existeUsuario = UsuariosCalls.usuario_por_nombre(str(datos_completos["cedula"]))
 
         # Si existe se guarda su id si no se crea uno nuevo
         if existeUsuario is not None:
@@ -189,7 +189,7 @@ class PacientesServices:
         else:
             # Se crea un diccionario que contendra la informacion del nuevo usuario
             usuario_diccionario = {
-                "usuario": (datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])),
+                "usuario": str(datos_completos["cedula"]),
                 "clave": datos_completos["cedula"],
                 "nombre": datos_completos["nombre"],
                 "rol_id": rol.id

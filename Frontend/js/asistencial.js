@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Elemento select donde agregaremos las opciones de als Dependencia
     const dependenciaSelect = document.getElementById("seleccionDependencia");
 
+    const dependenciaSelectModal = document.getElementById("seleccionDependenciaModal");
+
     // Llamada al servicio REST utilizando fetch
     fetch(urlDependencia)
         .then(response => response.json())
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = data.id;
                 option.textContent = data.nombre;
                 dependenciaSelect.appendChild(option);
+                dependenciaSelectModal.appendChild(option);
             });
         })
         .catch(error => {
@@ -32,6 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlMunicipio = "http://127.0.0.1:5000/municipios";
     // Elemento select donde agregaremos las opciones de los municipio
     const municipiosSelect = document.getElementById("seleccionMunicipio");
+
+    const municipiosSelectModal = document.getElementById("seleccionMunicipioModal");
 
     // Llamada al servicio REST utilizando fetch
     fetch(urlMunicipio)
@@ -45,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = data.id;
                 option.textContent = data.nombre;
                 municipiosSelect.appendChild(option);
+                municipiosSelectModal.appendChild(option);
             });
         })
         .catch(error => {
@@ -56,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlCargos = "http://127.0.0.1:5000/cargos";
     // Elemento select donde agregaremos las opciones de los cargo
     const cargosSelect = document.getElementById("seleccionCargo");
+
+    const cargosSelectModal = document.getElementById("seleccionCargoModal");
 
     // Llamada al servicio REST utilizando fetch
     fetch(urlCargos)
@@ -69,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = data.id;
                 option.textContent = data.nombre;
                 cargosSelect.appendChild(option);
+                cargosSelectModal.appendChild(option);
             });
         })
         .catch(error => {
@@ -105,6 +114,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Elemento select donde agregaremos las opciones de los tipos de pacientes
         const tipoPacienteSelect = document.getElementById("seleccionTipoPaciente");
 
+        const tipoPacienteSelectModal = document.getElementById("seleccionTipoPacienteModal");
+
         // Llamada al servicio REST utilizando fetch
         fetch(urlTipoPaciente)
             .then(response => response.json())
@@ -117,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     option.value = data.id;
                     option.textContent = data.nombre;
                     tipoPacienteSelect.appendChild(option);
+                    tipoPacienteSelectModal.appendChild(option);
                 });
             })
             .catch(error => {
@@ -255,10 +267,9 @@ function registrarPacienteNuevo(){
 }
 
 function datosPacienteTabla(datos){
-
+    sessionStorage.setItem('datosPaciente', JSON.stringify(datos))
     // Asignar valores a las celdas de la tabla
     document.getElementById("datosPaciente_cedula").textContent = datos.cedula;
-    sessionStorage.setItem('cedula', parseInt(datos.cedula))
     document.getElementById("datosPaciente_nombres").textContent = datos.nombre;
     document.getElementById("datosPaciente_apellidos").textContent = datos.apellido;
     document.getElementById("datosPaciente_institucion_laboral").textContent = datos.institucion_laboral;
@@ -300,7 +311,8 @@ function registrarReposo(){
     let fechaDesde = document.getElementById('reposofechaDesde').value;
     let fechaHasta = document.getElementById('reposofechaHasta').value;
     let quienValida = document.getElementById('reposoValida').value;
-    let cedula = parseInt(sessionStorage.getItem('cedula'));
+    let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+    let cedula = parseInt(datosPaciente.cedula);
 
     // Crear objeto con los valores obtenidos
     let datosReposo = {
@@ -351,7 +363,8 @@ function registrarReposo(){
                 // Guardamos los datos del paciente en una variable
                 datosReposoResultado = data.paciente 
                 mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
-                buscarPaciente(parseInt(sessionStorage.getItem('cedula')))
+                let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+                buscarPaciente(parseInt(datosPaciente.cedula))
             }else{
                 mostrarNotificacion(mensajeResultado[1],"#FF0000") 
             }
@@ -363,7 +376,6 @@ function registrarReposo(){
         mostrarNotificacion(err.message,"#FF0000") 
     })
 }
-
 
 // Función para llenar la tabla con los datos de la lista de objetos
 function llenarTablaReposos(datos) {
@@ -462,7 +474,116 @@ function PacienteEncontrado(){
     contenido.style.maxHeight = "";
 }
 
+function AbrirModalModificarPaciente(datosPaciente){
+    if(datosPaciente === null || typeof datosPaciente === 'undefined'){
+        datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+    }
+
+    document.getElementById('registrarPacienteCedulaModal').value = datosPaciente.cedula;
+    document.getElementById('registrarPacienteNombreModal').value = datosPaciente.nombre;
+    document.getElementById('registrarPacienteApellidoModal').value = datosPaciente.apellido;
+    document.getElementById('registrarPacienteInstitucionModal').value = datosPaciente.institucion_laboral;
+    document.getElementById('registrarPacienteDireccionModal').value = datosPaciente.direccion;
+    document.getElementById('registrarPacienteTelefonoModal').value = datosPaciente.telefono;
+    document.getElementById('registrarPacienteCorreoModal').value = datosPaciente.correo;
+    document.getElementById('seleccionCargoModal').value = datosPaciente.cargo.id;
+    document.getElementById('seleccionDependenciaModal').value = datosPaciente.dependencia.id;
+    document.getElementById('seleccionMunicipioModal').value = datosPaciente.municipio.id;
+    document.getElementById('seleccionTipoPacienteModal').value = datosPaciente.tipo_paciente.id;
+    var partesFecha = formatearFecha(datosPaciente.fecha_nacimiento).split('/'); 
+    var año = partesFecha[2];
+    var mes = partesFecha[0].length === 1 ? "0" + partesFecha[0] : partesFecha[0];
+    var día = partesFecha[1].length === 1 ? "0" + partesFecha[1] : partesFecha[1];
+    var fechaFormateada = año + '-' + mes + '-' + día;
+    document.getElementById('registrarPacienteFechaNacimientoModal').value = fechaFormateada;
+    
+    $('#exampleModal').modal('show');
+}
+
 function ModificarPaciente(){
+    let cedula = document.getElementById('registrarPacienteCedulaModal').value;
+    let nombres = document.getElementById('registrarPacienteNombreModal').value;
+    let apellidos = document.getElementById('registrarPacienteApellidoModal').value;
+    let institucion = document.getElementById('registrarPacienteInstitucionModal').value;
+    let direccion = document.getElementById('registrarPacienteDireccionModal').value;
+    let telefono = document.getElementById('registrarPacienteTelefonoModal').value;
+    let correo = document.getElementById('registrarPacienteCorreoModal').value;
+    let cargo = document.getElementById('seleccionCargoModal').value;
+    let dependencia = document.getElementById('seleccionDependenciaModal').value;
+    let municipio = document.getElementById('seleccionMunicipioModal').value;
+    let tipoPaciente = document.getElementById('seleccionTipoPacienteModal').value;
+    let fechaNacimiento = document.getElementById('registrarPacienteFechaNacimientoModal').value;
+
+    // Crear objeto con los valores obtenidos
+    let datosPaciente = {
+        "cedula": parseInt(cedula),
+        "nombre": nombres,
+        "apellido": apellidos,
+        "institucion_laboral": institucion,
+        "fecha_nacimiento": fechaNacimiento,
+        "direccion": direccion,
+        "telefono": telefono,
+        "correo": (correo !== null && typeof correo !== 'undefined' ? correo : ""),
+        "cargo_id": parseInt(cargo),
+        "dependencia_id": parseInt(dependencia),
+        "municipio_id": parseInt(municipio),
+        "tipo_paciente_id": parseInt(tipoPaciente),
+        "usuario_id": 0
+    };
+
+    // Opciones para la petición fetch
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosPaciente)
+    };
+
+    // URL del servicio que crea el usuario
+    const url = "http://127.0.0.1:5000/pacientes/ModificarPaciente";
+
+    document.getElementById('registrarPacienteCedulaModal').value = "";
+    document.getElementById('registrarPacienteNombreModal').value = "";
+    document.getElementById('registrarPacienteApellidoModal').value = "";
+    document.getElementById('registrarPacienteInstitucionModal').value = "";
+    document.getElementById('registrarPacienteDireccionModal').value = "";
+    document.getElementById('registrarPacienteTelefonoModal').value = "";
+    document.getElementById('registrarPacienteCorreoModal').value = "";
+    document.getElementById('seleccionCargoModal').value = 1;
+    document.getElementById('seleccionDependenciaModal').value = 1;
+    document.getElementById('seleccionMunicipioModal').value = 1;
+    document.getElementById('seleccionTipoPacienteModal').value = 1;
+    document.getElementById('registrarPacienteFechaNacimientoModal').value = "";
+
+    fetch(url, options)
+    .then(Response => Response.json())
+    .then(data => {
+  
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        let mensajeResultado = data.mensaje.toString().split('|')
+        
+        if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
+            if(mensajeResultado[0] === '00'){
+            
+                mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+                buscarPaciente(parseInt(data.paciente.cedula))
+            }else{
+                mostrarNotificacion(mensajeResultado[1],"#FF0000") 
+            }
+        }else{
+            mostrarNotificacion(mensajeResultado[0],"#FF0000") 
+        }
+        $('#exampleModal').modal('hide');
+    })
+    .catch(err => {
+        mostrarNotificacion(err.message,"#FF0000") 
+        $('#exampleModal').modal('hide');
+    })
+    
+}
+
+function AbrirModalEliminarrPaciente(){
 
 }
 

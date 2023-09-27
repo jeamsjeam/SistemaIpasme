@@ -43,7 +43,6 @@ class PacienteCalls():
             pacienteBD.dependencia_id = paciente.dependencia_id
             pacienteBD.municipio_id = paciente.municipio_id
             pacienteBD.tipo_paciente_id = paciente.tipo_paciente_id
-            pacienteBD.usuario_id=paciente.usuario_id
             db.session.commit()
             db.session.refresh(pacienteBD)
             return pacienteBD

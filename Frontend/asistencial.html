@@ -192,8 +192,9 @@
                                 <td id="datosPaciente_tipo_paciente"></td>
                                 <td id="datosPaciente_direccion" colspan="2"></td>
                                 <td>
-                                    <button id="modificarButton" class="btn btn-sm btn-primary" onclick="ModificarPaciente()" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil"></i></button>
-                                    <button id="eliminarButton" class="btn btn-sm btn-danger" onclick="EliminarPaciente()"><i class="fa-solid fa-trash-can"></i></button>
+                                    <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
+                                    <button id="modificarButton" class="btn btn-sm btn-primary" onclick="AbrirModalModificarPaciente()" ><i class="fa-solid fa-pencil"></i></button>
+                                    <button id="eliminarButton" class="btn btn-sm btn-danger" onclick="AbrirModalEliminarPaciente()"><i class="fa-solid fa-trash-can"></i></button>
                                 </td>
                             </tr>
                         </table>
@@ -299,7 +300,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form name="formulario" method="post" class="m-3" action="#" onsubmit="event.preventDefault(); registrarPacienteNuevo()">
+                        <form name="formulario" method="post" class="m-3" action="#" onsubmit="event.preventDefault(); ModificarPaciente()">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="mb-3">
