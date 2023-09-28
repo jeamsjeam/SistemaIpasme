@@ -474,6 +474,7 @@ function PacienteEncontrado(){
     contenido.style.maxHeight = "";
 }
 
+/** PACIENTE **/
 function AbrirModalModificarPaciente(cedula){
     let datosPaciente = {}
     if(cedula === null || typeof cedula === 'undefined'){
@@ -492,10 +493,10 @@ function AbrirModalModificarPaciente(cedula){
     document.getElementById('seleccionMunicipioModal').value = datosPaciente.municipio.id;
     document.getElementById('seleccionTipoPacienteModal').value = datosPaciente.tipo_paciente.id;
     var partesFecha = formatearFecha(datosPaciente.fecha_nacimiento).split('/'); 
-    var año = partesFecha[2];
+    var anio = partesFecha[2];
     var mes = partesFecha[0].length === 1 ? "0" + partesFecha[0] : partesFecha[0];
-    var día = partesFecha[1].length === 1 ? "0" + partesFecha[1] : partesFecha[1];
-    var fechaFormateada = año + '-' + mes + '-' + día;
+    var dia = partesFecha[1].length === 1 ? "0" + partesFecha[1] : partesFecha[1];
+    var fechaFormateada = anio + '-' + mes + '-' + dia;
     document.getElementById('registrarPacienteFechaNacimientoModal').value = fechaFormateada;
     
     $('#modificarModal').modal('show');
@@ -630,6 +631,190 @@ function EliminarPaciente(cedula){
     })
 }
 
+/** FIN PACIENTE **/
+
+/** REPOSO **/
+async function buscarReposo(id){
+    // URL del servicio REST que busca un reposo
+    const url = "http://127.0.0.1:5000/pacientes/reposo/" + id;
+
+    try {
+        const response = await fetch(url);
+    
+        if (!response.ok) {
+          mostrarNotificacion(`Error al consultar el servicio: ${response.status} ${response.statusText}`,"#FF0000")
+          return null
+        }
+    
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        mostrarNotificacion("Error al obtener el reposo: " + error.message,"#FF0000")
+        return null
+      }
+
+}
+async function AbrirModalModificarReposo(id){
+    reposo = await buscarReposo(id)
+    if(reposo === null || typeof reposo === 'undefined'){
+        mostrarNotificacion("Error","#FF0000") 
+        return
+    }
+
+    document.getElementById('reposoCodAsistencialModal').value = reposo.codigo_asistencial;
+    document.getElementById('reposoCodRegistroModal').value = reposo.codigo_registro;
+    document.getElementById('reposoValidaModal').value = reposo.quien_valida;
+
+    var partesFechaInicio = formatearFecha(reposo.fecha_inicio).split('/'); 
+    var anioInicio = partesFechaInicio[2];
+    var mesInicio = partesFechaInicio[1].length === 1 ? "0" + partesFechaInicio[1] : partesFechaInicio[1];
+    var diaInicio = partesFechaInicio[0].length === 1 ? "0" + partesFechaInicio[0] : partesFechaInicio[0];
+    var fechaInicioFormateada = anioInicio + '-' + mesInicio + '-' + diaInicio;
+    
+    document.getElementById('reposofechaDesdeModal').value = fechaInicioFormateada;
+
+    var partesFechaFin = formatearFecha(reposo.fecha_fin).split('/'); 
+    var anioFin = partesFechaFin[2];
+    var mesFin = partesFechaFin[1].length === 1 ? "0" + partesFechaFin[1] : partesFechaFin[1];
+    var diaFin = partesFechaFin[0].length === 1 ? "0" + partesFechaFin[0] : partesFechaFin[0];
+    var fechaFinFormateada = anioFin + '-' + mesFin + '-' + diaFin;
+
+    document.getElementById('reposofechaHastaModal').value = fechaFinFormateada;
+
+    $('#modificarModalReposo').modal('show');
+}
+
+function ModificarReposo(){
+    let cedula = document.getElementById('registrarPacienteCedulaModal').value;
+    let nombres = document.getElementById('registrarPacienteNombreModal').value;
+    let apellidos = document.getElementById('registrarPacienteApellidoModal').value;
+    let institucion = document.getElementById('registrarPacienteInstitucionModal').value;
+    let direccion = document.getElementById('registrarPacienteDireccionModal').value;
+    let telefono = document.getElementById('registrarPacienteTelefonoModal').value;
+    let correo = document.getElementById('registrarPacienteCorreoModal').value;
+    let cargo = document.getElementById('seleccionCargoModal').value;
+    let dependencia = document.getElementById('seleccionDependenciaModal').value;
+    let municipio = document.getElementById('seleccionMunicipioModal').value;
+    let tipoPaciente = document.getElementById('seleccionTipoPacienteModal').value;
+    let fechaNacimiento = document.getElementById('registrarPacienteFechaNacimientoModal').value;
+
+    // Crear objeto con los valores obtenidos
+    let datosPaciente = {
+        "cedula": parseInt(cedula),
+        "nombre": nombres,
+        "apellido": apellidos,
+        "institucion_laboral": institucion,
+        "fecha_nacimiento": fechaNacimiento,
+        "direccion": direccion,
+        "telefono": telefono,
+        "correo": (correo !== null && typeof correo !== 'undefined' ? correo : ""),
+        "cargo_id": parseInt(cargo),
+        "dependencia_id": parseInt(dependencia),
+        "municipio_id": parseInt(municipio),
+        "tipo_paciente_id": parseInt(tipoPaciente),
+        "usuario_id": 0
+    };
+
+    // Opciones para la petición fetch
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datosPaciente)
+    };
+
+    // URL del servicio que crea el usuario
+    const url = "http://127.0.0.1:5000/pacientes/ModificarPaciente";
+
+    document.getElementById('registrarPacienteCedulaModal').value = "";
+    document.getElementById('registrarPacienteNombreModal').value = "";
+    document.getElementById('registrarPacienteApellidoModal').value = "";
+    document.getElementById('registrarPacienteInstitucionModal').value = "";
+    document.getElementById('registrarPacienteDireccionModal').value = "";
+    document.getElementById('registrarPacienteTelefonoModal').value = "";
+    document.getElementById('registrarPacienteCorreoModal').value = "";
+    document.getElementById('seleccionCargoModal').value = 1;
+    document.getElementById('seleccionDependenciaModal').value = 1;
+    document.getElementById('seleccionMunicipioModal').value = 1;
+    document.getElementById('seleccionTipoPacienteModal').value = 1;
+    document.getElementById('registrarPacienteFechaNacimientoModal').value = "";
+
+    fetch(url, options)
+    .then(Response => Response.json())
+    .then(data => {
+  
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        let mensajeResultado = data.mensaje.toString().split('|')
+        
+        if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
+            if(mensajeResultado[0] === '00'){
+            
+                mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+                buscarPaciente(parseInt(data.paciente.cedula))
+            }else{
+                mostrarNotificacion(mensajeResultado[1],"#FF0000") 
+            }
+        }else{
+            mostrarNotificacion(mensajeResultado[0],"#FF0000") 
+        }
+        $('#modificarModal').modal('hide');
+    })
+    .catch(err => {
+        mostrarNotificacion(err.message,"#FF0000") 
+        $('#modificarModal').modal('hide');
+    })
+    
+}
+
+function AbrirModalEliminarReposo(){
+    
+    $('#eliminarModalReposo').modal('show');
+}
+
+function EliminarReposo(cedula){
+    if(cedula === null || typeof cedula === 'undefined'){
+        let datosPacienteTodos = JSON.parse(sessionStorage.getItem('datosPaciente'))
+        cedula = datosPacienteTodos.cedula
+    }
+
+    const url = "http://127.0.0.1:5000/pacientes/" + cedula;
+
+    // Opciones para la petición fetch
+    const options = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
+    
+    fetch(url, options)
+    .then(Response => Response.json())
+    .then(data => {
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        let mensajeResultado = data.toString().split('|')
+        
+        if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
+            if(mensajeResultado[0] === '00'){
+            
+                mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
+                resetearEtquitasOcultas()
+            }else{
+                mostrarNotificacion(mensajeResultado[1],"#FF0000") 
+            }
+        }else{
+            mostrarNotificacion(mensajeResultado[0],"#FF0000") 
+        }
+        $('#eliminarModal').modal('hide');
+    })
+    .catch(err => {
+        mostrarNotificacion(err.message,"#FF0000") 
+        $('#eliminarModal').modal('hide');
+    })
+}
+
+/** FIN REPOSO **/
+
 let dataTable;
 let dataTableIsInitialized = false;
 let numeroPorPagona = 5;
@@ -689,10 +874,10 @@ function listUsers(reposos) {
                     <td>${reposo.quien_valida != null && typeof reposo.quien_valida !== 'undefined' ? reposo.quien_valida : ''}</td>
                     <!-- <td><i class="fa-solid fa-check" style="color: green;"></i></td> -->
                     <td>
-                        <button class="btn btn-sm btn-primary"
+                        <button class="btn btn-sm btn-primary" onclick="AbrirModalModificarReposo(${reposo.id})"
                         ${reposo.quien_valida != null && typeof reposo.quien_valida !== 'undefined' ? '' : 'disabled'}
                         ><i class="fa-solid fa-pencil"></i></button>
-                        <button class="btn btn-sm btn-danger"
+                        <button class="btn btn-sm btn-danger" onclick="AbrirModalEliminarReposo(${reposo.id})"
                         ${reposo.quien_valida != null && typeof reposo.quien_valida !== 'undefined' ? '' : 'disabled'}
                         ><i class="fa-solid fa-trash-can"></i></button>
                         

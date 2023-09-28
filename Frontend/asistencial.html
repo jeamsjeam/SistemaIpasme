@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="col-6">
                                             <label for="registrarPacienteFechaNacimiento" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
-                                            <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01" max="2024-01-01">
+                                            <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimiento" required min="1900-01-01">
                                         </div>
                                     </div>
                                 </div>	
@@ -311,7 +311,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <label for="registrarPacienteFechaNacimientoModal" class="form-label">Fecha de nacimiento<span class = "requerido">*</span></label>
-                                                <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimientoModal" required min="1900-01-01" max="2024-01-01">
+                                                <input type="date" name="fechaNacimiento" class="form-control" id="registrarPacienteFechaNacimientoModal" required min="1900-01-01">
                                             </div>
                                         </div>
                                     </div>	
@@ -428,6 +428,101 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         <button type="button" class="btn btn-primary" onclick="EliminarPaciente()">Eliminar</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="modal fade" id="modificarModalReposo" tabindex="-1" aria-labelledby="modificarModalReposoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modificarModalReposoLabel">Modificar Reposo</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formulario" method="post" action="#" onsubmit="event.preventDefault(); ModificarReposo()">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoCodAsistencialModal" class="form-label">Codigo Asistencial<span class = "requerido">*</span></label>
+                                        <input type="text" name="codasistencial" class="form-control" id="reposoCodAsistencialModal" required placeholder="Codigo Asistencial">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoCodRegistroModal" class="form-label">Codigo Registro<span class = "requerido">*</span></label>
+                                        <input type="text" name="codregistro" class="form-control" id="reposoCodRegistroModal" required placeholder="Codigo Registro">
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">  
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposofechaDesdeModal" class="form-label">Fecha Desde<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechadesde" class="form-control" id="reposofechaDesdeModal" required min="1900-01-01" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposofechaHastaModal" class="form-label">Fecha Hasta<span class = "requerido">*</span></label>
+                                        <input type="date" name="fechahasta" class="form-control" id="reposofechaHastaModal" required min="1900-01-01" disabled>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoValidaModal" class="form-label">Quien Valida</label>
+                                        <input type="text" name="quienvalida" class="form-control" id="reposoValidaModal" placeholder="Quien Valida">
+                                    </div>
+                                </div>
+                                <!-- <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="reposoTipoReposoModal" class="form-label">Tipo Reposo<span class = "requerido">*</span></label>
+                                        <select name="tipoReposo" id ="reposoTipoReposoModal" class="form-select" aria-label="Default select example" required>
+                                    </div>
+                                </div> -->
+                            </div>    
+                            <div class="row mt-4 mb-3">
+                                <!-- Boton Registrar -->
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <button type="submit" name="botonRegistrarReposoModal" value="1" class="btn btn-primary">Modificar</button>
+                                        </div>
+                                        <div class="col-8">
+                                            <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                        </div>
+                                    </div>
+                                  </div>
+                              </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </section>
+        <section>
+            <div class="modal fade" id="eliminarModalReposo" tabindex="-1" aria-labelledby="eliminarModalReposoLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarModalReposoLabel">Eliminar Reposo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Esta seguro de eliminar el reposo?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="EliminarReposo()">Eliminar</button>
                     </div>
                     </div>
                 </div>
