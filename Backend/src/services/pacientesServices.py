@@ -7,6 +7,7 @@ from ..calls.dependenciasCalls import DependenciasCalls
 from ..calls.municipiosCalls import MunicipiosCalls
 from ..calls.tipoReposoCall import TipoReposoCalls
 from ..calls.rolesCalls import RolesCalls
+from ..calls.citasCalls import CitasCalls
 from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
@@ -173,16 +174,13 @@ class PacientesServices:
 
         # Se busca al paciente
         pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
+        #pdb.set_trace() 
 
         # Si existe el paciente se procede a buscar sus reposos
         if pacienteConsulta is not None:
-
-            # Se convierte el objeto Paciente a un diccionario
-            paciente = paciente_schema.dump(pacienteConsulta)   
-            #pdb.set_trace()  
-
+ 
             # Se buscan los grupos de reposos de ese paciente y se retornan en orden de la fecha mas actual a la mas antigua
-            grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(paciente['cedula'])
+            grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(pacienteConsulta.cedula)
 
             # Se verifica que exista al menos un grupo de reposo
             if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
@@ -201,10 +199,22 @@ class PacientesServices:
                             borradoReposo = ReposoCalls.borrar_reposo_sin_consultar(rep)  
 
                     borradoGrupoReposo = GrupoReposoCalls.borrar_grupoReposo_sin_consultar(grupo)
-                
+            
+            # Se consulta las citas para borrarlo
+            citas = CitasCalls.get_citas_paciente(pacienteConsulta.cedula)
+            if citas is not None and len(citas) > 0:
+                for cita in citas:
+                    borradoCitas = CitasCalls.borrar_ucita_sin_consultar(cita)
+                    
             borradoPaciente = PacienteCalls.borrar_paciente_sin_consultar(pacienteConsulta)
-            if borradoPaciente == True:
 
+            # Se consulta el usuario para borrarlo
+            usuario = UsuariosCalls.usuario_por_nombre(pacienteConsulta.cedula)
+
+            if usuario is not None:
+                borradoUsuario = UsuariosCalls.borrar_usuario_sin_consultar(usuario)
+
+            if borradoPaciente == True:
                 return "00|Borrado exitoso"
             else:
                 return "02|Error al borrar"

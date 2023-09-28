@@ -474,8 +474,9 @@ function PacienteEncontrado(){
     contenido.style.maxHeight = "";
 }
 
-function AbrirModalModificarPaciente(datosPaciente){
-    if(datosPaciente === null || typeof datosPaciente === 'undefined'){
+function AbrirModalModificarPaciente(cedula){
+    let datosPaciente = {}
+    if(cedula === null || typeof cedula === 'undefined'){
         datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
     }
 
@@ -588,9 +589,11 @@ function AbrirModalEliminarPaciente(){
     $('#eliminarModal').modal('show');
 }
 
-function EliminarPaciente(){
-    let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
-    var cedula = datosPaciente.cedula
+function EliminarPaciente(cedula){
+    if(cedula === null || typeof cedula === 'undefined'){
+        let datosPacienteTodos = JSON.parse(sessionStorage.getItem('datosPaciente'))
+        cedula = datosPacienteTodos.cedula
+    }
 
     const url = "http://127.0.0.1:5000/pacientes/" + cedula;
 
