@@ -44,6 +44,14 @@ class GrupoReposoCalls:
         else:
             return "05"
     
+    def borrar_grupoReposo_sin_consultar(grupoReposoBD):
+        if grupoReposoBD is not None:
+            db.session.delete(grupoReposoBD)
+            db.session.commit()
+            return True
+        else:
+            return False
+    
         
 """
 # Uso de la función

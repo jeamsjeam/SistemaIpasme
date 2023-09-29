@@ -7,6 +7,7 @@ from ..calls.dependenciasCalls import DependenciasCalls
 from ..calls.municipiosCalls import MunicipiosCalls
 from ..calls.tipoReposoCall import TipoReposoCalls
 from ..calls.rolesCalls import RolesCalls
+from ..calls.citasCalls import CitasCalls
 from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
@@ -76,7 +77,7 @@ class PacientesServices:
                                 #listaReposos.append(rep)
 
                         # se cambia la bandera de estado para que ya no cuente mas dias
-                        #banderaDias = False
+                        # banderaDias = False
                         break
                     
                     # Si se agrego algo a lista se agrega al objeto paciente un nuevo campo llamado reposo donde estara la lista que se acabo de llenar
@@ -168,6 +169,57 @@ class PacientesServices:
         else:
             # Si no se encuentra paciente se retorna null
             return None
+        
+    def eliminar_paciente(cedula):
+
+        # Se busca al paciente
+        pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
+        #pdb.set_trace() 
+
+        # Si existe el paciente se procede a buscar sus reposos
+        if pacienteConsulta is not None:
+ 
+            # Se buscan los grupos de reposos de ese paciente y se retornan en orden de la fecha mas actual a la mas antigua
+            grupoReposoConsulta = GrupoReposoCalls.get_grupoReposo_paciente(pacienteConsulta.cedula)
+
+            # Se verifica que exista al menos un grupo de reposo
+            if grupoReposoConsulta is not None and len(grupoReposoConsulta) > 0:
+
+                # Se recorren todos los grupos de reposos encontrados
+                for grupo in grupoReposoConsulta:
+
+                    # Se buscan los reposos de cada grupo de reposos y se traen en orden de la fecha mas actual a la mas antigua
+                    reposoConsulta = ReposoCalls.get_reposo_paciente(grupo.id)
+
+                    # Se verifica que existan reposos
+                    if reposoConsulta is not None and len(reposoConsulta) > 0:
+
+                        # Se recorren todos los reposos y se agregan a la lista 
+                        for rep in reposoConsulta:
+                            borradoReposo = ReposoCalls.borrar_reposo_sin_consultar(rep)  
+
+                    borradoGrupoReposo = GrupoReposoCalls.borrar_grupoReposo_sin_consultar(grupo)
+            
+            # Se consulta las citas para borrarlo
+            citas = CitasCalls.get_citas_paciente(pacienteConsulta.cedula)
+            if citas is not None and len(citas) > 0:
+                for cita in citas:
+                    borradoCitas = CitasCalls.borrar_ucita_sin_consultar(cita)
+                    
+            borradoPaciente = PacienteCalls.borrar_paciente_sin_consultar(pacienteConsulta)
+
+            # Se consulta el usuario para borrarlo
+            usuario = UsuariosCalls.usuario_por_nombre(pacienteConsulta.cedula)
+
+            if usuario is not None:
+                borradoUsuario = UsuariosCalls.borrar_usuario_sin_consultar(usuario)
+
+            if borradoPaciente == True:
+                return "00|Borrado exitoso"
+            else:
+                return "02|Error al borrar"
+        else:
+            return "01|No se encontro paciente"
     
     def crear_paciente(datos_completos):
 
@@ -181,7 +233,7 @@ class PacientesServices:
         idUsuario = 0
 
         # Se consulta si ya existe un usuario con ese usuario especifico
-        existeUsuario = UsuariosCalls.usuario_por_nombre((datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])))
+        existeUsuario = UsuariosCalls.usuario_por_nombre(str(datos_completos["cedula"]))
 
         # Si existe se guarda su id si no se crea uno nuevo
         if existeUsuario is not None:
@@ -189,7 +241,7 @@ class PacientesServices:
         else:
             # Se crea un diccionario que contendra la informacion del nuevo usuario
             usuario_diccionario = {
-                "usuario": (datos_completos["nombre"][0].lower() + datos_completos["apellido"][0].lower() + str(datos_completos["cedula"])),
+                "usuario": str(datos_completos["cedula"]),
                 "clave": datos_completos["cedula"],
                 "nombre": datos_completos["nombre"],
                 "rol_id": rol.id

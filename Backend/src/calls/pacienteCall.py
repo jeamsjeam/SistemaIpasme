@@ -5,6 +5,7 @@ from src import db
 class PacienteCalls():
     def get_paciente():
         paciente = Paciente.query.all()
+        paciente = sorted(Paciente.query.all(), key=lambda pa: pa.cedula, reverse=False) 
         return paciente
     
     def get_paciente_cedula(cedula):
@@ -44,7 +45,6 @@ class PacienteCalls():
             pacienteBD.dependencia_id = paciente.dependencia_id
             pacienteBD.municipio_id = paciente.municipio_id
             pacienteBD.tipo_paciente_id = paciente.tipo_paciente_id
-            pacienteBD.usuario_id=paciente.usuario_id
             db.session.commit()
             db.session.refresh(pacienteBD)
             return pacienteBD
@@ -59,6 +59,14 @@ class PacienteCalls():
             return "00|Ok"
         else:
             return "01|Error"
+        
+    def borrar_paciente_sin_consultar(pacienteBD):
+        if pacienteBD is not None:
+            db.session.delete(pacienteBD)
+            db.session.commit()
+            return True
+        else:
+            return False
         
     def crear_obj_paciente(datos_completos):
         paciente = Paciente(cedula=datos_completos['cedula'],

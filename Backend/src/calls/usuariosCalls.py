@@ -32,6 +32,14 @@ class UsuariosCalls():
         db.session.delete(usuarioBD)
         db.session.commit()
         return "Ok"
+    
+    def borrar_usuario_sin_consultar(usuarioBD):
+        if usuarioBD is not None:
+            db.session.delete(usuarioBD)
+            db.session.commit()
+            return True
+        else:
+            return False
 
     def autenticar_usuario(usuario, clave):
         usuarioBD = Usuario.query.filter_by(usuario = usuario).first()
@@ -45,7 +53,8 @@ class UsuariosCalls():
                 return "01|Usuario o Clave Incorrecta"
             
     def usuario_por_nombre(usuario):
-        return Usuario.query.filter_by(usuario = usuario).first()
+        #pdb.set_trace() 
+        return Usuario.query.filter_by(usuario = str(usuario)).first()
     
     def crear_obj_usuario(datos_usuario):
         usuario = Usuario(usuario = datos_usuario["usuario"], 
