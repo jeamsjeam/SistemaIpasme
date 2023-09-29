@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //------------------------------Tipo Reposo------------------------------
     // URL del servicio REST que retorna la lista de tipo de reposo
-    const urlTipoReposo = "http://127.0.0.1:5000/tipoReposo";
+    /*const urlTipoReposo = "http://127.0.0.1:5000/tipoReposo";
     // Elemento select donde agregaremos las opciones de los tipo de reposo
     //const cargosTipoReposo = document.getElementById("primerReposoTipoReposo");
 
@@ -106,9 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => {
             mostrarNotificacion("Error al obtener los Tipo Reposo: " + error.message,"#FF0000")
-        });
+        });*/
 
-        //------------------------------Cargo------------------------------
+        //------------------------------Tipos Pacientes------------------------------
         // URL del servicio REST que retorna la lista de tipo de pacientes
         const urlTipoPaciente = "http://127.0.0.1:5000/tiposPaciente";
         // Elemento select donde agregaremos las opciones de los tipos de pacientes
@@ -475,6 +475,7 @@ function PacienteEncontrado(){
 }
 
 /** PACIENTE **/
+
 function AbrirModalModificarPaciente(cedula){
     let datosPaciente = {}
     if(cedula === null || typeof cedula === 'undefined'){
@@ -634,6 +635,7 @@ function EliminarPaciente(cedula){
 /** FIN PACIENTE **/
 
 /** REPOSO **/
+
 async function buscarReposo(id){
     // URL del servicio REST que busca un reposo
     const url = "http://127.0.0.1:5000/pacientes/reposo/" + id;
@@ -664,6 +666,7 @@ async function AbrirModalModificarReposo(id){
     document.getElementById('reposoCodAsistencialModal').value = reposo.codigo_asistencial;
     document.getElementById('reposoCodRegistroModal').value = reposo.codigo_registro;
     document.getElementById('reposoValidaModal').value = reposo.quien_valida;
+    document.getElementById('reposoIdModificarModal').value = reposo.id.toString();
 
     var partesFechaInicio = formatearFecha(reposo.fecha_inicio).split('/'); 
     var anioInicio = partesFechaInicio[2];
@@ -685,34 +688,21 @@ async function AbrirModalModificarReposo(id){
 }
 
 function ModificarReposo(){
-    let cedula = document.getElementById('registrarPacienteCedulaModal').value;
-    let nombres = document.getElementById('registrarPacienteNombreModal').value;
-    let apellidos = document.getElementById('registrarPacienteApellidoModal').value;
-    let institucion = document.getElementById('registrarPacienteInstitucionModal').value;
-    let direccion = document.getElementById('registrarPacienteDireccionModal').value;
-    let telefono = document.getElementById('registrarPacienteTelefonoModal').value;
-    let correo = document.getElementById('registrarPacienteCorreoModal').value;
-    let cargo = document.getElementById('seleccionCargoModal').value;
-    let dependencia = document.getElementById('seleccionDependenciaModal').value;
-    let municipio = document.getElementById('seleccionMunicipioModal').value;
-    let tipoPaciente = document.getElementById('seleccionTipoPacienteModal').value;
-    let fechaNacimiento = document.getElementById('registrarPacienteFechaNacimientoModal').value;
+    let codAsistencial = document.getElementById('reposoCodAsistencialModal').value;
+    let codRegistro = document.getElementById('reposoCodRegistroModal').value;
+    let fechaDesde = document.getElementById('reposofechaDesdeModal').value;
+    let fechaHasta = document.getElementById('reposofechaHastaModal').value;
+    let quienValida = document.getElementById('reposoValidaModal').value;
+    let id = document.getElementById('reposoIdModificarModal').value;
 
     // Crear objeto con los valores obtenidos
-    let datosPaciente = {
-        "cedula": parseInt(cedula),
-        "nombre": nombres,
-        "apellido": apellidos,
-        "institucion_laboral": institucion,
-        "fecha_nacimiento": fechaNacimiento,
-        "direccion": direccion,
-        "telefono": telefono,
-        "correo": (correo !== null && typeof correo !== 'undefined' ? correo : ""),
-        "cargo_id": parseInt(cargo),
-        "dependencia_id": parseInt(dependencia),
-        "municipio_id": parseInt(municipio),
-        "tipo_paciente_id": parseInt(tipoPaciente),
-        "usuario_id": 0
+    let datosReposo = {
+        "codigo_asistencial": codAsistencial,
+        "codigo_registro": codRegistro,
+        "fecha_inicio": fechaDesde,
+        "fecha_fin": fechaHasta,
+        "quien_valida": quienValida,  
+        "id": id
     };
 
     // Opciones para la petición fetch
@@ -721,64 +711,60 @@ function ModificarReposo(){
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(datosPaciente)
+        body: JSON.stringify(datosReposo)
     };
 
-    // URL del servicio que crea el usuario
-    const url = "http://127.0.0.1:5000/pacientes/ModificarPaciente";
+    // URL del servicio que modifica el reposo
+    const url = "http://127.0.0.1:5000/pacientes/reposo/ModificarReposo";
 
-    document.getElementById('registrarPacienteCedulaModal').value = "";
-    document.getElementById('registrarPacienteNombreModal').value = "";
-    document.getElementById('registrarPacienteApellidoModal').value = "";
-    document.getElementById('registrarPacienteInstitucionModal').value = "";
-    document.getElementById('registrarPacienteDireccionModal').value = "";
-    document.getElementById('registrarPacienteTelefonoModal').value = "";
-    document.getElementById('registrarPacienteCorreoModal').value = "";
-    document.getElementById('seleccionCargoModal').value = 1;
-    document.getElementById('seleccionDependenciaModal').value = 1;
-    document.getElementById('seleccionMunicipioModal').value = 1;
-    document.getElementById('seleccionTipoPacienteModal').value = 1;
-    document.getElementById('registrarPacienteFechaNacimientoModal').value = "";
+    document.getElementById('reposoCodAsistencialModal').value = "";
+    document.getElementById('reposoCodRegistroModal').value = "";
+    document.getElementById('reposofechaDesdeModal').value = "";
+    document.getElementById('reposofechaHastaModal').value = "";
+    document.getElementById('reposoValidaModal').value = "";
+    document.getElementById('reposoIdModificarModal').value = "";
 
+    let datosReposoResultado = {}
     fetch(url, options)
     .then(Response => Response.json())
     .then(data => {
-  
+
         // Guardamos el mensaje para saber si fue exitoso o no el registro
-        let mensajeResultado = data.mensaje.toString().split('|')
-        
+        let mensajeResultado = data.toString().split('|')
+        $('#modificarModalReposo').modal('hide');
+
         if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
             if(mensajeResultado[0] === '00'){
-            
+                // Guardamos los datos del paciente en una variable
+                datosReposoResultado = data.paciente 
                 mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
-                buscarPaciente(parseInt(data.paciente.cedula))
+                let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+                buscarPaciente(parseInt(datosPaciente.cedula))
             }else{
                 mostrarNotificacion(mensajeResultado[1],"#FF0000") 
             }
         }else{
             mostrarNotificacion(mensajeResultado[0],"#FF0000") 
         }
-        $('#modificarModal').modal('hide');
     })
     .catch(err => {
         mostrarNotificacion(err.message,"#FF0000") 
-        $('#modificarModal').modal('hide');
+        $('#modificarModalReposo').modal('hide');
     })
     
 }
 
-function AbrirModalEliminarReposo(){
-    
+function AbrirModalEliminarReposo(id){
+    sessionStorage.setItem('reposoId',id)
     $('#eliminarModalReposo').modal('show');
 }
 
-function EliminarReposo(cedula){
-    if(cedula === null || typeof cedula === 'undefined'){
-        let datosPacienteTodos = JSON.parse(sessionStorage.getItem('datosPaciente'))
-        cedula = datosPacienteTodos.cedula
-    }
+function EliminarReposo(){
+    
+    let reposoId = JSON.parse(sessionStorage.getItem('reposoId'))
 
-    const url = "http://127.0.0.1:5000/pacientes/" + cedula;
+
+    const url = "http://127.0.0.1:5000/pacientes/reposo/" + reposoId;
 
     // Opciones para la petición fetch
     const options = {
@@ -791,25 +777,28 @@ function EliminarReposo(cedula){
     fetch(url, options)
     .then(Response => Response.json())
     .then(data => {
+
         // Guardamos el mensaje para saber si fue exitoso o no el registro
         let mensajeResultado = data.toString().split('|')
-        
+        $('#eliminarModalReposo').modal('hide');
+
         if(typeof mensajeResultado[1] !== 'undefined' && mensajeResultado[1] !== null){
             if(mensajeResultado[0] === '00'){
-            
+                // Guardamos los datos del paciente en una variable
+                datosReposoResultado = data.paciente 
                 mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
-                resetearEtquitasOcultas()
+                let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+                buscarPaciente(parseInt(datosPaciente.cedula))
             }else{
                 mostrarNotificacion(mensajeResultado[1],"#FF0000") 
             }
         }else{
             mostrarNotificacion(mensajeResultado[0],"#FF0000") 
         }
-        $('#eliminarModal').modal('hide');
     })
     .catch(err => {
         mostrarNotificacion(err.message,"#FF0000") 
-        $('#eliminarModal').modal('hide');
+        $('#eliminarModalReposo').modal('hide');
     })
 }
 

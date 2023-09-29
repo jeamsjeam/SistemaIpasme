@@ -58,6 +58,8 @@ class EmpleadosCalls():
                 db.session.delete(permisoBD)
             for asistenciaBD in empleadoBD.asistencias:
                 db.session.delete(asistenciaBD)
+            for citaBD in empleadoBD.citas:
+                db.session.delete(citaBD)
             db.session.delete(empleadoBD)
             db.session.commit()
             return "00|Ok"
