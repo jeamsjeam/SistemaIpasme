@@ -77,7 +77,7 @@ class PacientesServices:
                                 #listaReposos.append(rep)
 
                         # se cambia la bandera de estado para que ya no cuente mas dias
-                        #banderaDias = False
+                        # banderaDias = False
                         break
                     
                     # Si se agrego algo a lista se agrega al objeto paciente un nuevo campo llamado reposo donde estara la lista que se acabo de llenar

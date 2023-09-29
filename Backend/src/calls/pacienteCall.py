@@ -4,6 +4,7 @@ from src import db
 class PacienteCalls():
     def get_paciente():
         paciente = Paciente.query.all()
+        paciente = sorted(Paciente.query.all(), key=lambda pa: pa.cedula, reverse=False) 
         return paciente
     
     def get_paciente_cedula(cedula):

@@ -119,19 +119,15 @@ def modificar_reposo():
     datos_completos = request.json
 
     datos_completos_objeto = ReposoCalls.retornar_obj_reposo(datos_completos)
-    
-    resultado = {}
+
     # Llamamos al método registrar_datos del objeto registro_paciente
     respuesta = ReposoCalls.modificar_reposo(datos_completos_objeto,datos_completos["id"])
     if respuesta is not None:
-        resultado["mensaje"] = "00|Se modifico el reposo con exito"
-        resultado["reposo"] = reposo_schema.dump(respuesta)
+        return make_response(jsonify("00|Se modifico el reposo con exito"))
         # Devolvemos la respuesta como JSON en la respuesta HTTP
-        
     else:
-        resultado["mensaje"] = "01|Error al modificar el reposo"
-        resultado["reposo"] = None
-    return make_response(jsonify(resultado))
+        return make_response(jsonify("01|Error al modificar el reposo"))
+    
     
 @app.route('/pacientes/reposo/<int:id>', methods=['DELETE'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
