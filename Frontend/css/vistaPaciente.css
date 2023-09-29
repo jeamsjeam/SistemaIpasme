@@ -53,7 +53,7 @@
 
             .card-img-overlay {
                 transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
-                background: rgb(33, 137, 255);
+                background: rgba(33, 137, 255, 0.5);
                 background: linear-gradient(0deg, rgba(33, 137, 255, 0.5) 0%, rgb(0, 119, 255) 100%);
             }
         }
@@ -74,7 +74,6 @@
     .card-img-overlay {
         transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
         background: rgb(33, 137, 255);
-        background: linear-gradient(0deg, rgba(141, 191, 248, 0.379) 0%, rgba(33, 137, 255, 1) 100%);
     }
 }
 

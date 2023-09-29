@@ -1,5 +1,7 @@
 from ..models.cita import Cita
 from src import db
+from datetime import datetime
+from sqlalchemy import extract
 import pdb
 
 class CitasCalls():
@@ -50,3 +52,19 @@ class CitasCalls():
             return True
         else:
             return False
+        
+    def get_citas_dia_medico(cedula, fecha):
+        date = datetime.strptime(fecha, "%d/%m/%Y")
+        citas = Cita.query.filter_by(empleado_cedula=cedula).filter(\
+            extract('month', Cita.fecha) == date.month,\
+            extract('year', Cita.fecha) == date.year,\
+            extract('day', Cita.fecha) == date.day)
+        return citas
+    
+    def get_citas_paciente_mes(cedula, fecha):
+        date = datetime.strptime(fecha, "%d/%m/%Y")
+        citas = Cita.query.filter_by(paciente_cedula=cedula).filter(\
+            extract('month', Cita.fecha) == date.month,\
+            extract('year', Cita.fecha) == date.year\
+            ).order_by(Cita.fecha)
+        return citas

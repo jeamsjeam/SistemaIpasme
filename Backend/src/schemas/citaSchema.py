@@ -13,6 +13,7 @@ class CitaSchema(ma.SQLAlchemyAutoSchema):
     fecha = ma.auto_field()
     empleado = ma.Nested('EmpleadoSchema')
     paciente = ma.Nested('PacienteSchema')
+    estado_cita = ma.Nested('EstadoCitaSchema')
 
 cita_schema = CitaSchema()
 citas_schema = CitaSchema(many=True)

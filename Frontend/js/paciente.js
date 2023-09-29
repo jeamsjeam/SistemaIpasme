@@ -33,7 +33,7 @@ function cargarCalendario(sumar){
     sessionStorage.setItem('mesCalendarioCita', fechaConsulta)
 
     let cedula = JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'));    
-    let url = "http://127.0.0.1:5000/asistencias/empleado/mes"; 
+    let url = "http://127.0.0.1:5000/citas/paciente/mes"; 
     data = {
         cedula : cedula,
         fecha : fechaConsulta.toLocaleDateString('en-GB')
@@ -173,5 +173,46 @@ function seleccionarMedico(medicoCedula){
 }
 
 function agendarCita(){
+    let fecha_cita = document.getElementById("fecha-cita").value;
+    if (fecha_cita == '') {
+        mostrarNotificacion('Por favor, indique una fecha valida', "#FF0000")
+        return 0
+    }
+    let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'))
+    let url = "http://127.0.0.1:5000/citas/agendar"; 
+    data = {
+        nota : '',
+        fecha : formatearFecha(fecha_inicio),
+        empleado_cedula : JSON.parse(sessionStorage.getItem('medicoCita')),
+        paciente_usuario : datosUsuario.usuario
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        resultado = data.toString().split('|')
+        if (typeof resultado[1] !== 'undefined' && resultado[1] !== null) {
+            if (resultado[0] === '00') {
+                mostrarNotificacion("Registrado con Exito", "#198754")
+                document.getElementById("fecha-cita").value = "";
+                window.location.href = "menuPaciente.html"
+            } else {
+                mostrarNotificacion(resultado[1], "#FF0000")
+            }
+        } else {
+            mostrarNotificacion(resultado[0], "#FF0000")
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
 
+function formatearFecha(fecha) {
+    let data = fecha.split('-')
+    return data[2] + "/" + data[1] + "/" + data[0]
 }
