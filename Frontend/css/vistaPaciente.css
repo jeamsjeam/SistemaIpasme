@@ -116,8 +116,9 @@ li {
     grid-column-start: var(--first-day-start, 0);
 }
 
-.asistencia,
-.permiso {
+.agendada,
+.asistida,
+.cancelada {
     position: relative;
 }
 
@@ -146,8 +147,9 @@ li {
     font-size: 1.2rem;
 }
 
-li.permiso:before,
-li.asistencia:before {
+li.agendada:before,
+li.asistida:before,
+li.cancelada:before{
     content: "";
     position: absolute;
     height: 29px;
@@ -161,14 +163,19 @@ li.asistencia:before {
     z-index: -1;
 }
 
-li.permiso:before {
+li.agendada:before {
     background: lightblue;
     border: 1px solid lightblue;
 }
 
-li.asistencia:before {
+li.asistida:before {
     background: palegreen;
     border: 1px solid palegreen;
+}
+
+li.cancelada:before {
+    background: palevioletred;
+    border: 1px solid palevioletred;
 }
 
 

@@ -13,5 +13,5 @@ def agendar_cita():
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def get_citas_paciente_mes():
     json = request.json
-    respuesta = CitasServices.get_citas_paciente_mes(json['cedula'], json['fecha'])
+    respuesta = CitasServices.get_citas_paciente_mes(json['usuario'], json['fecha'])
     return respuesta

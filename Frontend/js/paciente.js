@@ -32,10 +32,10 @@ function cargarCalendario(sumar){
     fechaConsulta = new Date(year, mes, 1)
     sessionStorage.setItem('mesCalendarioCita', fechaConsulta)
 
-    let cedula = JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'));    
+    let usuario = JSON.parse(sessionStorage.getItem('usuario'));    
     let url = "http://127.0.0.1:5000/citas/paciente/mes"; 
     data = {
-        cedula : cedula,
+        usuario : usuario.usuario,
         fecha : fechaConsulta.toLocaleDateString('en-GB')
     }
     let options = {
@@ -48,7 +48,7 @@ function cargarCalendario(sumar){
     fetch(url, options)
     .then(response => response.json() )
     .then(data => {
-        asistencias = data
+        citas = data
 
         // Formatos
         let locale = "es"; // formato 
@@ -72,7 +72,7 @@ function cargarCalendario(sumar){
     let htmlDias = dias
         .map(
             (day, index) =>
-                `<li ${buscarClaseDia(index, diaInicio, asistencias[day])}>${day + 1}</li>`
+                `<li ${buscarClaseDia(index, diaInicio, citas[day])}>${day + 1}</li>`
         )
         .join('')
 
@@ -84,17 +84,25 @@ function cargarCalendario(sumar){
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )    
 }
 
-function buscarClaseDia(index, diaInicio, asistenciaServicio){
+function buscarClaseDia(index, diaInicio, diaCita){
     let estiloPrimerDia = `style='--first-day-start: ${diaInicio}'`
     let claseAsistencia = ''
     
-    if (asistenciaServicio.asistencia === true){
-        claseAsistencia = 'asistencia'
-    }
-    else if (asistenciaServicio.asistencia === false) {
-        claseAsistencia = 'permiso'
-    }
+    switch (diaCita.estado) {
+        case 'Agendada':
+            claseAsistencia = 'agendada'
+            break;
+        case 'Asistida':
+            claseAsistencia = 'asistida'
+            break;
+        case 'Cancelada':
+            claseAsistencia = 'cancelada'
+            break;
     
+        default:
+            break;
+    }
+
     let clase = `class='${index === 0? 'first-day ' + claseAsistencia : claseAsistencia}'`
     if (index === 0){
         return clase + estiloPrimerDia
@@ -178,13 +186,13 @@ function agendarCita(){
         mostrarNotificacion('Por favor, indique una fecha valida', "#FF0000")
         return 0
     }
-    let datosUsuario = JSON.parse(sessionStorage.getItem('usuario'))
+    let usuario = JSON.parse(sessionStorage.getItem('usuario'))
     let url = "http://127.0.0.1:5000/citas/agendar"; 
     data = {
         nota : '',
         fecha : formatearFecha(fecha_inicio),
         empleado_cedula : JSON.parse(sessionStorage.getItem('medicoCita')),
-        paciente_usuario : datosUsuario.usuario
+        paciente_usuario : usuario.usuario
     }
     let options = {
         method: "POST",
