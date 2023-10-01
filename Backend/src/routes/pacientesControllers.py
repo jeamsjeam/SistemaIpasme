@@ -1,11 +1,14 @@
-from flask import Blueprint, request, jsonify, make_response
+from flask import Blueprint, request, jsonify, make_response, send_file
 from src import app
 from ..services.pacientesServices import PacientesServices
 from ..calls.pacienteCall import PacienteCalls
 from ..calls.repososCalls import ReposoCalls
 from ..schemas.pacienteSchema import paciente_schema,Pacientes_schema
 from ..schemas.reposoSchema import reposo_schema,reposos_schema
+from ..services.generarPDFServices import GenerarPDF
 from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
+from io import BytesIO
+import os
 import pdb
 
 @app.route('/pacientes/<int:cedula>', methods=['GET'])
@@ -134,3 +137,28 @@ def modificar_reposo():
 def eliminar_reposo(id):
     respuesta = ReposoCalls.borrar_reposo(id)
     return make_response(jsonify(respuesta))
+
+@app.route('/pacientes/pdf/<nombre>', methods=['GET'])
+@cross_origin()  # Se debe colocar en servicio para evitar problemas de cors
+def generar_pdf_pacientes(nombre):
+    pacientes = PacientesServices.buscarTodos()  # Obtener datos de pacientes (reemplaza esto con tu lógica para obtener los pacientes)
+
+    # Obtén la ruta del directorio del script actual (donde se encuentra pacientesControllers.py)
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+
+    # Retrocede cuatro niveles para llegar a la raíz del proyecto y luego entra en Frontend/css/imagenes/
+    ruta_relativa_logo = '../../../Frontend/css/imagenes/ipaslogoMasPequeno.png'
+
+    # Obtén la ruta absoluta completa al logo
+    logo_path = os.path.normpath(os.path.join(script_directory, ruta_relativa_logo))
+
+    # Llamar a la función para generar el PDF y obtener la ruta del archivo temporal
+    pdf_path = PacientesServices.create_pdf_pacientes(pacientes, logo_path, "Reporte Pacientes")
+
+    # Devolver el PDF como una respuesta para descargar
+    return send_file(
+        pdf_path,
+        download_name=nombre,
+        as_attachment=True,
+        mimetype='application/pdf'
+    )

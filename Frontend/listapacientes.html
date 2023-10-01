@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/toastify.css">
         
         <link rel="stylesheet" type="text/css" href="css/asistencia.css">
+        <link rel="stylesheet" type="text/css" href="css/listapacientes.css">
         <link rel="stylesheet" type="text/css" href="css/estilo.css">
         <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" type="text/css" href="css/DataTable/cdnjs.cloudflare.com_ajax_libs_font-awesome_6.2.0_css_all.min.css">
@@ -17,6 +18,9 @@
     <div id="navbarContainer"></div>
 
     <div class="container-fluid mt-2">
+        <section class="margenDescargarPDF">
+            <button type="button" class="btn btn-primary" onclick="descargarPDF('pacientes/pdf','documento')">Generar PDF</button>
+        </section>
         <section>
             <div class="row p-4 mt-2" id="tablaPacientes">
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -47,6 +51,9 @@
                     </table>
                 </div>
             </div>
+        </section>
+        <section class="margenDescargarPDF">
+            <button type="button" class="btn btn-primary" onclick="descargarPDF('pacientes/pdf','documento')">Generar PDF</button>
         </section>
         <section>
             <div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="modificarModalLabel" aria-hidden="true">

@@ -18,7 +18,10 @@ from ..schemas.reposoSchema import reposo_schema,reposos_schema
 from ..schemas.cargoSchema import cargo_schema,cargos_schema
 from ..schemas.dependenciaSchema import dependecia_schema,dependecias_schema
 from ..schemas.municipioSchema import municipio_schema,municipios_schema
+from ..services.generarPDFServices import GenerarPDF
 from datetime import datetime
+import tempfile
+import base64
 import pdb
 
 class PacientesServices:
@@ -406,7 +409,38 @@ class PacientesServices:
         else:
             # No se encontraron grupos de reposos para el paciente
             return 0
-        
+
+    def create_pdf_pacientes(pacientes, logo_path, titulo):
+        # Crear instancia de PDF
+
+        pdf = GenerarPDF(logo_path,"pacientes", titulo)
+  
+        pdf.add_page()
+
+        # Llamar al método header para generar el encabezado
+        pdf.header()
+ 
+        # Configurar fuente y tamaño para los datos de los pacientes
+        pdf.set_font('Arial', '', 10)
+
+        # Agregar datos de pacientes al PDF
+        for paciente in pacientes:
+            pdf.cell(30, 10, str(paciente["cedula"]), 1)
+            pdf.cell(40, 10, paciente["nombre"], 1)
+            pdf.cell(40, 10, paciente["apellido"], 1)
+            pdf.cell(40, 10, paciente["correo"], 1)
+            pdf.cell(30, 10, str(paciente["dias_reposo"]), 1)
+            pdf.ln()
+
+        # Llamar al método footer para generar el pie de página
+        pdf.footer()
+
+        # Crear un archivo temporal para guardar el PDF
+        with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+            pdf_path = temp_file.name
+            pdf.output(pdf_path)
+        return pdf_path
+     
     
 """
 {
