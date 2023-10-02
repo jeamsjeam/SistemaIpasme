@@ -410,27 +410,90 @@ class PacientesServices:
             # No se encontraron grupos de reposos para el paciente
             return 0
 
-    def create_pdf_pacientes(pacientes, logo_path, titulo):
+    def create_pdf_pacientes(pacientes, logo_path, titulo,tipo):
         # Crear instancia de PDF
 
-        pdf = GenerarPDF(logo_path,"pacientes", titulo)
+        pdf = GenerarPDF(logo_path, titulo)
   
         pdf.add_page()
 
         # Llamar al método header para generar el encabezado
-        pdf.header()
- 
-        # Configurar fuente y tamaño para los datos de los pacientes
-        pdf.set_font('Arial', '', 10)
+        #pdf.header()
 
-        # Agregar datos de pacientes al PDF
-        for paciente in pacientes:
-            pdf.cell(30, 10, str(paciente["cedula"]), 1)
-            pdf.cell(40, 10, paciente["nombre"], 1)
-            pdf.cell(40, 10, paciente["apellido"], 1)
-            pdf.cell(40, 10, paciente["correo"], 1)
-            pdf.cell(30, 10, str(paciente["dias_reposo"]), 1)
+        # Agregar imagen como logo (ajusta las coordenadas y dimensiones según tu necesidad)
+        pdf.image(logo_path, 10, 8, 33)
+        pdf.set_xy(0.0,0.0)
+        pdf.set_font('Arial', 'B', 16)
+        # self.set_text_color(76.0, 32.0 ,250.0)
+        pdf.set_text_color(41, 0 ,199)
+        pdf.cell(w=210.0, h=40.0, align='C', txt=titulo, border=0)
+        pdf.set_text_color(0.0, 0.0 ,0.0)
+        # Agregar cabeceras de columnas
+        pdf.set_xy(10.0,50.0)
+ 
+        if tipo == "pacientes":
+            pdf.set_font('Arial', 'B', 12)
+            pdf.cell(30, 10, 'Cedula', 1)
+            pdf.cell(30, 10, 'Nombre', 1)
+            pdf.cell(30, 10, 'Apellido', 1)
+            pdf.cell(35, 10, 'Telefono', 1)
+            pdf.cell(35, 10, 'Correo', 1)
+            pdf.cell(30, 10, 'Días Reposo', 1)  # Agrega este campo solo para pacientes
             pdf.ln()
+            # Configurar fuente y tamaño para los datos de los pacientes
+            pdf.set_font('Arial', '', 10)
+
+            # Agregar datos de pacientes al PDF
+            for paciente in pacientes:
+                pdf.cell(30, 10, str(paciente["cedula"]), 1)
+                pdf.cell(30, 10, paciente["nombre"], 1)
+                pdf.cell(30, 10, paciente["apellido"], 1)
+                pdf.cell(35, 10, paciente["telefono"], 1)
+                pdf.cell(35, 10, paciente["correo"], 1)
+                pdf.cell(30, 10, str(paciente["dias_reposo"]), 1)
+                pdf.ln()
+        elif tipo == "pacienteIndividual":
+            pdf.set_font('Arial', 'B', 12)
+            pdf.cell(30, 10, 'Cedula', 1)
+            pdf.cell(30, 10, 'Nombre', 1)
+            pdf.cell(30, 10, 'Apellido', 1)
+            pdf.cell(35, 10, 'Telefono', 1)
+            pdf.cell(35, 10, 'Correo', 1)
+            pdf.cell(30, 10, 'Días Reposo', 1)  # Agrega este campo solo para pacientes
+            pdf.ln()
+
+            pdf.set_font('Arial', '', 10)
+            pdf.cell(30, 10, str(pacientes["cedula"]), 1)
+            pdf.cell(30, 10, pacientes["nombre"], 1)
+            pdf.cell(30, 10, pacientes["apellido"], 1)
+            pdf.cell(35, 10, pacientes["telefono"], 1)
+            pdf.cell(35, 10, pacientes["correo"], 1)
+            pdf.cell(30, 10, str(pacientes["dias_reposo"]), 1)
+            pdf.ln()
+
+            pdf.set_font('Arial', 'B', 16)
+            pdf.set_text_color(41, 0 ,199)
+            pdf.cell(w=190.0, h=40.0, align='C', txt="Reposos", border=0)
+            pdf.set_text_color(0.0, 0.0 ,0.0)
+            # Agregar cabeceras de columnas
+            pdf.set_xy(10.0,100.0)
+            pdf.set_font('Arial', 'B', 12)
+            pdf.cell(40, 10, 'COdigo Asistencial', 1)
+            pdf.cell(40, 10, 'Codigo Registro', 1)
+            pdf.cell(35, 10, 'Fecha Inicio', 1)
+            pdf.cell(35, 10, 'Fecha Fin', 1)
+            pdf.cell(35, 10, 'Quien Valida', 1)
+            pdf.ln()
+
+            # Agregar datos de pacientes al PDF
+            for reposos in pacientes["reposos"]:
+                pdf.set_font('Arial', '', 10)
+                pdf.cell(40, 10, str(reposos["codigo_asistencial"]), 1)
+                pdf.cell(40, 10, reposos["codigo_registro"], 1)
+                pdf.cell(35, 10, reposos["fecha_inicio"].split("T")[0], 1)
+                pdf.cell(35, 10, reposos["fecha_fin"].split("T")[0], 1)
+                pdf.cell(35, 10, reposos["quien_valida"], 1)
+                pdf.ln()
 
         # Llamar al método footer para generar el pie de página
         pdf.footer()
@@ -440,61 +503,3 @@ class PacientesServices:
             pdf_path = temp_file.name
             pdf.output(pdf_path)
         return pdf_path
-     
-    
-"""
-{
-  "cedula": 19925888,
-  "grupo_reposo_fecha_inicio": "2023-08-01",
-  "tipo_reposo_id": 1,
-  "reposos": [
-    {
-      "codigo_asistencial": "COD123",
-      "codigo_registro": "REG456",
-      "fecha_inicio": "2023-08-05",
-      "fecha_fin": "2023-08-10",
-      "quien_valida": "Dr. Validador"
-      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
-    },
-    {
-      "codigo_asistencial": "COD789",
-      "codigo_registro": "REG012",
-      "fecha_inicio": "2023-08-15",
-      "fecha_fin": "2023-08-20",
-      "quien_valida": "Dra. Validadora"
-      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
-    },
-    {
-      "codigo_asistencial": "COD123",
-      "codigo_registro": "REG456",
-      "fecha_inicio": "2023-08-11",
-      "fecha_fin": "2023-08-14",
-      "quien_valida": "Dr. Validador"
-      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
-    },
-    {
-      "codigo_asistencial": "COD789",
-      "codigo_registro": "REG012",
-      "fecha_inicio": "2023-08-21",
-      "fecha_fin": "2023-08-25",
-      "quien_valida": "Dra. Validadora"
-      // Puedes agregar campos adicionales aquí, si existen en el modelo Reposo
-    }
-  ]
-}
-"""
-"""
-{
-  "cedula": 19925888,
-  "nombre": "Jesus",
-  "apellido": "Acevedo",
-  "institucion_laboral": "Hospital ABC",
-  "fecha_nacimiento": "1985-05-10",
-  "direccion": "Calle 123, Ciudad",
-  "telefono": "555-1234",
-  "cargo_id": 1,
-  "dependencia_id": 2,
-  "municipio_id": 1
-}
-"""
-        

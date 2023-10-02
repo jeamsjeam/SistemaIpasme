@@ -35,9 +35,12 @@ function formatDateString(dateString) {
     return `${day}-${month}-${year}`;
 }
 
-function descargarPDF(url,nonbreArchivo) {
+function descargarPDF(url,nonbreArchivo,cedula) {
     // Llamar al servicio REST que genera el PDF
     let urlCompleta = 'http://127.0.0.1:5000/' + url + "/" + nonbreArchivo + ".pdf"
+    if(cedula !== null && typeof cedula !== 'undefined'){
+        urlCompleta += "/" + cedula
+    }
 
     fetch(urlCompleta, {
         method: 'GET',

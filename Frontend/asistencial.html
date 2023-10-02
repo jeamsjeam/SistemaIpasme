@@ -137,7 +137,7 @@
                                         <button type="submit" name="botonRegistrarTodo" value="1" class="btn btn-primary">Registrar</button>
                                     </div>
                                     <div class="col-8">
-                                        <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                        <label class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
                                     </div>
                                 </div>
                               </div>
@@ -195,6 +195,7 @@
                                     <!-- data-bs-toggle="modal" data-bs-target="#modificarModal" -->
                                     <button id="modificarButton" class="btn btn-sm btn-primary" onclick="AbrirModalModificarPaciente()" ><i class="fa-solid fa-pencil"></i></button>
                                     <button id="eliminarButton" class="btn btn-sm btn-danger" onclick="AbrirModalEliminarPaciente()"><i class="fa-solid fa-trash-can"></i></button>
+                                    <button type="button" class="btn btn-info btn-sm" style="max-width: 160px;" onclick="GenerarPDF()">Generar PDF</button>
                                 </td>
                             </tr>
                         </table>
@@ -258,7 +259,7 @@
                                             <button type="submit" name="botonRegistrarReposo" value="1" class="btn btn-primary">Registrar</button>
                                         </div>
                                         <div class="col-8">
-                                            <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                            <label class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
                                         </div>
                                     </div>
                                   </div>
@@ -267,8 +268,11 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="row p-4 mt-3 d-none" id="tablaReposos">
+
+            <div class="row mt-3 mb-3 d-none card" id="tablaReposos">
+                <div class="col-12 mb-2 text-center card-header ">
+                    <h2>Reposos</h2>
+                </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <table id="datatable_reposos" class="table table-striped">
                         <caption>
@@ -287,9 +291,10 @@
                             </tr>
                         </thead>
                         <tbody id="tableBody_reposos"></tbody>
-                    </table>
+                    </table> 
                 </div>
             </div>
+            
         </section>
         <section>
             <div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="modificarModalLabel" aria-hidden="true">
@@ -400,7 +405,7 @@
                                             <button type="submit" name="botonRegistrarTodoModal" value="1" class="btn btn-primary">Modificar</button>
                                         </div>
                                         <div class="col-6">
-                                            <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                            <label class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
                                         </div>
                                     </div>
                                   </div>
@@ -496,7 +501,7 @@
                                             <button type="submit" name="botonRegistrarReposoModal" value="1" class="btn btn-primary">Modificar</button>
                                         </div>
                                         <div class="col-8">
-                                            <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                            <label class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
                                         </div>
                                     </div>
                                   </div>
@@ -552,3 +557,27 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> -->
 </body>
 </html>
+<style>
+
+    .card {
+        margin-bottom: 10px;
+        border: none;
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: rgba(33, 137, 255, 1);
+        color: #fff;
+        font-weight: bold;
+        width: 100%;
+    }
+    
+    .sin-espacios{
+        padding: 0;
+        margin: 0;
+    }
+
+</style>

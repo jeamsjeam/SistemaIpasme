@@ -153,7 +153,31 @@ def generar_pdf_pacientes(nombre):
     logo_path = os.path.normpath(os.path.join(script_directory, ruta_relativa_logo))
 
     # Llamar a la función para generar el PDF y obtener la ruta del archivo temporal
-    pdf_path = PacientesServices.create_pdf_pacientes(pacientes, logo_path, "Reporte Pacientes")
+    pdf_path = PacientesServices.create_pdf_pacientes(pacientes, logo_path, "Reporte Pacientes","pacientes")
+
+    # Devolver el PDF como una respuesta para descargar
+    return send_file(
+        pdf_path,
+        download_name=nombre,
+        as_attachment=True,
+        mimetype='application/pdf'
+    )
+
+@app.route('/pacientes/individualPDF/<nombre>/<int:cedula>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def buscar_paciente_individual_pdf(cedula,nombre):
+    respuesta = PacientesServices.buscar(cedula)
+    # Obtén la ruta del directorio del script actual (donde se encuentra pacientesControllers.py)
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+
+    # Retrocede cuatro niveles para llegar a la raíz del proyecto y luego entra en Frontend/css/imagenes/
+    ruta_relativa_logo = '../../../Frontend/css/imagenes/ipaslogoMasPequeno.png'
+
+    # Obtén la ruta absoluta completa al logo
+    logo_path = os.path.normpath(os.path.join(script_directory, ruta_relativa_logo))
+
+    # Llamar a la función para generar el PDF y obtener la ruta del archivo temporal
+    pdf_path = PacientesServices.create_pdf_pacientes(respuesta, logo_path, "Reporte Paciente","pacienteIndividual")
 
     # Devolver el PDF como una respuesta para descargar
     return send_file(

@@ -17,12 +17,15 @@
 <body>
     <div id="navbarContainer"></div>
 
-    <div class="container-fluid mt-2">
-        <section class="margenDescargarPDF">
+    <!-- <div class="container-fluid mt-2">
+        <section class="margenDescargarPDF mt-3">
             <button type="button" class="btn btn-primary" onclick="descargarPDF('pacientes/pdf','documento')">Generar PDF</button>
-        </section>
+        </section> -->
         <section>
-            <div class="row p-4 mt-2" id="tablaPacientes">
+            <div class="row mt-3 mb-3 card" id="tablaPacientes">
+                <div class="col-12 mb-2 text-center card-header ">
+                    <h2>Pacientes</h2>
+                </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <table id="datatable_Pacientes" class="table table-striped">
                         <caption>
@@ -52,7 +55,7 @@
                 </div>
             </div>
         </section>
-        <section class="margenDescargarPDF">
+        <section class="margenDescargarPDF mb-2" >
             <button type="button" class="btn btn-primary" onclick="descargarPDF('pacientes/pdf','documento')">Generar PDF</button>
         </section>
         <section>
@@ -164,7 +167,7 @@
                                             <button type="submit" name="botonRegistrarTodoModal" value="1" class="btn btn-primary">Modificar</button>
                                         </div>
                                         <div class="col-6">
-                                            <label for="" class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
+                                            <label class="form-label"><span class = "requerido">(*) Campos Obligatorios</span></label>
                                         </div>
                                     </div>
                                   </div>
@@ -222,3 +225,23 @@
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> -->
 </body>
 </html>
+<style>
+
+    .card {
+        margin-bottom: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        border: none;
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: rgba(33, 137, 255, 1);
+        color: #fff;
+        font-weight: bold;
+    }
+
+</style>
