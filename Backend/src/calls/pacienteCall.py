@@ -89,5 +89,5 @@ class PacienteCalls():
  
     def get_paciente_usuario(usuario):
         paciente = Paciente.query.join(Usuario, Usuario.id == Paciente.usuario_id)\
-                          .filter_by(Usuario.usuario == usuario).first()
+                          .filter(Usuario.usuario == usuario).first()
         return paciente

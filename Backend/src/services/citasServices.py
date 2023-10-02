@@ -34,6 +34,9 @@ class CitasServices:
             return '02|Este médico ha alcanzado su límite de pacientes para este día'
         
     def get_citas_paciente_mes(usuario, fecha):
+        date = datetime.strptime(fecha, "%d/%m/%Y")
+        finMes = date.replace(day=28) + timedelta(days=4) 
+        finMes = finMes - timedelta(days=finMes.day)
         retorno = mesBase(finMes)
 
         paciente = PacienteCalls.get_paciente_usuario(usuario)
@@ -44,11 +47,6 @@ class CitasServices:
         
         citas = CitasCalls.get_citas_paciente_mes(paciente['cedula'], fecha)
         citasJson = citas_schema.dump(citas)
-
-        # Se buscan las fechas de la semana
-        date = datetime.strptime(fecha, "%d/%m/%Y")
-        finMes = date.replace(day=28) + timedelta(days=4) 
-        finMes = finMes - timedelta(days=finMes.day)
 
         # Se llenan las citas
         if len(citasJson) > 0:
