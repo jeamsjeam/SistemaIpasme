@@ -181,6 +181,7 @@ function seleccionarMedico(medicoCedula){
 }
 
 function agendarCita(){
+    debugger
     let fecha_cita = document.getElementById("fecha-cita").value;
     if (fecha_cita == '') {
         mostrarNotificacion('Por favor, indique una fecha valida', "#FF0000")
@@ -190,7 +191,7 @@ function agendarCita(){
     let url = "http://127.0.0.1:5000/citas/agendar"; 
     data = {
         nota : '',
-        fecha : formatearFecha(fecha_inicio),
+        fecha : formatearFecha(fecha_cita),
         empleado_cedula : JSON.parse(sessionStorage.getItem('medicoCita')),
         paciente_usuario : usuario.usuario
     }
