@@ -128,3 +128,7 @@ li.asistencia:before{
   background: palegreen;
   border: 1px solid palegreen;
 }
+
+.margenDescargarPDF{
+  margin-left: 20px;
+}

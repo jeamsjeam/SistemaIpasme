@@ -154,6 +154,7 @@ function buscarPaciente(ced){
     .then(data => {
         console.log(data)
         if(typeof data !== 'undefined' && data !== null){
+            mostrarNotificacion("Paciente Encontrado","linear-gradient(to right, #00b09b, #96c93d)") 
             var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
             var tablaReposos = document.getElementById("tablaReposos");
             //var formularioRegistrarReposo = document.getElementById("formularioRegistrarReposo");
@@ -877,4 +878,10 @@ function listUsers(reposos) {
     } catch (ex) {
         alert(ex);
     }
+}
+
+function GenerarPDF(){
+    let datosPaciente = JSON.parse(sessionStorage.getItem('datosPaciente'))
+    let cedula = parseInt(datosPaciente.cedula);
+    descargarPDF('pacientes/individualPDF','documento',cedula)
 }
