@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <link rel="stylesheet" type="text/css" href="css/estilos_dashboard.css">
+    <title>IPAS</title>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container pt-4">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
+                <div id="paciente" class="card text-white card-has-bg click-col" style="background-image:url('css/imagenes/Agendar-cita-por-paciente.jpg');">
+                    <img class="card-img d-none">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <small class="card-meta mb-2">Central de Citas</small>
+                            <h4 class="card-title mt-0 text-dark">Buscar Citas por Paciente</h4>
+                            <small><i class=""></i>Visualizar todas citas agendadas por un paciente.</small>
+                        </div>
+                        <div class="card-footer">
+                            <div class="media">
+                                <img class="mr-3 rounded-circle"
+                                    src="css\imagenes\citasmedicas.png"
+                                    alt="Generic placeholder image" style="max-width:50px">
+                                <div class="media-body">
+                                    <h6 class="my-0 text-white d-block">Central de</h6>
+                                    <h6 class="my-0 text-white d-block">Citas</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
+                <div id="medico" class="card text-white card-has-bg click-col" style="background-image:url('css/imagenes/Agendar-cita-por-medico.jpg');">
+                    <img class="card-img d-none">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <small class="card-meta mb-2">Central de Citas</small>
+                            <h4 class="card-title mt-0 text-dark">Buscar Citas por Medico</h4>
+                            <small><i class=""></i>Visualizar todas citas que agendaron para un medico.</small>
+                        </div>
+                        <div class="card-footer">
+                            <div class="media">
+                                <img class="mr-3 rounded-circle"
+                                    src="css\imagenes\citasmedicas.png"
+                                    alt="Generic placeholder image" style="max-width:50px">
+                                <div class="media-body">
+                                    <h6 class="my-0 text-white d-block">Central de</h6>
+                                    <h6 class="my-0 text-white d-block">Citas</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>
+<script>
+    document.getElementById("paciente").addEventListener("click", function() {
+        window.location.href = "citaspaciente.html";
+    });
+    document.getElementById("medico").addEventListener("click", function() {
+        window.location.href = "citasmedico.html";
+    });
+</script>

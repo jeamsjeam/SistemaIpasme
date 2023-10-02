@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+        
+        <link rel="stylesheet" type="text/css" href="css/citaspaciente.css">
+        <link rel="stylesheet" type="text/css" href="css/estilo.css">
+        <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" type="text/css" href="css/DataTable/cdnjs.cloudflare.com_ajax_libs_font-awesome_6.2.0_css_all.min.css">
+        <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/all.min.css">
+    <title>Reposos</title>
+</head>
+<body>
+    <div id="navbarContainer"></div>
+
+    <div class="container-fluid mt-5">
+        <section class="row d-flex justify-content-center mb-5">
+            <div class="col-12" style="position: relative;">
+                <form name="formularioBuscarCedula" action="#" method="post" onsubmit="event.preventDefault(); buscarPaciente()">
+                    <div class="col-12">
+                        <div class="searchbar">
+                            <input type="text" name="cedula"  id="buscarCedula" required pattern="[0-9]{5,8}" class="search_input input-personalizado" type="text" placeholder="Buscar Paciente">
+                            <button type="submit" name="botonBuscarCedula" id="botonBuscarCedula" value="1" class="btn search_icon pl-2"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <a href="listapacientes.html" class="btn btn-outline-secondary botonTodosPacientes">
+                    Todos los pacientes</a>
+            </div>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-5">
+                    <div class="datos-paciente mt-3 d-none" id="formularioDatosEncontrados">
+                        <div class="row">
+                            <div class="col-12 ">
+                                <table class="table table-sm table-borderless ">
+                                    <!-- Primera Fila-->
+                                    <tr>
+                                        <th>Cedula</th>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                    </tr>
+                                    <tr>
+                                        <td id="datosPaciente_cedula"></td>
+                                        <td id="datosPaciente_nombres"></td>
+                                        <td id="datosPaciente_apellidos"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Institucion Laboral</th>
+                                        <th>Fecha de Nacimiento</th>
+                                        <th>Telefono</th>
+                                    </tr>
+                                    <tr>
+                                        <td id="datosPaciente_institucion_laboral"></td>
+                                        <td id="datosPaciente_fecha_nacimiento"></td>
+                                        <td id="datosPaciente_telefono"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Correo</th>
+                                        <th>Cargo</th>
+                                        <th>Dependencia</th>
+                                    </tr>
+                                    <tr>
+                                        <td id="datosPaciente_correo"></td>
+                                        <td id="datosPaciente_cargo"></td>
+                                        <td id="datosPaciente_dependencia"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Municipio</th>
+                                        <th colspan="2">Tipo Paciente</th>
+                                    </tr>
+                                    <tr>
+                                        <td id="datosPaciente_municipio"></td>
+                                        <td id="datosPaciente_tipo_paciente" colspan="2"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7 mr-2">
+                    <div class="row d-none card" id="tablaReposos">
+                        <div class="col-12 mb-2 text-center card-header ">
+                            <h4>Citas</h4>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <table id="datatable_reposos" class="table table-striped">
+                                <caption>
+                                    Reposos
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th class="centered">#</th>
+                                        <th class="centered">Fecha Desde</th>
+                                        <th class="centered">Fecha Hasta</th>
+                                        <th class="centered">Quien Valida</th>
+                                        <!-- <th class="centered">Status</th> -->
+                                        <th class="centered">Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody_reposos"></tbody>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/DataTable/cdnjs.cloudflare.com_ajax_libs_jquery_3.6.0_jquery.min.js"></script>
+    
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_jquery.dataTables.min.js"></script>
+
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_dataTables.bootstrap5.min.js"></script>
+
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/all.min.js"></script>
+    <script src="js/citaspaciente.js"></script>
+    <script src="js/navbar.js"></script>
+    <!-- <script src="js/dataTableReposos.js"></script> -->
+    
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script> -->
+</body>
+</html>
+<style>
+
+    .card {
+        margin-bottom: 10px;
+        border: none;
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: rgba(33, 137, 255, 1);
+        color: #fff;
+        font-weight: bold;
+        width: 100%;
+    }
+    
+    .sin-espacios{
+        padding: 0;
+        margin: 0;
+    }
+
+</style>
