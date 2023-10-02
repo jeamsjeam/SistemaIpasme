@@ -6,6 +6,8 @@ from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 @app.route('/citas/agendar', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def agendar_cita():
+    variable = request.json
+    print(variable)
     respuesta = CitasServices.agendar_cita(request.json)
     return make_response(jsonify(respuesta))
 
