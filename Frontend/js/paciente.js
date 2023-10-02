@@ -84,10 +84,10 @@ function cargarCalendario(sumar){
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )    
 }
 
-function buscarClaseDia(index, diaInicio, diaCita){
+function buscarClaseDia(index, diaInicio, diaCita) {
     let estiloPrimerDia = `style='--first-day-start: ${diaInicio}'`
     let claseAsistencia = ''
-    
+
     switch (diaCita.estado) {
         case 'Agendada':
             claseAsistencia = 'agendada'
@@ -98,15 +98,17 @@ function buscarClaseDia(index, diaInicio, diaCita){
         case 'Cancelada':
             claseAsistencia = 'cancelada'
             break;
-    
+
         default:
             break;
     }
-
-    let clase = `class='${index === 0? 'first-day ' + claseAsistencia : claseAsistencia}'`
-    if (index === 0){
+    let clase = `class='${index === 0 ? 'first-day ' + claseAsistencia
+        : claseAsistencia}' ${diaCita.estado != null ? diaCita.nota != "" ? `title='${diaCita.nota}'` :
+            `title='${diaCita.estado}'` : ""
+        }`
+    if (index === 0) {
         return clase + estiloPrimerDia
-    } else{
+    } else {
         return clase
     }
 }
@@ -179,11 +181,34 @@ function cargarMedicos(){
 function seleccionarMedico(medicoCedula){
     sessionStorage.setItem('medicoCita', medicoCedula)
 }
+function obtenerFechaActual () {
+    // crea un nuevo objeto Date
+    var today = new Date()
+    // getDate() devuelve el día del mes (del 1 al 31)
+    var day = today.getDate()
+    // getMonth() devuelve el mes (de 0 a 11)
+    var month = today.getMonth()
+    // getFullYear() devuelve el año completo
+    var year = today.getFullYear()
+    // muestra la fecha de hoy en formato MM/DD/YYYY
+    return new Date(year,month,day)
+  }
 
+function stringToFecha(fecha_cita){
+    if (fecha_cita != ""){
+        valores = fecha_cita.split('-')
+        return new Date(valores[0], parseInt(valores[1]) - 1,valores[2])
+    }else{
+        return ""
+    }
+}
 function agendarCita(){
-    debugger
     let fecha_cita = document.getElementById("fecha-cita").value;
-    if (fecha_cita == '') {
+    fechaActual = obtenerFechaActual()
+    let fecha_string = stringToFecha(fecha_cita)
+    if (fecha_string == '' || fecha_string < fechaActual || 
+        (fecha_string.toLocaleDateString('en-GB') == fechaActual.toLocaleDateString('en-GB') 
+        && new Date().getHours() > 13)) {
         mostrarNotificacion('Por favor, indique una fecha valida', "#FF0000")
         return 0
     }
@@ -208,9 +233,12 @@ function agendarCita(){
         resultado = data.toString().split('|')
         if (typeof resultado[1] !== 'undefined' && resultado[1] !== null) {
             if (resultado[0] === '00') {
-                mostrarNotificacion("Registrado con Exito", "#198754")
                 document.getElementById("fecha-cita").value = "";
-                window.location.href = "menuPaciente.html"
+                mostrarNotificacion("Registrado con Exito", "#198754")
+
+                setTimeout(()=>{
+                    window.location.href = "menuPaciente.html"
+                }, 1200)
             } else {
                 mostrarNotificacion(resultado[1], "#FF0000")
             }

@@ -120,6 +120,7 @@ li {
 .asistida,
 .cancelada {
     position: relative;
+    cursor: help;
 }
 
 .day-name {

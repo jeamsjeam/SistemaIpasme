@@ -7,7 +7,7 @@ class EstadoCita(db.Model):
     id = db.Column(db.BigInteger(), primary_key=True)
     nombre = db.Column(db.Text)
 
-    citas = relationship('Cita', backref='estado_citas')
+    citas = relationship('Cita', backref='estado_cita')
 
     def __init__(self, nombre):
         self.nombre = nombre

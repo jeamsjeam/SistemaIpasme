@@ -19,8 +19,8 @@ class CitasCalls():
     
     def crear_cita(cita):
         citaNueva = Cita(nota = cita.nota, 
-                         empleado_id=cita.empleado_id,
-                         paciente_id=cita.paciente_id,
+                         empleado_cedula=cita.empleado_cedula,
+                         paciente_cedula=cita.paciente_cedula,
                          fecha=cita.fecha,
                          estado_cita_id=cita.estado_cita_id)
         db.session.add(citaNueva)
@@ -31,8 +31,8 @@ class CitasCalls():
     def modificar_cita(cita):
         citaBD = Cita.query.get(cita.id)
         citaBD.nota = cita.nota
-        citaBD.empleado_id = cita.empleado_id
-        citaBD.paciente_id = cita.paciente_id
+        citaBD.empleado_cedula = cita.empleado_cedula
+        citaBD.paciente_cedula = cita.paciente_cedula
         citaBD.fecha = cita.fecha
         citaBD.estado_cita_id = cita.estado_cita_id
         db.session.commit()
@@ -56,6 +56,14 @@ class CitasCalls():
     def get_citas_dia_medico(cedula, fecha):
         date = datetime.strptime(fecha, "%d/%m/%Y")
         citas = Cita.query.filter_by(empleado_cedula=cedula).filter(\
+            extract('month', Cita.fecha) == date.month,\
+            extract('year', Cita.fecha) == date.year,\
+            extract('day', Cita.fecha) == date.day)
+        return citas
+    
+    def get_citas_dia_paciente(cedula, fecha):
+        date = datetime.strptime(fecha, "%d/%m/%Y")
+        citas = Cita.query.filter_by(paciente_cedula=cedula).filter(\
             extract('month', Cita.fecha) == date.month,\
             extract('year', Cita.fecha) == date.year,\
             extract('day', Cita.fecha) == date.day)

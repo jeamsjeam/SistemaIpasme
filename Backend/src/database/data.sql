@@ -7,8 +7,8 @@ INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
 INSERT INTO ESTADO_EMPLEADO (nombre) VALUES ('Activo'),('Inactivo'),('Jubilado');
 INSERT INTO ESTADO_CITA (nombre) VALUES ('Agendada'),('Asistida'),('Cancelada');
 
-INSERT INTO cargo (nombre) VALUES ('Medico'),('Enfermero'),('Docente'),('Administrativo'),('Obrero'),('Jefe'),('Encargado');
-INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal');
+INSERT INTO cargo (nombre) VALUES ('Medico'),('Enfermero'),('Docente'),('Administrativo'),('Obrero'),('Jefe'),('Encargado'),('Otro');
+INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal')('Otro');
 INSERT INTO especialidad (nombre, consultas) VALUES ('Odontologia', '1'),('Medicina interna', '1'),
 ('Pediatria','1'),('Administrativo','0'),('Obrero','0'),('Seguridad','0'),('Limpieza','0');
 INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',63),('Especial',80);

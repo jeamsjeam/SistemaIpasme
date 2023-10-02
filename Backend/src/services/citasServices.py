@@ -1,9 +1,12 @@
 from ..calls.citasCalls import CitasCalls
 from ..calls.pacienteCall import PacienteCalls
+from ..calls.empleadosCalls import EmpleadosCalls
 from ..models.cita import Cita
 from datetime import datetime, timedelta
 from ..schemas.citaSchema import cita_schema,citas_schema
 from ..schemas.pacienteSchema import paciente_schema
+from ..schemas.empleadoSchema import empleado_schema
+from ..schemas.estadoCitaSchema import estado_cita_schema, estados_citas_schema
 import locale
 
 class CitasServices:
@@ -21,9 +24,16 @@ class CitasServices:
                       fecha=json['fecha'],
                       estado_cita_id=1)
         
-        citasDelDia = CitasCalls.get_citas_dia_medico(cita.empleado_cedula, cita.fecha)
+        citasMed = citas_schema.dump(CitasCalls.get_citas_dia_medico(cita.empleado_cedula, cita.fecha))
+        citasPac = citas_schema.dump(CitasCalls.get_citas_dia_paciente(cita.paciente_cedula, cita.fecha))
 
-        if len(citasDelDia) < 8:
+        if len(citasPac) > 0:
+            empleado = empleado_schema.dump(EmpleadosCalls.get_empleado_cedula(cita.empleado_cedula))
+            for cita in citasPac:
+                if cita['empleado']['especialidad']['nombre'] == empleado['especialidad']['nombre']:
+                    return '03|Ya tienes una cita agendada para esta especialidad'
+
+        if len(citasMed) < 8:
             cita.estado_cita_id = 1
             done = CitasCalls.crear_cita(cita)
             if done is not None:
