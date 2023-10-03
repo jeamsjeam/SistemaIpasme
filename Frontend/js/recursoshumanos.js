@@ -403,6 +403,7 @@ function cargarReporteSemana(){
     .then(response => response.json() )
     .then(data => {
         const reporteSemana = document.getElementById('reporteSemana');
+        let diaSemana = new Date().getDay() - 1 
             data.forEach((turno) => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -419,7 +420,7 @@ function cargarReporteSemana(){
                                 </div>
                                 <div class="col-6 d-flex justify-content-around">
                                     ${trabajador.semana.map((asistencia) => 
-                                        `<button class="btn btn-${coloresBotones[asistencia.asistencia]} btn-sm">${asistencia.dia.substring(0,1)}</button>`
+                                        `<button class="btn btn-${asistencia.numeroDia > diaSemana && asistencia.asistencia == null? "outline-" : ""}${coloresBotones[asistencia.asistencia]} btn-sm">${asistencia.dia.substring(0,1)}</button>`
                                     ).join('')}
                                 </div>
                                 </li>
