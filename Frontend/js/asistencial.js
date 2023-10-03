@@ -23,6 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = data.id;
                 option.textContent = data.nombre;
                 dependenciaSelect.appendChild(option);
+            });
+            dataDependencia.forEach(data => {
+                // Creamos una opción para cada rol
+                const option = document.createElement("option");
+                option.value = data.id;
+                option.textContent = data.nombre;
                 dependenciaSelectModal.appendChild(option);
             });
         })
@@ -50,6 +56,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = data.id;
                 option.textContent = data.nombre;
                 municipiosSelect.appendChild(option);
+            });
+            dataMunicipio.forEach(data => {
+                // Creamos una opción para cada rol
+                const option = document.createElement("option");
+                option.value = data.id;
+                option.textContent = data.nombre;
                 municipiosSelectModal.appendChild(option);
             });
         })
@@ -77,6 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = data.id;
                 option.textContent = data.nombre;
                 cargosSelect.appendChild(option);
+            });
+            Cargosdata.forEach(data => {
+                // Creamos una opción para cada rol
+                const option = document.createElement("option");
+                option.value = data.id;
+                option.textContent = data.nombre;
                 cargosSelectModal.appendChild(option);
             });
         })
@@ -128,6 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     option.value = data.id;
                     option.textContent = data.nombre;
                     tipoPacienteSelect.appendChild(option);
+                });
+                tipoPacientedata.forEach(data => {
+                    // Creamos una opción para cada rol
+                    const option = document.createElement("option");
+                    option.value = data.id;
+                    option.textContent = data.nombre;
                     tipoPacienteSelectModal.appendChild(option);
                 });
             })
