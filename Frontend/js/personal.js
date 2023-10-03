@@ -49,7 +49,6 @@ function verPerfil(ced) {
 function buscarPerfilUsuario(clave) {
     let cedulaPerfil = sessionStorage.getItem('cedulaPerfil')
     sessionStorage.setItem('modoPerfil', false)
-    llenarSelects()
     if (typeof cedulaPerfil != 'undefined' && cedulaPerfil != null && cedulaPerfil != "0" && clave != 0) {
         let urlPerfil = urlEmpleados + "/" + cedulaPerfil;
         // Llamada al servicio REST utilizando fetch
@@ -216,11 +215,6 @@ function llenarSelects() {
         let url = "http://127.0.0.1:5000/" + fieldName;
         // Elemento select donde agregaremos las opciones
         let select = document.getElementById(fieldName);
-        if (typeof select.options != 'undefined' && select.options != null && select.length > 0) {                        
-            for (let index = 0; index < select.options.length; index++) {
-                select.removeChild(select.options[index])
-            }
-        }
         // Llamada al servicio REST utilizando fetch
         fetch(url)
             .then(response => response.json())
