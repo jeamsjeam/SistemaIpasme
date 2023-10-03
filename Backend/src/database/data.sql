@@ -5,7 +5,7 @@ INSERT INTO ROL (nombre) VALUES ('Administrador'),('Central de Citas'),('Asisten
 INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1), ('jeam', '1234', 'Jesus',1);
 INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
 INSERT INTO ESTADO_EMPLEADO (nombre) VALUES ('Activo'),('Inactivo'),('Jubilado');
-INSERT INTO ESTADO_CITA (nombre) VALUES ('Agendada'),('Asistida'),('Cancelada'),("No Asistio");
+INSERT INTO ESTADO_CITA (nombre) VALUES ('Agendada'),('Asistida'),('Cancelada'),('No Asistio');
 
 INSERT INTO cargo (nombre) VALUES ('Medico'),('Enfermero'),('Docente'),('Administrativo'),('Obrero'),('Jefe'),('Encargado'),('Otro');
 INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal'),('Otro');
