@@ -65,6 +65,9 @@ class EmpleadosServices:
             empleado = empleado_schema.dump(empleadoConsulta)   
             #pdb.set_trace()  
 
+            if empleado["cargo"]["nombre"] != "Medico":
+                return None
+
             # SSe consultan las citas
             consultaCitas = CitasCalls.get_citas_medico(empleado['cedula'])
 

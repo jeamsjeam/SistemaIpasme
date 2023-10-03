@@ -23,7 +23,7 @@ function buscarEmpleado(ced){
     .then(data => {
         if(typeof data !== 'undefined' && data !== null){
 
-            mostrarNotificacion("Paciente Encontrado","linear-gradient(to right, #00b09b, #96c93d)") 
+            mostrarNotificacion("Medico Encontrado","linear-gradient(to right, #00b09b, #96c93d)") 
             var pacienteEncontrado = document.getElementById("formularioDatosEncontrados");
             var tablaReposos = document.getElementById("tablaCitas");
             //var formularioRegistrarReposo = document.getElementById("formularioRegistrarReposo");
@@ -36,7 +36,7 @@ function buscarEmpleado(ced){
             initDataTable(data.citas)
             
         }else{
-            mostrarNotificacion("No se encontro paciente","#FF0000") 
+            mostrarNotificacion("No se encontro medico","#FF0000") 
         }
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )

@@ -117,7 +117,7 @@ class CitasServices:
         pdf.set_xy(10.0,100.0)
         pdf.set_font('Arial', 'B', 12)
         pdf.cell(45, 10, 'Fecha', 1, 0,'C')
-        if tipo  == 2:
+        if tipo == 2:
             pdf.cell(45, 10, 'Paciente', 1, 0,'C')
         else:
             pdf.cell(45, 10, 'Medico', 1, 0,'C')

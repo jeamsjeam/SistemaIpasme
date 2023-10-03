@@ -4,3 +4,4 @@
 [0725/165031.618:ERROR:(-1)] Check failed: false. 
 [0904/134028.269:ERROR:check.cc(222)] Check failed: false. 
 [0919/120733.281:ERROR:check.cc(222)] Check failed: false. 
+[1003/112823.310:ERROR:check.cc(298)] Check failed: false. NOTREACHED log messages are omitted in official builds. Sorry!
