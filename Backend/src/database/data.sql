@@ -1,5 +1,6 @@
 
 --DROP DATABASE IF EXISTS ipasprueba  WITH (FORCE);
+--DROP DATABASE IF EXISTS ipas  WITH (FORCE);
 
 INSERT INTO ROL (nombre) VALUES ('Administrador'),('Central de Citas'),('Asistencial'),('Recursos Humanos'),('Paciente');
 INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', 'System',1), ('jeam', '1234', 'Jesus',1);
