@@ -10,7 +10,18 @@ INSERT INTO ESTADO_CITA (nombre) VALUES ('Agendada'),('Asistida'),('Cancelada'),
 INSERT INTO cargo (nombre) VALUES ('Medico'),('Enfermero'),('Docente'),('Administrativo'),('Obrero'),('Jefe'),('Encargado'),('Otro');
 INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal'),('Otro');
 INSERT INTO especialidad (nombre, consultas) VALUES ('Odontologia', '1'),('Medicina interna', '1'),
-('Pediatria','1'),('Administrativo','0'),('Obrero','0'),('Seguridad','0'),('Limpieza','0');
+('Pediatria','1'),('Administrativo','0'),('Obrero','0'),('Seguridad','0'),('Limpieza','0'),
+('Otros','0'),
+('Medicina Familiar','1'),
+('Medicina General','1'),
+('Ginecologia y Obstetricia','1'),
+('Imagenologia','1'),
+('Cardiologia','1'),
+('Nutricion','1'),
+('Psicologia','1'),
+('Nefrologia','1'),
+('Otorrino','1'),
+('Traumatologia','1'),;
 INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',63),('Especial',80);
 INSERT INTO tipo_paciente (nombre) VALUES ('Afiliado'),('Beneficiario');
 INSERT INTO estado (nombre) VALUES ('Tachira'),('Merida'),('Zulia'),('Trujillo'),('Apure');
@@ -19,13 +30,34 @@ INSERT INTO municipio (nombre) VALUES ('Junin'),('Ayacucho'),('Libertador'),('Sa
 INSERT INTO turno (nombre,hora_llegada,hora_salida) VALUES ('Turno Prueba','2023-09-05 00:00:00.307429','2023-09-05 00:00:00.307429');
 
 INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
-VALUES(1111111,'Prueba','Prueba',current_timestamp,'Prueba','11111111',1,1,1,1,1,1);
+VALUES(3450035,'Juan','Pérez', '1975-08-12', 'Calle 1 Casa 1', '04148563254', 1, 1, 1, 1, 1, 1);
 
-INSERT INTO ASISTENCIA (comentario, hora_llegada, hora_salida, empleado_cedula) 
-VALUES ('A tiempo', current_timestamp, current_timestamp,1111111);
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(4205340,'María','González', '1982-04-25', 'Calle 2 Casa 1', '04148563254', 2, 1, 2, 1, 2, 1);
 
-INSERT INTO PERMISO (descripcion_motivo,fecha_inicio,fecha_fin,empleado_cedula)
-VALUES ('Permiso por comision de servicio', '2023-09-04 00:00:00.307429', '2023-09-06 00:00:00.307429', 1111111);
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(4550348,'Luis','Martínez', '1968-11-08', 'Calle 3 Casa 1', '04148563254', 1, 1, 2, 2, 1, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(8743215,'Ana','Hernández', '1972-06-15', 'Calle 1 Casa 1', '04148563254', 2, 1, 1, 2, 2, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(15672943,'Carlos','López', '1988-09-30', 'Calle 2 Casa 1', '04148563254', 3, 1, 1, 1, 1, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(5892301,'Elena','Díaz', '1977-03-22', 'Calle 3 Casa 1', '04148563254', 3, 1, 1, 2, 2, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(20134567,'Javier','Ramírez', '1965-07-18', 'Calle 1 Casa 1', '04148563254', 3, 1, 1, 1, 1, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(6543219,'Sara','Torres', '1979-12-05', 'Calle 2 Casa 1', '04148563254', 4, 4, 2, 1, 2, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(10287654,'Martín','Gómez', '1986-02-14', 'Calle 3 Casa 1', '04148563254', 4, 4, 1, 1, 1, 1);
+
+INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
+VALUES(25674321,'Laura','Rodríguez', '1990-10-28', 'Calle 1 Casa 1', '04148563254', 4, 4, 3, 2, 2, 1);
 
 /*
 POST

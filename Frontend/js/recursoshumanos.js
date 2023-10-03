@@ -384,7 +384,7 @@ function list(lista) {
 
 const coloresBotones={
     true : 'success',
-    null : 'danger',
+    null : 'secondary',
     false : 'primary'
 }
 function cargarReporteSemana(){
