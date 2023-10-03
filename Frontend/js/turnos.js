@@ -5,8 +5,11 @@ function cargarTurnos() {
         .then(response => response.json())
         .then(dataResponse => {
             let turnosContainer = document.getElementById("turnos");
-            for (let index = 0; index < turnosContainer.children.length; index++) {
-                turnosContainer.removeChild(turnosContainer.children[index]);
+            let divsBorrar = turnosContainer.children.length - 1 
+            if (divsBorrar > -1) {                
+                for (divsBorrar; 0 <= divsBorrar; divsBorrar--) {
+                    turnosContainer.removeChild(turnosContainer.children[divsBorrar]);
+                }
             }
             dataResponse.forEach((turno) => {
                 agregarTurnoUI(turno);
