@@ -133,7 +133,6 @@ class PacientesServices:
                 
                 # Se utiliza para poder saber cual es el primer grupo reposo para sumar solo esos dias
                 banderaDias = True
-
                 # Se recorren todos los grupos de reposos encontrados
                 for grupo in grupoReposo:
 
@@ -351,6 +350,10 @@ class PacientesServices:
             # Se recorren todos los reposos que se enviaron, normalmente seria 1 solo
             for reposo_info in datos_completos['reposos']:
                 reposo = ReposoCalls.retornar_obj_reposo(reposo_info)  # Asociaremos este campo más adelante
+                fecha_inicio_reposo = datetime.strptime(reposo_info['fecha_inicio'], "%Y-%m-%d")
+                fecha_fin_reposo = datetime.strptime(reposo_info['fecha_fin'], "%Y-%m-%d")
+                if fecha_inicio_reposo > fecha_fin_reposo:
+                    return "07|La fecha de inicio es mayor a la fin"
                 reposos.append(reposo)
             
             # Se pregunta si existre grupo de reporte nuevo y si la lista de reposos tiene algo
@@ -385,6 +388,8 @@ class PacientesServices:
             for reposo_info in datos_completos['reposos']:
                 fecha_inicio_reposo = datetime.strptime(reposo_info['fecha_inicio'], "%Y-%m-%d")
                 fecha_fin_reposo = datetime.strptime(reposo_info['fecha_fin'], "%Y-%m-%d")
+                if fecha_inicio_reposo > fecha_fin_reposo:
+                    return "07|La fecha de inicio es mayor a la fin"
                 duracion_reposo_completo = (fecha_fin_reposo - fecha_inicio_reposo).days + 1
 
                 # Se recorren los reposos que se consultaron de la base de datos para las validaciones
