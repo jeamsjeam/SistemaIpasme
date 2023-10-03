@@ -18,6 +18,17 @@ def buscar_empleado(cedula):
     else:
         return jsonify(None)
 
+@app.route('/empleados/citas/<int:cedula>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def buscar_empleado_citas(cedula):
+
+    respuesta = EmpleadosServices.buscar_citas(cedula)
+
+    if respuesta is not None and len(respuesta) > 0:
+        return make_response(jsonify(respuesta))
+    else:
+        return jsonify(None)
+
 @app.route('/empleados/guardar', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def guardar_empleado():

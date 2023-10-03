@@ -8,6 +8,7 @@ from ..calls.municipiosCalls import MunicipiosCalls
 from ..calls.tipoReposoCall import TipoReposoCalls
 from ..calls.rolesCalls import RolesCalls
 from ..calls.citasCalls import CitasCalls
+from ..calls.citasCalls import CitasCalls
 from ..models.paciente import Paciente
 from ..models.grupo_reposo import GrupoReposo
 from ..models.reposo import Reposo
@@ -18,6 +19,7 @@ from ..schemas.reposoSchema import reposo_schema,reposos_schema
 from ..schemas.cargoSchema import cargo_schema,cargos_schema
 from ..schemas.dependenciaSchema import dependecia_schema,dependecias_schema
 from ..schemas.municipioSchema import municipio_schema,municipios_schema
+from ..schemas.citaSchema import cita_schema,citas_schema
 from ..services.generarPDFServices import GenerarPDF
 from datetime import datetime
 import tempfile
@@ -168,6 +170,39 @@ class PacientesServices:
                 # Si el paciente no se le encontraron grupo de reposos se envia la lista de reposos vacia 
                 paciente['reposos'] = []
                 paciente["dias_reposo"] = total_dias_reposos
+                return paciente
+        else:
+            # Si no se encuentra paciente se retorna null
+            return None
+    
+    def buscar_citas(cedula):
+
+        # Se busca al paciente
+        pacienteConsulta = PacienteCalls.get_paciente_cedula(cedula)
+
+        # Si existe el paciente se procede a buscar sus reposos
+        if pacienteConsulta is not None:
+
+            # Se convierte el objeto Paciente a un diccionario
+            paciente = paciente_schema.dump(pacienteConsulta)   
+            #pdb.set_trace()  
+
+            # SSe consultan las citas
+            consultaCitas = CitasCalls.get_citas_paciente(paciente['cedula'])
+
+            # Se verifica que exista citas
+            if consultaCitas is not None and len(consultaCitas) > 0:
+
+                # Se convierte el objeto citas en un diccionario
+                citas = citas_schema.dump(consultaCitas)
+
+                # Se agregan las citas
+                paciente['citas'] = citas
+                return paciente
+
+            else:
+                # Se envia las citas vacias
+                paciente['citas'] = []
                 return paciente
         else:
             # Si no se encuentra paciente se retorna null
@@ -433,42 +468,42 @@ class PacientesServices:
  
         if tipo == "pacientes":
             pdf.set_font('Arial', 'B', 12)
-            pdf.cell(30, 10, 'Cedula', 1)
-            pdf.cell(30, 10, 'Nombre', 1)
-            pdf.cell(30, 10, 'Apellido', 1)
-            pdf.cell(35, 10, 'Telefono', 1)
-            pdf.cell(35, 10, 'Correo', 1)
-            pdf.cell(30, 10, 'Días Reposo', 1)  # Agrega este campo solo para pacientes
+            pdf.cell(30, 10, 'Cedula', 1, 0,'C')
+            pdf.cell(30, 10, 'Nombre', 1, 0,'C')
+            pdf.cell(30, 10, 'Apellido', 1, 0,'C')
+            pdf.cell(35, 10, 'Telefono', 1, 0,'C')
+            pdf.cell(35, 10, 'Correo', 1, 0,'C')
+            pdf.cell(30, 10, 'Días Reposo', 1, 0,'C')  # Agrega este campo solo para pacientes
             pdf.ln()
             # Configurar fuente y tamaño para los datos de los pacientes
             pdf.set_font('Arial', '', 10)
 
             # Agregar datos de pacientes al PDF
             for paciente in pacientes:
-                pdf.cell(30, 10, str(paciente["cedula"]), 1)
-                pdf.cell(30, 10, paciente["nombre"], 1)
-                pdf.cell(30, 10, paciente["apellido"], 1)
-                pdf.cell(35, 10, paciente["telefono"], 1)
-                pdf.cell(35, 10, paciente["correo"], 1)
-                pdf.cell(30, 10, str(paciente["dias_reposo"]), 1)
+                pdf.cell(30, 10, str(paciente["cedula"]), 1, 0,'C')
+                pdf.cell(30, 10, paciente["nombre"], 1, 0,'C')
+                pdf.cell(30, 10, paciente["apellido"], 1, 0,'C')
+                pdf.cell(35, 10, paciente["telefono"], 1, 0,'C')
+                pdf.cell(35, 10, paciente["correo"], 1, 0,'C')
+                pdf.cell(30, 10, str(paciente["dias_reposo"]), 1, 0,'C')
                 pdf.ln()
         elif tipo == "pacienteIndividual":
             pdf.set_font('Arial', 'B', 12)
-            pdf.cell(30, 10, 'Cedula', 1)
-            pdf.cell(30, 10, 'Nombre', 1)
-            pdf.cell(30, 10, 'Apellido', 1)
-            pdf.cell(35, 10, 'Telefono', 1)
-            pdf.cell(35, 10, 'Correo', 1)
-            pdf.cell(30, 10, 'Días Reposo', 1)  # Agrega este campo solo para pacientes
+            pdf.cell(30, 10, 'Cedula', 1, 0,'C')
+            pdf.cell(30, 10, 'Nombre', 1, 0,'C')
+            pdf.cell(30, 10, 'Apellido', 1, 0,'C')
+            pdf.cell(35, 10, 'Telefono', 1, 0,'C')
+            pdf.cell(35, 10, 'Correo', 1, 0,'C')
+            pdf.cell(30, 10, 'Días Reposo', 1, 0,'C')  # Agrega este campo solo para pacientes
             pdf.ln()
 
             pdf.set_font('Arial', '', 10)
-            pdf.cell(30, 10, str(pacientes["cedula"]), 1)
-            pdf.cell(30, 10, pacientes["nombre"], 1)
-            pdf.cell(30, 10, pacientes["apellido"], 1)
-            pdf.cell(35, 10, pacientes["telefono"], 1)
-            pdf.cell(35, 10, pacientes["correo"], 1)
-            pdf.cell(30, 10, str(pacientes["dias_reposo"]), 1)
+            pdf.cell(30, 10, str(pacientes["cedula"]), 1, 0,'C')
+            pdf.cell(30, 10, pacientes["nombre"], 1, 0,'C')
+            pdf.cell(30, 10, pacientes["apellido"], 1, 0,'C')
+            pdf.cell(35, 10, pacientes["telefono"], 1, 0,'C')
+            pdf.cell(35, 10, pacientes["correo"], 1, 0,'C')
+            pdf.cell(30, 10, str(pacientes["dias_reposo"]), 1, 0,'C')
             pdf.ln()
 
             pdf.set_font('Arial', 'B', 16)
@@ -478,21 +513,21 @@ class PacientesServices:
             # Agregar cabeceras de columnas
             pdf.set_xy(10.0,100.0)
             pdf.set_font('Arial', 'B', 12)
-            pdf.cell(40, 10, 'COdigo Asistencial', 1)
-            pdf.cell(40, 10, 'Codigo Registro', 1)
-            pdf.cell(35, 10, 'Fecha Inicio', 1)
-            pdf.cell(35, 10, 'Fecha Fin', 1)
-            pdf.cell(35, 10, 'Quien Valida', 1)
+            pdf.cell(40, 10, 'Codigo Asistencial', 1, 0,'C')
+            pdf.cell(40, 10, 'Codigo Registro', 1, 0,'C')
+            pdf.cell(35, 10, 'Fecha Inicio', 1, 0,'C')
+            pdf.cell(35, 10, 'Fecha Fin', 1, 0,'C')
+            pdf.cell(35, 10, 'Quien Valida', 1, 0,'C')
             pdf.ln()
 
             # Agregar datos de pacientes al PDF
             for reposos in pacientes["reposos"]:
                 pdf.set_font('Arial', '', 10)
-                pdf.cell(40, 10, str(reposos["codigo_asistencial"]), 1)
-                pdf.cell(40, 10, reposos["codigo_registro"], 1)
-                pdf.cell(35, 10, reposos["fecha_inicio"].split("T")[0], 1)
-                pdf.cell(35, 10, reposos["fecha_fin"].split("T")[0], 1)
-                pdf.cell(35, 10, reposos["quien_valida"], 1)
+                pdf.cell(40, 10, str(reposos["codigo_asistencial"]), 1, 0,'C')
+                pdf.cell(40, 10, reposos["codigo_registro"], 1, 0,'C')
+                pdf.cell(35, 10, reposos["fecha_inicio"].split("T")[0], 1, 0,'C')
+                pdf.cell(35, 10, reposos["fecha_fin"].split("T")[0], 1, 0,'C')
+                pdf.cell(35, 10, reposos["quien_valida"], 1, 0,'C')
                 pdf.ln()
 
         # Llamar al método footer para generar el pie de página
@@ -503,3 +538,4 @@ class PacientesServices:
             pdf_path = temp_file.name
             pdf.output(pdf_path)
         return pdf_path
+    

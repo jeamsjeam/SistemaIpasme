@@ -118,7 +118,8 @@ li {
 
 .agendada,
 .asistida,
-.cancelada {
+.cancelada,
+.noasistio {
     position: relative;
     cursor: help;
 }
@@ -150,7 +151,8 @@ li {
 
 li.agendada:before,
 li.asistida:before,
-li.cancelada:before{
+li.cancelada:before,
+li.noasistio:before{
     content: "";
     position: absolute;
     height: 29px;
@@ -177,6 +179,11 @@ li.asistida:before {
 li.cancelada:before {
     background: palevioletred;
     border: 1px solid palevioletred;
+}
+
+li.noasistio:before {
+    background: grey;
+    border: 1px solid grey;
 }
 
 

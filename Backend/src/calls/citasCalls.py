@@ -17,6 +17,10 @@ class CitasCalls():
         cita = sorted(Cita.query.filter_by(paciente_cedula = cedula), key=lambda cit: cit.fecha, reverse=True) 
         return cita
     
+    def get_citas_medico(cedula):
+        cita = sorted(Cita.query.filter_by(empleado_cedula = cedula), key=lambda cit: cit.fecha, reverse=True) 
+        return cita
+    
     def crear_cita(cita):
         citaNueva = Cita(nota = cita.nota, 
                          empleado_cedula=cita.empleado_cedula,
@@ -35,6 +39,13 @@ class CitasCalls():
         citaBD.paciente_cedula = cita.paciente_cedula
         citaBD.fecha = cita.fecha
         citaBD.estado_cita_id = cita.estado_cita_id
+        db.session.commit()
+        db.session.refresh(citaBD)
+        return citaBD
+ 
+    def modificar_estado_cita(id,estado):
+        citaBD = Cita.query.get(id)
+        citaBD.estado_cita_id = estado
         db.session.commit()
         db.session.refresh(citaBD)
         return citaBD

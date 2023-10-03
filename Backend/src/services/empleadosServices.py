@@ -1,6 +1,8 @@
 from ..calls.empleadosCalls import EmpleadosCalls
+from ..calls.citasCalls import CitasCalls
 from ..models.empleado import Empleado
 from ..schemas.empleadoSchema import empleado_schema,empleados_schema
+from ..schemas.citaSchema import cita_schema,citas_schema
 from ..schemas.estadoEmpleadoSchema import estados_empleados_schema, estado_empleado_schema
 
 class EmpleadosServices:
@@ -51,6 +53,40 @@ class EmpleadosServices:
                 retorno.append(agregar)
         return retorno
     
+    def buscar_citas(cedula):
+
+        # Se busca al paciente
+        empleadoConsulta = EmpleadosCalls.get_empleado_cedula(cedula)
+        
+        # Si existe el paciente se procede a buscar sus reposos
+        if empleadoConsulta is not None:
+
+            # Se convierte el objeto Paciente a un diccionario
+            empleado = empleado_schema.dump(empleadoConsulta)   
+            #pdb.set_trace()  
+
+            # SSe consultan las citas
+            consultaCitas = CitasCalls.get_citas_medico(empleado['cedula'])
+
+            # Se verifica que exista citas
+            if consultaCitas is not None and len(consultaCitas) > 0:
+
+                # Se convierte el objeto citas en un diccionario
+                citas = citas_schema.dump(consultaCitas)
+
+                # Se agregan las citas
+                empleado['citas'] = citas
+                return empleado
+
+            else:
+                # Se envia las citas vacias
+                empleado['citas'] = []
+                return empleado
+        else:
+            # Si no se encuentra paciente se retorna null
+            return None
+        
+    
 def agruparEmpleados(filtro):
     empleadosConsulta = EmpleadosCalls.get_empleados()
     empleados = empleados_schema.dump(empleadosConsulta)
@@ -92,3 +128,4 @@ def infoBasica(empleado):
         'cargo' :  empleado['cargo']['nombre']
     }
     return info
+    

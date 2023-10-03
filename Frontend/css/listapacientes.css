@@ -1,0 +1,20 @@
+.botonTodosPacientes{
+    border-radius: 30px !important;
+}
+
+button.btn.btn-info.botonTodosPacientes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 40px;
+}
+
+@media (max-width:997.9px){
+    button.btn.btn-info.botonTodosPacientes {
+        position: relative;
+        margin-top: 10px;
+    }
+}

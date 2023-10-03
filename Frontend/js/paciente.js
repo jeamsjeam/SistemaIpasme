@@ -98,6 +98,9 @@ function buscarClaseDia(index, diaInicio, diaCita) {
         case 'Cancelada':
             claseAsistencia = 'cancelada'
             break;
+        case 'No Asistio':
+            claseAsistencia = 'noasistio'
+            break;
 
         default:
             break;

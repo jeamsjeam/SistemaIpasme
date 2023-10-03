@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function buscarPaciente(ced){
+function buscarEmpleado(ced){
     resetearEtquitasOcultas()
     var cedula = ""
     if(ced !== null && typeof ced !== 'undefined'){
@@ -14,7 +14,7 @@ function buscarPaciente(ced){
         cedula = document.getElementById("buscarCedula").value;
     }
     
-    const url = "http://127.0.0.1:5000/pacientes/citas/" + cedula;
+    const url = "http://127.0.0.1:5000/empleados/citas/" + cedula;
 
     document.getElementById("buscarCedula").value = ""
     
@@ -49,7 +49,7 @@ function datosPacienteTabla(datos){
     // Asignar valores a las celdas de la tabla
     document.getElementById("datos_nombres").textContent = datos.nombre + " " + datos.apellido;
     document.getElementById("datos_cargo").textContent = datos.cargo.nombre;
-    document.getElementById("datos_extra").textContent = datos.tipo_paciente.nombre;
+    document.getElementById("datos_departamento").textContent = datos.especialidad.nombre;
 }
 
 // Función para llenar la tabla con los datos de la lista de objetos
@@ -143,7 +143,7 @@ function listUsers(citas) {
                 <tr>
                     <td>${index + 1}</td>
                     <td>${cita.fecha != null && typeof cita.fecha !== 'undefined' ? formatDateString(cita.fecha) : ''}</td>
-                    <td>${cita.empleado != null && typeof cita.empleado !== 'undefined' ? cita.empleado.nombre + ' ' +  cita.empleado.apellido : ''}</td>
+                    <td>${cita.paciente != null && typeof cita.paciente !== 'undefined' ? cita.paciente.nombre + ' ' +  cita.paciente.apellido : ''}</td>
                     <td>${cita.nota != null && typeof cita.nota !== 'undefined' ? cita.nota : ''}</td>
                     <td>${cita.estado_cita != null && typeof cita.estado_cita !== 'undefined' ? cita.estado_cita.nombre : ''}</td>
                     <!-- <td><i class="fa-solid fa-check" style="color: green;"></i></td> -->
@@ -183,7 +183,7 @@ function CambiarEstadoCita(id,estado){
                 datosReposoResultado = data.paciente 
                 mostrarNotificacion(mensajeResultado[1],"linear-gradient(to right, #00b09b, #96c93d)") 
                 let cedula = parseInt(JSON.parse(sessionStorage.getItem('cedulaCitas')))
-                buscarPaciente(cedula)
+                buscarEmpleado(cedula)
             }else{
                 mostrarNotificacion(mensajeResultado[1],"#FF0000") 
             }
@@ -198,5 +198,5 @@ function CambiarEstadoCita(id,estado){
 
 function GenerarPDF(){
     let cedula = parseInt(JSON.parse(sessionStorage.getItem('cedulaCitas')))
-    descargarPDF('citas/pdf','documento',cedula,1)
+    descargarPDF('citas/pdf','documento',cedula,2)
 }
