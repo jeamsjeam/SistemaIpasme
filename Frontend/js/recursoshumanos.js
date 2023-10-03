@@ -79,7 +79,7 @@ function cargarCalendario(sumar){
     // Inyeccion HTML
     let html = `<h2 class="header"> <span class="prev" onclick="cargarCalendario(-1)"><i class="fas fa-chevron-left icon"></i></span> ${nombreMes.toUpperCase()} ${year} <span class="next" onclick="cargarCalendario(1)"><i class="fas fa-chevron-right icon"></i></span></h2> <ol>${htmlNombreDias}${htmlDias}</ol>`
     document.querySelector('.calendar').innerHTML = html
-
+    document.querySelector('.calendar').classList.remove('d-none')
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )
 
@@ -87,18 +87,19 @@ function cargarCalendario(sumar){
     
 }
 
+const nombreAsistencia = {
+    true : 'Asistencia',
+    false : 'Permiso'
+}
+
 function buscarClaseDia(index, diaInicio, asistenciaServicio){
     let estiloPrimerDia = `style='--first-day-start: ${diaInicio}'`
     let claseAsistencia = ''
     
-    if (asistenciaServicio.asistencia === true){
-        claseAsistencia = 'asistencia'
+    if (nombreAsistencia[asistenciaServicio.asistencia] != null){
+        claseAsistencia = nombreAsistencia[asistenciaServicio.asistencia].toLowerCase()
     }
-    else if (asistenciaServicio.asistencia === false) {
-        claseAsistencia = 'permiso'
-    }
-    
-    let clase = `class='${index === 0? 'first-day ' + claseAsistencia : claseAsistencia}'`
+    let clase = `class='${index === 0? 'first-day ' + claseAsistencia : claseAsistencia}' ${asistenciaServicio.asistencia != null ? ` title='${nombreAsistencia[asistenciaServicio.asistencia]}'` : ''}`
     if (index === 0){
         return clase + estiloPrimerDia
     } else{
@@ -207,8 +208,8 @@ function registrarSalida(){
     data = {
         id : asistencia.id,
         comentario : document.getElementById("comentario").value,
-        hora_salida : asistencia.hora_salida,
-        hora_llegada : new Date().toISOString(), 
+        hora_salida : new Date().toISOString(),
+        hora_llegada : asistencia.hora_llegada, 
         empleado_cedula : JSON.parse(sessionStorage.getItem('cedulaBuscarEmpleado'))
     }
     let options = {
