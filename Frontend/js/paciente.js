@@ -79,6 +79,7 @@ function cargarCalendario(sumar){
     // Inyeccion HTML
     let html = `<h2 class="header"> <span class="prev" onclick="cargarCalendario(-1)"><i class="fas fa-chevron-left icon"></i></span> ${nombreMes.toUpperCase()} ${year} <span class="next" onclick="cargarCalendario(1)"><i class="fas fa-chevron-right icon"></i></span></h2> <ol>${htmlNombreDias}${htmlDias}</ol>`
     document.querySelector('.calendar').innerHTML = html
+    document.querySelector('.calendar').classList.remove('d-none')
 
     })
     .catch(err => mostrarNotificacion(err.message,"#FF0000") )    
