@@ -9,10 +9,12 @@ class MovimientoMonedero(db.Model):
     saldo = db.Column(db.Numeric(precision=10, scale=2), nullable=False)
     moneda_id = db.Column(db.BigInteger(), db.ForeignKey('moneda.id'))
     monedero_id = db.Column(db.BigInteger(), db.ForeignKey('monedero.id'))
+    fecha = db.Column(db.DateTime(), default=datetime.now)
 
-    def __init__(self, nombre, saldo, moneda_id, monedero_id):
+    def __init__(self, nombre, saldo, moneda_id, monedero_id, fecha):
         self.comentanombrerio = nombre
         self.saldo = saldo
         self.moneda_id = moneda_id
         self.monedero_id = monedero_id
+        self.fecha = fecha
     

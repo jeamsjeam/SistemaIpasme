@@ -7,7 +7,8 @@ INSERT INTO USUARIO (usuario, clave, nombre, rol_id) VALUES ('admin', 'admin', '
 INSERT INTO GENERO (nombre) VALUES ('Masculino'),('Femenino');
 INSERT INTO ESTADO_EMPLEADO (nombre) VALUES ('Activo'),('Inactivo'),('Jubilado');
 INSERT INTO ESTADO_CITA (nombre) VALUES ('Agendada'),('Asistida'),('Cancelada'),('No Asistio');
-
+INSERT INTO MONEDA (nombre, simbolo) VALUES ('Bolívares', 'BS'),('Dólares', 'USD'),('Pesos Colombianos', 'COP');
+INSERT INTO MONEDERO (nombre, saldo, moneda_id, usuario_id) VALUES ('Central', 0, 1,1);
 INSERT INTO cargo (nombre) VALUES ('Medico'),('Enfermero'),('Docente'),('Administrativo'),('Obrero'),('Jefe'),('Encargado'),('Otro');
 INSERT INTO dependencia (nombre) VALUES ('Nacional'),('Estadal'),('Otro');
 INSERT INTO especialidad (nombre, consultas) VALUES ('Odontologia', '1'),('Medicina interna', '1'),
