@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/vistaPaciente.css">
+    <link rel="stylesheet" type="text/css" href="css/all.min.css">
+    <title>Contable</title>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container pt-4">
+        <div class="mb-3 row align-items-center">
+            <div class="col">
+                <h1>Monederos</h1>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-success btn-sm px-5" data-bs-toggle="modal" data-bs-target="#monederoModal" id="agregarBtn">Agregar</button>
+            </div>
+        </div>
+        <div id="monederos" class="mt-5"></div>
+        <div class="modal fade" id="monederoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar nuevo monedero</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row pb-2 justify-content-around">
+                            <div class="col-lg-6">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend input-group-sm">
+                                      <span class="input-group-text">Moneda</span>
+                                    </div>
+                                    <select class="form-select" aria-label="Moneda" id="selectMonedas">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend input-group-sm">
+                                      <span class="input-group-text">Responsable</span>
+                                    </div>
+                                    <select class="form-select" aria-label="usuario" id="selectUsuarios">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 pt-3">
+                                <div class="form-floating">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend input-group-sm">
+                                          <span class="input-group-text" >Nombre</span>
+                                        </div>
+                                        <input id="nombreMonedero" type="text" class="form-control"  >
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" onclick="registrarMonedero()" data-bs-dismiss="modal">Agregar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/all.min.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/finanzas.js"></script>
+</body>
+
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        cargarMonederos()
+        cargarMonedas()
+        cargarUsuarios()
+    });
+</script>

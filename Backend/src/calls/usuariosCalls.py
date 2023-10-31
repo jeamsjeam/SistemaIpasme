@@ -3,6 +3,10 @@ from src import db
 import pdb
 
 class UsuariosCalls():
+    def get_usuarios_empleados(rol_paciente):
+        usuarios = Usuario.query.filter(Usuario.rol_id != rol_paciente)
+        return usuarios
+
     def get_usuarios():
         usuarios = Usuario.query.all()
         return usuarios

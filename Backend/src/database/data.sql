@@ -23,13 +23,15 @@ INSERT INTO especialidad (nombre, consultas) VALUES ('Odontologia', '1'),('Medic
 ('Psicologia','1'),
 ('Nefrologia','1'),
 ('Otorrino','1'),
-('Traumatologia','1'),;
+('Traumatologia','1');
 INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',63),('Especial',80);
 INSERT INTO tipo_paciente (nombre) VALUES ('Afiliado'),('Beneficiario');
 INSERT INTO estado (nombre) VALUES ('Tachira'),('Merida'),('Zulia'),('Trujillo'),('Apure');
 INSERT INTO municipio (nombre) VALUES ('Junin'),('Ayacucho'),('Libertador'),('San Cristóbal'),('Lobatera');
 
-INSERT INTO turno (nombre,hora_llegada,hora_salida) VALUES ('Turno Prueba','2023-09-05 00:00:00.307429','2023-09-05 00:00:00.307429');
+INSERT INTO turno (nombre,hora_llegada,hora_salida) VALUES 
+('Mañana','2023-09-05 08:00:00.307429','2023-09-05 12:00:00.307429'),
+('Tarde','2023-09-05 13:00:00.307429','2023-09-05 17:00:00.307429');
 
 INSERT INTO EMPLEADO(cedula,nombre,apellido,fecha_nacimiento,direccion,telefono,especialidad_id,cargo_id,dependencia_id,turno_id,genero_id,estado_empleado_id)
 VALUES(3450035,'Juan','Pérez', '1975-08-12', 'Calle 1 Casa 1', '04148563254', 1, 1, 1, 1, 1, 1);

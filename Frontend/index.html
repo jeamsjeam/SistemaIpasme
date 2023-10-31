@@ -100,22 +100,22 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
-                <div id="departamento" class="card text-white card-has-bg click-col">
+                <div id="contable" class="card text-white card-has-bg click-col" style="background-image:url('css/imagenes/finanzas.jpg');">
                     <img class="card-img d-none">
                     <div class="card-img-overlay d-flex flex-column">
                         <div class="card-body">
-                            <small class="card-meta mb-2">Departamento</small>
-                            <h4 class="card-title mt-0 text-dark">Proximamente...</h4>
-                            <small><i class=""></i>Descripcion</small>
+                            <small class="card-meta mb-2">Registro Contable</small>
+                            <h4 class="card-title mt-0 text-dark">Control de Cuentas</h4>
+                            <small><i class=""></i>Permite monitorear los ingresos y gastos de la institución</small>
                         </div>
                         <div class="card-footer">
                             <div class="media">
                                 <img class="mr-3 rounded-circle"
-                                    src="css\imagenes\ipaslogo.png"
+                                    src="css\imagenes\billetera.png"
                                     alt="Generic placeholder image" style="max-width:50px">
                                 <div class="media-body">
-                                    <h6 class="my-0 text-white d-block">Nombre</h6>
-                                    <h6 class="my-0 text-white d-block">Departamento</h6>
+                                    <h6 class="my-0 text-white d-block">Registro</h6>
+                                    <h6 class="my-0 text-white d-block">Contable</h6>
                                 </div>
                             </div>
                         </div>
@@ -140,5 +140,8 @@
     });
     document.getElementById("citas").addEventListener("click", function() {
         window.location.href = "citas.html";
+    });
+    document.getElementById("contable").addEventListener("click", function() {
+        window.location.href = "contable.html";
     });
 </script>

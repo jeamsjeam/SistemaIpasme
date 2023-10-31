@@ -3,7 +3,14 @@ from ..calls.rolesCalls import RolesCalls
 from ..models.usuario import Usuario
 
 class UsuariosServices:
-
+    def get_usuarios_empleados():
+        rol_paciente = RolesCalls.get_rol_nombre("Paciente")
+        if rol_paciente is not None:
+            usuarios = UsuariosCalls.get_usuarios_empleados(rol_paciente.id)
+            return usuarios
+        else:
+            return []
+        
     def usuario_rol_por_nombre(usuario):
         usuario = UsuariosCalls.usuario_por_nombre(usuario)
         if usuario is not None:

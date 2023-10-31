@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/toastify.css">
+    <link rel="stylesheet" type="text/css" href="bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/asistencia.css">
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+    <link rel="stylesheet" type="text/css" href="css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="css/DataTable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="css/DataTable/cdnjs.cloudflare.com_ajax_libs_font-awesome_6.2.0_css_all.min.css">
+    <title>Asistencias</title>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+
+    <div class="container pt-5 pb-2">
+        <div class="row mt-5 d-none tablaPermisos card" id="tablaPermisos">
+            <div class="col-12 text-center card-header ">
+                <h2>Permisos</h2>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 ">
+                <table id="datatable_permisos" class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th class="centered">#</th>
+                            <th class="centered">Motivo</th>
+                            <th class="centered">Fecha Desde</th>
+                            <th class="centered">Fecha Hasta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_permisos"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="asistenciaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">¿Desea añadir un comentario?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-12">
+                        <div class="form-floating mb-3">
+                            <textarea id="comentario" class="form-control" aria-label="With textarea"></textarea>
+                            <label for="comentario">Comentario</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="botonAsistencia" data-bs-dismiss="modal">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/DataTable/cdnjs.cloudflare.com_ajax_libs_jquery_3.6.0_jquery.min.js"></script>   
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_jquery.dataTables.min.js"></script>
+    <script src="js/DataTable/cdn.datatables.net_1.12.1_js_dataTables.bootstrap5.min.js"></script>
+    <script src="js/toastify.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/all.min.js"></script>
+    <script src="bootstrap-5/js/bootstrap.min.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/recursoshumanos.js"></script>
+</body>
+</html>
+<style>
+
+    .card {
+        margin-bottom: 10px;
+        border: none;
+        transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: rgba(33, 137, 255, 1);
+        color: #fff;
+        font-weight: bold;
+    }
+
+</style>

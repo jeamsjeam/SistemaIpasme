@@ -33,4 +33,10 @@ def usuario_por_nombre(usuario):
     respuesta = UsuariosServices.usuario_por_nombre(usuario)
     return make_response(usuario_schema.dump(respuesta))
 
+@app.route('/usuarios/empleados', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def get_usuarios_empleados():
+    respuesta = UsuariosServices.get_usuarios_empleados()
+    return usuarios_schema.dump(respuesta)
+
     
