@@ -15,7 +15,7 @@ class Monedero(db.Model):
     movimientos = relationship('MovimientoMonedero', backref='monedero')
 
     def __init__(self, nombre, saldo, moneda_id, usuario_id):
-        self.comentanombrerio = nombre
+        self.nombre = nombre
         self.saldo = saldo
         self.moneda_id = moneda_id
         self.usuario_id = usuario_id

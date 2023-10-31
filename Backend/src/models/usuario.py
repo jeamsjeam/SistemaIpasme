@@ -1,4 +1,5 @@
 from src import db
+from sqlalchemy.orm import relationship, backref
 
 class Usuario(db.Model):
     __tablename__ = 'usuario'
@@ -8,6 +9,8 @@ class Usuario(db.Model):
     clave = db.Column(db.Text, nullable=False)
     nombre = db.Column(db.Text)
     rol_id = db.Column(db.BigInteger(), db.ForeignKey('rol.id'))
+
+    monederos = relationship('Monedero', backref='usuario')
 
     def __init__(self, usuario, clave, nombre, rol_id):
         self.usuario = usuario

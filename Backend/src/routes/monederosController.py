@@ -8,6 +8,11 @@ from flask_cors import cross_origin # Se utiliza para evitar el problema de cors
 def get_monederos():
     return MonederosServices.get()
 
+@app.route('/monederos/<int:id>', methods=['GET'])
+@cross_origin() # Se debe colocar en servicio para evitar problemas de cors
+def buscar_monedero(id):
+    return MonederosServices.buscar(id)
+
 @app.route('/monederos/crear', methods=['POST'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def crear_monedero():
@@ -19,7 +24,7 @@ def crear_monedero():
 def modificar_monedero():
     return MonederosServices.modificar(request.json)
 
-@app.route('/monederos/borrar/<int:id>', methods=['POST'])
+@app.route('/monederos/borrar/<int:id>', methods=['GET'])
 @cross_origin() # Se debe colocar en servicio para evitar problemas de cors
 def borrar_monedero(id):
     respuesta = MonederosServices.borrar(id)
