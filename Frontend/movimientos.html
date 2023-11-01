@@ -32,6 +32,7 @@
         <div class="row mt-5 card tablaPermisos" id="tablaMovimientos">
             <div class="col-12 text-center card-header ">
                 <h2>Movimientos</h2>
+                <button class="btn btn-outline-primary text-white" data-bs-toggle="modal" data-bs-target="#agregarMonedero" id="modificarBtn">Registrar</button>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pt-2 ">
                 <table id="datatable_movimientos" class="table table-striped ">
@@ -104,7 +105,57 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
+    <div class="modal fade" id="agregarMonedero" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registrar Movimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row pb-2 justify-content-around">
+                        <div class="col-lg-6">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend input-group-sm">
+                                  <span class="input-group-text">Tipo</span>
+                                </div>
+                                <select class="form-select" aria-label="Tipo" id="tipoMovimiento">
+                                    <option value="Entrada">Entrada</option>
+                                    <option value="Salida">Salida</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-floating">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend input-group-sm">
+                                      <span class="input-group-text" >Monto</span>
+                                    </div>
+                                    <input id="montoMovimiento" type="number" class="form-control" min="0.1" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pt-3">
+                            <div class="form-floating">
+                                <div class="input-group input-group-sm">
+                                    <div class="input-group-prepend input-group-sm">
+                                      <span class="input-group-text" >Descripcion</span>
+                                    </div>
+                                    <input id="descripcionMovimiento" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" onclick="registrarMovimiento()" data-bs-dismiss="modal">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/DataTable/cdnjs.cloudflare.com_ajax_libs_jquery_3.6.0_jquery.min.js"></script>   
     <script src="js/DataTable/cdn.datatables.net_1.12.1_js_jquery.dataTables.min.js"></script>

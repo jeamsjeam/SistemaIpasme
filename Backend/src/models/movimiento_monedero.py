@@ -11,8 +11,8 @@ class MovimientoMonedero(db.Model):
     monedero_id = db.Column(db.BigInteger(), db.ForeignKey('monedero.id'))
     fecha = db.Column(db.DateTime(), default=datetime.now)
 
-    def __init__(self, nombre, saldo, moneda_id, monedero_id, fecha):
-        self.comentanombrerio = nombre
+    def __init__(self, descripcion, saldo, moneda_id, monedero_id, fecha):
+        self.descripcion = descripcion
         self.saldo = saldo
         self.moneda_id = moneda_id
         self.monedero_id = monedero_id

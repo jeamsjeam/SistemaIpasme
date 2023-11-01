@@ -46,3 +46,14 @@ class MonederosCalls():
             return "00|Ok"
         else:
             return "01|Error"
+    
+    def registrar_monto(id, saldo):
+        monederoBD = Monedero.query.get(id)
+        if monederoBD.saldo + saldo < 0:
+            return "01|Monto no valido"
+
+        monederoBD.saldo = monederoBD.saldo + saldo
+        db.session.commit()
+        db.session.refresh(monederoBD)
+        return monederoBD
+

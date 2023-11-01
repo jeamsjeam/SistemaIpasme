@@ -180,7 +180,7 @@ function list(lista) {
                     <td>${index + 1}</td>
                     <td>${data.descripcion}</td>
                     <td>${data.saldo}</td>
-                    <td>${data.moneda.simbolo}</td>
+                    <td>${data.monedero.moneda.simbolo}</td>
                     <td>${fecha.toLocaleDateString('en-GB')}</td>
                 </tr>`;
         });
@@ -278,4 +278,60 @@ function borrarMonedero(){
             mostrarNotificacion("Error al borrar el empleado: " + error.message, "#FF0000")
         });
 
+}
+
+function registrarMovimiento(){
+    let monedero = JSON.parse(sessionStorage.getItem('monedero'))
+    let tipo = document.getElementById("tipoMovimiento").value
+    let descripcion = document.getElementById("descripcionMovimiento").value
+    let monto = document.getElementById("montoMovimiento").value
+    if (monto == "" || parseFloat(monto) < 0.1) {
+        mostrarNotificacion('Monto del movimiento debe ser mayor a 0.1', "#FF0000")
+        return 0
+    }
+
+    if (descripcion == "")
+        descripcion = tipo
+
+    if (tipo == "Salida"){
+        monto = "-" + monto.toString()
+    }
+
+    data = {
+        descripcion : descripcion,
+        saldo : monto,
+        moneda_id : monedero.moneda.id, 
+        monedero_id : monedero.id,
+        fecha: new Date().toISOString()
+    }
+    let url = "http://127.0.0.1:5000/movimientos/guardar"; 
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        if (typeof data === 'string') 
+        {
+            mostrarNotificacion(data.toString().split('|')[1],"#FF0000") 
+        }
+        else
+        {
+            if(typeof data !== 'undefined' && data !== null){
+                sessionStorage.setItem('monedero', JSON.stringify(data))
+                mostrarNotificacion("Guardado con Exito", "#198754")
+                cargarMovimientos()
+                document.getElementById("descripcionMovimiento").value = ""
+                document.getElementById("montoMovimiento").value = "0"
+            }else{
+                mostrarNotificacion("Error al registrar movimiento","#FF0000") 
+            }
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
 }
