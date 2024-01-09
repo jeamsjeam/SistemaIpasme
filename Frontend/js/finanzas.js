@@ -10,9 +10,10 @@ function cargarMonederos(){
             data.forEach(data => {
                 html += `<div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                             <div onclick="seleccionarMonedero(${data.id})" class="card text-white card-has-bg click-col">
-                                <div class="card-img-overlay d-flex flex-column">
-                                    <div class="card-body">
-                                        <h4 class="card-title mt-0 text-white text-center"><i class="fa-solid fa-wallet"></i>  ${data.nombre}</h4>
+                                <div class="card-img-overlay d-flex">
+                                    <div class="card-body flex-column">
+                                        <h4 class="card-title mt-3 text-white text-center">${data.moneda.simbolo}   <i class="fa-solid fa-money-bill"></i>  ${data.nombre}</h4>
+                                        <h6 class="card-title mb-0 text-white text-end" style="width: 100%">${data.usuario.nombre} </h6>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +70,268 @@ function cargarUsuarios(){
         });
 }
 
-function seleccionarMonedero(id){
-    sessionStorage.setItem('monedero', monederoId)
-    window.location.href = "movimientos.html"
+function seleccionarMonedero(monederoId){
+    // URL del servicio REST
+    let url = "http://127.0.0.1:5000/monederos/" + monederoId ;
+    
+    // Llamada al servicio REST utilizando fetch
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+            sessionStorage.setItem('monedero', JSON.stringify(data))
+            window.location.href = "movimientos.html"
+        })
+        .catch(error => {
+            mostrarNotificacion("Error al obtener los Datos: " + error.message, "#FF0000")
+        });
+}
+
+function registrarMonedero(){
+    let url = "http://127.0.0.1:5000/monederos/crear"; 
+    let nombre = document.getElementById("nombreMonedero").value
+    if (nombre == "") {
+        mostrarNotificacion('Por favor, complete todos los campos', "#FF0000")
+        return 0
+    }
+    data = {
+        nombre : nombre,
+        saldo : 0,
+        moneda_id : document.getElementById("selectMonedas").value, 
+        usuario_id : document.getElementById("selectUsuarios").value
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        resultado = data.toString().split('|')
+        if (typeof resultado[1] !== 'undefined' && resultado[1] !== null) {
+            if (resultado[0] === '00') {
+                mostrarNotificacion("Guardado con Exito", "#198754")
+                cargarMonederos()
+                document.getElementById("nombreMonedero").value = ""
+            } else {
+                mostrarNotificacion(resultado[1], "#FF0000")
+            }
+        } else {
+            mostrarNotificacion(resultado[0], "#FF0000")
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
+
+let dataTable = null;
+let dataTableIsInitialized = false;
+const dataTableOptions = {
+    //scrollX: "2000px",
+    lengthMenu: [5, 10, 15, 20, 100, 200, 500],
+    columnDefs: [
+        { className: "centered", targets: [0, 1, 2, 3, 4] },
+        { orderable: false, targets: [0, 2, 4] },
+        { searchable: false, targets: [1, 2, 4] }
+        //{ width: "50%", targets: [0] }
+    ],
+    pageLength: 3,
+    destroy: true,
+    language: {
+        lengthMenu: "Mostrar _MENU_ registros por página",
+        zeroRecords: "Ningún movimiento encontrado",
+        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+        infoEmpty: "Ningún movimiento encontrado",
+        infoFiltered: "(filtrados desde _MAX_ registros totales)",
+        search: "Buscar:",
+        loadingRecords: "Cargando...",
+        paginate: {
+            first: "Primero",
+            last: "Último",
+            next: "Siguiente",
+            previous: "Anterior"
+        }
+    }
+};
+
+function initDataTable(lista) { 
+    if (dataTableIsInitialized) {
+        dataTable.destroy();
+    }
+
+    try{
+        list(lista);
+        dataTable = $("#datatable_movimientos").DataTable(dataTableOptions);
+    }catch(error){
+        console.error("Error initializing DataTable:", error);
+    }
+
+    dataTableIsInitialized = true;
+}
+
+function list(lista) {
+    try {
+        let content = ``;
+        lista.forEach((data, index) => {
+            let fecha = new Date(data.fecha)
+            content += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${data.descripcion}</td>
+                    <td>${data.saldo}</td>
+                    <td>${data.monedero.moneda.simbolo}</td>
+                    <td>${fecha.toLocaleDateString('en-GB')}</td>
+                </tr>`;
+        });
+        tableBody_movimientos.innerHTML = content;
+    } catch (ex) {
+        console.error("Error initializing DataTable:", error);
+    }
+}
+
+function cargarMovimientos(){
+    let monedero = JSON.parse(sessionStorage.getItem('monedero'))
+    // URL del servicio REST
+    let url = "http://127.0.0.1:5000/movimientos/" + monedero.id;
+
+    // Llamada al servicio REST utilizando fetch
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            initDataTable(data)
+            elemento = document.getElementById("selectUsuarios");
+            for (let index = 0; index < elemento.options.length; index++) {
+                if (elemento.options[index].value == monedero.usuario.id.toString()) {
+                    elemento.selectedIndex = index;
+                }
+            }
+            document.getElementById('nombreMonedero').value = monedero.nombre
+            document.getElementById('tituloMonedero').innerText = monedero.nombre
+            document.getElementById('saldoMonedero').innerText = monedero.saldo + " " + monedero.moneda.simbolo
+        })
+        .catch(error => {
+            mostrarNotificacion("Error al obtener los Datos: " + error.message, "#FF0000")
+        });
+}
+
+function modificarMonedero(){
+    let monedero = JSON.parse(sessionStorage.getItem('monedero'))
+    let url = "http://127.0.0.1:5000/monederos/modificar"; 
+    let nombre = document.getElementById("nombreMonedero").value
+    if (nombre == "") {
+        mostrarNotificacion('Por favor, complete todos los campos', "#FF0000")
+        return 0
+    }
+    data = {
+        id : monedero.id,
+        nombre : nombre,
+        saldo : monedero.saldo,
+        moneda_id : monedero.moneda.id, 
+        usuario_id : document.getElementById("selectUsuarios").value
+    }
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        if (typeof data !== 'undefined' && data !== null) {
+            sessionStorage.setItem('monedero', JSON.stringify(data))
+            mostrarNotificacion("Guardado con Exito", "#198754")
+            cargarMovimientos()
+            document.getElementById("nombreMonedero").value = ""
+        } else {
+            mostrarNotificacion("Error al guardar", "#FF0000")
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
+}
+
+function borrarMonedero(){
+    let monedero = JSON.parse(sessionStorage.getItem('monedero'))
+    // URL del servicio REST
+    let url = "http://127.0.0.1:5000/monederos/borrar/" + monedero.id;
+    // Llamada al servicio REST utilizando fetch
+    fetch(url)
+        .then(response => response.json())
+        .then(dataResponse => {
+            resultado = dataResponse.toString().split('|')
+            if(typeof resultado[1] !== 'undefined' && resultado[1] !== null){
+                if(resultado[0] === '00'){
+                    sessionStorage.setItem('monedero', null)
+                    window.location.href = "contable.html";
+                    mostrarNotificacion("Borrado con Exito","#198754") 
+                }else{
+                    mostrarNotificacion(resultado[1],"#FF0000") 
+                }
+            }else{
+                mostrarNotificacion(resultado[0],"#FF0000") 
+            }
+            
+        })
+        .catch(error => {
+            mostrarNotificacion("Error al borrar el empleado: " + error.message, "#FF0000")
+        });
+
+}
+
+function registrarMovimiento(){
+    let monedero = JSON.parse(sessionStorage.getItem('monedero'))
+    let tipo = document.getElementById("tipoMovimiento").value
+    let descripcion = document.getElementById("descripcionMovimiento").value
+    let monto = document.getElementById("montoMovimiento").value
+    if (monto == "" || parseFloat(monto) < 0.1) {
+        mostrarNotificacion('Monto del movimiento debe ser mayor a 0.1', "#FF0000")
+        return 0
+    }
+
+    if (descripcion == "")
+        descripcion = tipo
+
+    if (tipo == "Salida"){
+        monto = "-" + monto.toString()
+    }
+
+    data = {
+        descripcion : descripcion,
+        saldo : monto,
+        moneda_id : monedero.moneda.id, 
+        monedero_id : monedero.id,
+        fecha: new Date().toISOString()
+    }
+    let url = "http://127.0.0.1:5000/movimientos/guardar"; 
+    let options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    };   
+    fetch(url, options)
+    .then(response => response.json() )
+    .then(data => {
+        // Guardamos el mensaje para saber si fue exitoso o no el registro
+        if (typeof data === 'string') 
+        {
+            mostrarNotificacion(data.toString().split('|')[1],"#FF0000") 
+        }
+        else
+        {
+            if(typeof data !== 'undefined' && data !== null){
+                sessionStorage.setItem('monedero', JSON.stringify(data))
+                mostrarNotificacion("Guardado con Exito", "#198754")
+                cargarMovimientos()
+                document.getElementById("descripcionMovimiento").value = ""
+                document.getElementById("montoMovimiento").value = "0"
+            }else{
+                mostrarNotificacion("Error al registrar movimiento","#FF0000") 
+            }
+        }
+    })
+    .catch(err => mostrarNotificacion(err.message,"#FF0000") )
 }
