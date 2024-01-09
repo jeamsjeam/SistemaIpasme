@@ -408,7 +408,7 @@ class PacientesServices:
 
             total_dias_totales = total_dias_reposos + total_dias_completos
 
-            diasMaximos = 63
+            diasMaximos = 90
 
             tipoReposo = TipoReposoCalls.get_tipoReposo_id(grupo_reposo_encontrado.tipo_reposo_id)
 
@@ -416,7 +416,7 @@ class PacientesServices:
                 diasMaximos = tipoReposo.maximo_dias
 
             if total_dias_totales > diasMaximos:
-                return "04|La suma de días de reposos es mayor a 63"
+                return "04|La suma de días de reposos es mayor a " + str(diasMaximos) 
             else:
                 # Se recorren y se crean
                 for i, reposo in enumerate(reposos):

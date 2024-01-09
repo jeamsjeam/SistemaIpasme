@@ -24,7 +24,7 @@ INSERT INTO especialidad (nombre, consultas) VALUES ('Odontologia', '1'),('Medic
 ('Nefrologia','1'),
 ('Otorrino','1'),
 ('Traumatologia','1');
-INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',63),('Especial',80);
+INSERT INTO tipo_reposo (nombre,maximo_dias) VALUES ('General',90),('Especial',90);
 INSERT INTO tipo_paciente (nombre) VALUES ('Afiliado'),('Beneficiario');
 INSERT INTO estado (nombre) VALUES ('Tachira'),('Merida'),('Zulia'),('Trujillo'),('Apure');
 INSERT INTO municipio (nombre) VALUES ('Junin'),('Ayacucho'),('Libertador'),('San Cristóbal'),('Lobatera');
